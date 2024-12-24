@@ -1,6 +1,7 @@
 {
   "lang": "es",
   "title": "Hola mundo",
+  "description": "",
   "system": "Sistema",
   "light": "Claro",
   "dark": "Oscuro"

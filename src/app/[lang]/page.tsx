@@ -4,7 +4,6 @@ import { TLocale } from "@/i18n";
 export default async function Home({
   params,
 }: Readonly<{
-  children: React.ReactNode;
   params: Promise<{ lang: TLocale }>;
 }>) {
   const { lang } = await params;
