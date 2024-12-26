@@ -1,7 +1,14 @@
 {
   "lang": "es",
-  "title": "Hola mundo",
+  "title": "Universo Coffe",
   "description": "",
+  "product": "Producto",
+  "price": "Precio",
+  "quantity": "Cantidad",
+  "cart_table_caption": "Lista de productos añadidos al carrito",
+  "cart_description": "Estas a pocos pasos de concretar tu compra",
+  "sign_in": "Iniciar sesión",
+  "sign_out": "Cerrar sesión",
   "system": "Sistema",
   "light": "Claro",
   "dark": "Oscuro"

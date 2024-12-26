@@ -1,7 +1,14 @@
 {
   "lang": "en",
-  "title": "Hello world",
+  "title": "Universo Coffe",
   "description": "",
+  "product": "Product",
+  "price": "Price",
+  "quantity": "Quantity",
+  "cart_table_caption": "List of products added to cart",
+  "cart_description": "You are just a few steps away from completing your purchase",
+  "sign_in": "Sign in",
+  "sign_out": "Sign out",
   "system": "System",
   "light": "Light",
   "dark": "Dark"

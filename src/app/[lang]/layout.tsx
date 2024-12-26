@@ -8,9 +8,8 @@ import { locales, TLocale } from "@/i18n";
 import { ToggleLang } from "@/components/toggle-lang";
 import { LangProvider } from "@/providers/lang-provider";
 import { getDictionary } from "@/get-dictionary";
-import { SignIn } from "@/components/sign-in";
-import { SignOut } from "@/components/sign-out";
-import UserAvatar from "@/components/user-avatar";
+import { User } from "@/components/user";
+import { Cart } from "@/components/cart";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -94,14 +93,15 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <LangProvider dictionary={dictionary}>
-            <header className="container flex items-center justify-between py-4">
-              <h1>Coffe</h1>
-              <div className="flex items-center space-x-3">
-                <ToggleLang />
-                <ModeToggle />
-                <SignIn />
-                <SignOut />
-                <UserAvatar />
+            <header className="container sticky top-0 z-50 mb-4 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+              <div className="flex items-center justify-between border-b py-4">
+                <h1>Coffe</h1>
+                <div className="flex items-center space-x-3">
+                  <ToggleLang />
+                  <ModeToggle />
+                  <User />
+                  <Cart />
+                </div>
               </div>
             </header>
             <main className="container grow">{children}</main>
