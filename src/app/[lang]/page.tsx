@@ -1,5 +1,3 @@
-import { Product } from "@/components/product";
-import { products } from "@/context/store";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 
@@ -13,18 +11,9 @@ export default async function Home({
 
   return (
     <>
-      <h1 className="scroll-m-20 text-center text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+      <h1 className="mb-8 scroll-m-20 text-center text-4xl font-extrabold uppercase tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
         {title}
       </h1>
-      <section>
-        <ul>
-          {products.map((product) => (
-            <li key={product.title}>
-              <Product {...product} />
-            </li>
-          ))}
-        </ul>
-      </section>
     </>
   );
 }

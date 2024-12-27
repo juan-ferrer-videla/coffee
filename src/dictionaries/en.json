@@ -11,5 +11,10 @@
   "sign_out": "Sign out",
   "system": "System",
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "home": "Home",
+  "courses": "Courses",
+  "store": "Store",
+  "store_description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt modi voluptas nulla",
+  "blogs": "Blogs"
 }

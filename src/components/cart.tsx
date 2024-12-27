@@ -15,13 +15,27 @@ import {
 import { ShoppingCart } from "lucide-react";
 import { CartTable } from "./cart-table";
 import { useDictionary } from "@/hooks/useDictionary";
+import { useStore } from "@/context/store";
+
+const Count = () => {
+  const length = useStore((state) => state.getLength());
+  if (length < 1) return null;
+
+  return (
+    <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 rounded bg-foreground px-1 font-mono text-xs text-background">
+      {length}
+    </div>
+  );
+};
+
 export const Cart = () => {
   const { cart_description } = useDictionary();
 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size={"icon"}>
+        <Button variant="outline" size={"icon"} className="relative">
+          <Count />
           <ShoppingCart />
           <span className="sr-only">Open cart</span>
         </Button>

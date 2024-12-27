@@ -11,5 +11,10 @@
   "sign_out": "Cerrar sesión",
   "system": "Sistema",
   "light": "Claro",
-  "dark": "Oscuro"
+  "dark": "Oscuro",
+  "home": "Inicio",
+  "courses": "Cursos",
+  "store": "Tienda",
+  "store_description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt modi voluptas nulla",
+  "blogs": "Blogs"
 }

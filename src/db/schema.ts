@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   integer,
   primaryKey,
@@ -12,46 +12,56 @@ export const usersTable = sqliteTable("users", {
   email: text("email").unique().notNull(),
 });
 
-export const coursesTable = sqliteTable("courses", {
+export const productsTable = sqliteTable("courses", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
+  description: text("description"),
+  img: text("img"),
+  price: integer("price").notNull(),
 });
 
-export const usersToCourses = sqliteTable(
-  "users_to_courses",
+export const usersToProducts = sqliteTable(
+  "users_to_products",
   {
     userId: integer("user_id")
       .notNull()
       .references(() => usersTable.id),
-    courseId: integer("course_id")
+    productId: integer("product_id")
       .notNull()
-      .references(() => coursesTable.id),
+      .references(() => productsTable.id),
+    quantity: integer("quantity").notNull(),
+    purchasedAt: text("purchased_at")
+      .default(sql`(CURRENT_TIMESTAMP)`)
+      .notNull(),
   },
   (t) => ({
-    pk: primaryKey({ columns: [t.userId, t.courseId] }),
+    pk: primaryKey({ columns: [t.userId, t.productId] }),
   }),
 );
 export const usersRelations = relations(usersTable, ({ many }) => ({
-  usersToCourses: many(usersToCourses),
+  usersToProducts: many(usersToProducts),
 }));
 
-export const coursesRelations = relations(coursesTable, ({ many }) => ({
-  usersToCourses: many(usersToCourses),
+export const productsRelations = relations(productsTable, ({ many }) => ({
+  usersToProducts: many(usersToProducts),
 }));
 
-export const usersToCoursesRelations = relations(usersToCourses, ({ one }) => ({
-  courses: one(coursesTable, {
-    fields: [usersToCourses.courseId],
-    references: [coursesTable.id],
+export const usersToProductsRelations = relations(
+  usersToProducts,
+  ({ one }) => ({
+    courses: one(productsTable, {
+      fields: [usersToProducts.productId],
+      references: [productsTable.id],
+    }),
+    user: one(usersTable, {
+      fields: [usersToProducts.userId],
+      references: [usersTable.id],
+    }),
   }),
-  user: one(usersTable, {
-    fields: [usersToCourses.userId],
-    references: [usersTable.id],
-  }),
-}));
+);
 
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;
 
-export type InsertCourse = typeof coursesTable.$inferInsert;
-export type SelectCourse = typeof coursesTable.$inferSelect;
+export type InsertProduct = typeof productsTable.$inferInsert;
+export type SelectProduct = typeof productsTable.$inferSelect;

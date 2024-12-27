@@ -15,8 +15,13 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { ReactNode } from "react";
 
 export const CartTable = () => {
+  const currency = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    minimumFractionDigits: 0,
+  });
   const store = useStore((state) => state.products);
-  const getTotal = useStore((state) => state.getTotal);
+  const total = useStore((state) => state.getTotal());
   const { product, price, quantity, cart_table_caption } = useDictionary();
 
   return (
@@ -45,7 +50,7 @@ export const CartTable = () => {
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">{getTotal()}</TableCell>
+          <TableCell className="text-right">{currency.format(total)}</TableCell>
         </TableRow>
       </TableFooter>
     </Table>

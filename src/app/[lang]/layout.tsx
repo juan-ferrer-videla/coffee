@@ -10,6 +10,9 @@ import { LangProvider } from "@/providers/lang-provider";
 import { getDictionary } from "@/get-dictionary";
 import { User } from "@/components/user";
 import { Cart } from "@/components/cart";
+import { Separator } from "@/components/ui/separator";
+import { Nav } from "@/components/nav";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -93,9 +96,10 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <LangProvider dictionary={dictionary}>
-            <header className="container sticky top-0 z-50 mb-4 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <header className="container sticky top-0 z-50 mb-6 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:mb-8 md:mb-12">
               <div className="flex items-center justify-between border-b py-4">
-                <h1>Coffe</h1>
+                <Link href={"/"}>Coffee</Link>
+                <Nav />
                 <div className="flex items-center space-x-3">
                   <ToggleLang />
                   <ModeToggle />
@@ -105,7 +109,9 @@ export default async function RootLayout({
               </div>
             </header>
             <main className="container grow">{children}</main>
-            <footer className="container"></footer>
+            <footer className="container pb-6">
+              <Separator className="mb-6" />
+            </footer>
           </LangProvider>
         </ThemeProvider>
       </body>
