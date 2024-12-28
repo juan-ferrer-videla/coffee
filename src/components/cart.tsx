@@ -15,10 +15,11 @@ import {
 import { ShoppingCart } from "lucide-react";
 import { CartTable } from "./cart-table";
 import { useDictionary } from "@/hooks/useDictionary";
-import { useStore } from "@/context/store";
+import { useProductContext } from "@/hooks/useProduct";
+import { SelectProduct } from "@/db/schema";
 
 const Count = () => {
-  const length = useStore((state) => state.getLength());
+  const length = useProductContext((state) => state.getLength());
   if (length < 1) return null;
 
   return (
@@ -28,7 +29,7 @@ const Count = () => {
   );
 };
 
-export const Cart = () => {
+export const Cart = ({ products }: { products: SelectProduct[] }) => {
   const { cart_description } = useDictionary();
 
   return (
@@ -46,7 +47,7 @@ export const Cart = () => {
           <SheetDescription>{cart_description}</SheetDescription>
         </SheetHeader>
         <div className="py-4">
-          <CartTable />
+          <CartTable products={products} />
         </div>
         <SheetFooter>
           <SheetClose asChild>

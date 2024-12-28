@@ -12,6 +12,11 @@ export const usersTable = sqliteTable("users", {
   email: text("email").unique().notNull(),
 });
 
+export const adminsTable = sqliteTable("admins", {
+  id: integer("id").primaryKey(),
+  email: text("email").unique().notNull(),
+});
+
 export const productsTable = sqliteTable("courses", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),

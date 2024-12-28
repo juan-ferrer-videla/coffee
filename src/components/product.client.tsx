@@ -1,13 +1,13 @@
 "use client";
 
-import { useStore } from "@/context/store";
 import { Plus, Minus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCallback } from "react";
+import { useProductContext } from "@/hooks/useProduct";
 
 export const DecreaseButton = ({ id }: { id: string }) => {
-  const count = useStore((state) => state.products[id]);
-  const decrease = useStore((state) => state.removeProduct);
+  const count = useProductContext((state) => state.products[id]);
+  const decrease = useProductContext((state) => state.removeProduct);
 
   const handleDecrease = useCallback(() => {
     decrease(id);
@@ -21,7 +21,7 @@ export const DecreaseButton = ({ id }: { id: string }) => {
 };
 
 export const IncreaseButton = ({ id }: { id: string }) => {
-  const increase = useStore((state) => state.addProduct);
+  const increase = useProductContext((state) => state.addProduct);
   const handleIncrease = useCallback(() => {
     increase(id);
   }, [increase, id]);
@@ -34,6 +34,6 @@ export const IncreaseButton = ({ id }: { id: string }) => {
 };
 
 export const Count = ({ id }: { id: string }) => {
-  const count = useStore((state) => state.products[id]);
+  const count = useProductContext((state) => state.products[id]);
   return <div className="min-w-8 text-center">{count}</div>;
 };

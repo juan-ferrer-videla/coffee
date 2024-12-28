@@ -1,3 +1,4 @@
+import { logIn } from "@/actions";
 import { auth } from "../auth";
 import { SignIn } from "./sign-in";
 import { SignOut } from "./sign-out";
@@ -14,6 +15,7 @@ export async function User() {
   const session = await auth();
   const name = session?.user?.name;
   const email = session?.user?.email;
+  if (email && name) logIn({ email, name });
 
   return (
     <DropdownMenu>

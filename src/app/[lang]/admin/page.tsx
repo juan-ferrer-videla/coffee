@@ -1,0 +1,37 @@
+import { getProducts, isAdmin } from "@/actions";
+import { auth } from "@/auth";
+import { CreateProduct } from "@/components/create-product";
+import { TLocale } from "@/i18n";
+import { redirect } from "next/navigation";
+
+export default async function Admin({
+  params,
+}: Readonly<{
+  params: Promise<{ lang: TLocale }>;
+}>) {
+  const { lang } = await params;
+
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) redirect(`/${lang}/sign-in?redirect=admin`);
+
+  const isAuthorized = await isAdmin(email);
+  if (!isAuthorized) redirect(`/${lang}`);
+
+  const products = await getProducts();
+
+  return (
+    <>
+      <div className="flex flex-col items-center text-center">
+        <h1 className="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+          Administrador
+        </h1>
+        <p className="mb-8 max-w-2xl scroll-m-20 text-lg font-light text-muted-foreground sm:mb-12 md:mb-16">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam facere
+        </p>
+      </div>
+      <CreateProduct />
+      <div>{JSON.stringify(products, null, 2)}</div>
+    </>
+  );
+}

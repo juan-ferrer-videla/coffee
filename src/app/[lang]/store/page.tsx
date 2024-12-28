@@ -1,5 +1,5 @@
+import { getProducts } from "@/actions";
 import { Product } from "@/components/product";
-import { products } from "@/context/store";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 
@@ -10,6 +10,7 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const { store, store_description } = await getDictionary(lang);
+  const products = await getProducts();
 
   return (
     <>

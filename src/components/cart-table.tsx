@@ -10,18 +10,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { products, useStore } from "@/context/store";
+import { SelectProduct } from "@/db/schema";
 import { useDictionary } from "@/hooks/useDictionary";
+import { useProductContext } from "@/hooks/useProduct";
 import { ReactNode } from "react";
 
-export const CartTable = () => {
+export const CartTable = ({ products }: { products: SelectProduct[] }) => {
   const currency = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
     minimumFractionDigits: 0,
   });
-  const store = useStore((state) => state.products);
-  const total = useStore((state) => state.getTotal());
+  const store = useProductContext((state) => state.products);
+  const total = useProductContext((state) => state.getTotal());
   const { product, price, quantity, cart_table_caption } = useDictionary();
 
   return (

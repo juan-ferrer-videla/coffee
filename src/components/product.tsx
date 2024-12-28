@@ -1,5 +1,5 @@
-import type { TProduct } from "@/context/store";
 import { Count, DecreaseButton, IncreaseButton } from "./product.client";
+import cogollo from "@/assets/cogollo.webp";
 import Image from "next/image";
 import {
   Card,
@@ -8,8 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SelectProduct } from "@/db/schema";
 
-export const Product = ({ title, price, id, src, description }: TProduct) => {
+export const Product = ({
+  title,
+  price,
+  id,
+  img,
+  description,
+}: SelectProduct) => {
   const currency = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -19,8 +26,7 @@ export const Product = ({ title, price, id, src, description }: TProduct) => {
   return (
     <Card className="overflow-hidden">
       <Image
-        placeholder="blur"
-        src={src}
+        src={img || cogollo}
         alt={title}
         className="aspect-video h-full w-full object-cover"
       />
