@@ -3,18 +3,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
 import { createProduct } from "@/actions";
 import { Button } from "./ui/button";
+
 export const CreateProduct = async () => {
   return (
-    <div>
+    <section className="pb-10 sm:pb-12 md:pb-16 lg:pb-20">
       <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
         Añadir Producto
       </h2>
-      <form action={createProduct} className="">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+      <form action={createProduct} className="grid max-w-sm gap-6">
+        <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="title">Title</Label>
           <Input id="title" name="title" placeholder="Cogollo" />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="description">Description</Label>
           <Textarea
             id="description"
@@ -23,16 +24,16 @@ export const CreateProduct = async () => {
             rows={4}
           />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="price">Price</Label>
           <Input type="number" id="price" name="price" placeholder="5000" />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="img">URL Image</Label>
-          <Input id="img" name="img" placeholder="https://www.imgur.com/asd" />
+          <Label htmlFor="picture">Picture</Label>
+          <Input id="picture" type="file" name="img" accept="image/*" />
         </div>
         <Button className="self-start">Submit</Button>
       </form>
-    </div>
+    </section>
   );
 };

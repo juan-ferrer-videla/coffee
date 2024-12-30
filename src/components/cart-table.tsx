@@ -13,14 +13,10 @@ import {
 import { SelectProduct } from "@/db/schema";
 import { useDictionary } from "@/hooks/useDictionary";
 import { useProductContext } from "@/hooks/useProduct";
+import { currency } from "@/lib/utils";
 import { ReactNode } from "react";
 
 export const CartTable = ({ products }: { products: SelectProduct[] }) => {
-  const currency = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  });
   const store = useProductContext((state) => state.products);
   const total = useProductContext((state) => state.getTotal());
   const { product, price, quantity, cart_table_caption } = useDictionary();

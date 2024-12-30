@@ -1,5 +1,6 @@
-import { Count, DecreaseButton, IncreaseButton } from "./product.client";
+"use client";
 
+import React from "react";
 import {
   Card,
   CardContent,
@@ -7,24 +8,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CldImage } from "next-cloudinary";
+import { currency } from "@/lib/utils";
 import { SelectProduct } from "@/db/schema";
-import { CldImage } from "./cld-image";
+import { EditProduct } from "./edit-product";
+import { DeleteProduct } from "./delete-product";
 
 export const Product = ({
-  title,
-  price,
   id,
-  img,
   description,
+  img,
+  price,
+  title,
 }: SelectProduct) => {
-  const currency = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  });
-
   return (
-    <Card className="overflow-hidden">
+    <Card className="w-full max-w-sm overflow-hidden" key={id}>
       <div className="relative aspect-video w-full">
         <CldImage
           key={id}
@@ -39,12 +37,15 @@ export const Product = ({
         <CardDescription>{description}</CardDescription>
         <p>{currency.format(price)}</p>
       </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-x-1">
-          <DecreaseButton id={id.toString()} />
-          <Count id={id.toString()} />
-          <IncreaseButton id={id.toString()} />
-        </div>
+      <CardContent className="items flex justify-end space-x-4">
+        <EditProduct
+          id={id}
+          title={title}
+          description={description}
+          price={price}
+          img={img}
+        />
+        <DeleteProduct id={id} img={img} />
       </CardContent>
     </Card>
   );

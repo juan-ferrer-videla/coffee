@@ -3,16 +3,12 @@ import "../globals.css";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
-import { ModeToggle } from "@/components/mode-toggle";
 import { locales, TLocale } from "@/i18n";
-import { ToggleLang } from "@/components/toggle-lang";
 import { LangProvider } from "@/providers/lang-provider";
 import { getDictionary } from "@/get-dictionary";
-import { User } from "@/components/user";
-import { Cart } from "@/components/cart";
+
 import { Separator } from "@/components/ui/separator";
-import { Nav } from "@/components/nav";
-import Link from "next/link";
+
 import { ProductsProvider } from "@/providers/products-provider";
 import { getProducts } from "@/actions";
 
@@ -100,20 +96,8 @@ export default async function RootLayout({
         >
           <LangProvider dictionary={dictionary}>
             <ProductsProvider products={products}>
-              <header className="container sticky top-0 z-50 mb-6 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:mb-8 md:mb-12">
-                <div className="flex items-center justify-between border-b py-4">
-                  <Link href={"/"}>Coffee</Link>
-                  <Nav />
-                  <div className="flex items-center space-x-3">
-                    <ToggleLang />
-                    <ModeToggle />
-                    <User />
-                    <Cart products={products} />
-                  </div>
-                </div>
-              </header>
-              <main className="container grow">{children}</main>
-              <footer className="container pb-6">
+              {children}
+              <footer className="container mt-12 pb-6">
                 <Separator className="mb-6" />
               </footer>
             </ProductsProvider>

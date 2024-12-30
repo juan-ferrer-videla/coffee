@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { CreateProduct } from "@/components/create-product";
 import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
+import { Product } from "./product";
 
 export default async function Admin({
   params,
@@ -31,7 +32,13 @@ export default async function Admin({
         </p>
       </div>
       <CreateProduct />
-      <div>{JSON.stringify(products, null, 2)}</div>
+      <ul className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
+        {products.map((product) => (
+          <li key={product.title} className="w-full">
+            <Product {...product} />
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
