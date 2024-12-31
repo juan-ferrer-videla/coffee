@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -17,6 +16,8 @@ import { CartTable } from "./cart-table";
 import { useDictionary } from "@/hooks/useDictionary";
 import { useProductContext } from "@/hooks/useProduct";
 import { SelectProduct } from "@/db/schema";
+import { Buy } from "./buy";
+import { useState } from "react";
 
 const Count = () => {
   const length = useProductContext((state) => state.getLength());
@@ -31,9 +32,16 @@ const Count = () => {
 
 export const Cart = ({ products }: { products: SelectProduct[] }) => {
   const { cart_description } = useDictionary();
+  const clearCart = useProductContext((state) => state.clearCart);
+  const [open, setOpen] = useState(false);
+
+  const close = () => {
+    clearCart();
+    setOpen(false);
+  };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" size={"icon"} className="relative">
           <Count />
@@ -50,9 +58,7 @@ export const Cart = ({ products }: { products: SelectProduct[] }) => {
           <CartTable products={products} />
         </div>
         <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Comprar</Button>
-          </SheetClose>
+          <Buy close={close} />
         </SheetFooter>
       </SheetContent>
     </Sheet>

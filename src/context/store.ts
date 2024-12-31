@@ -50,7 +50,7 @@ export const createProductsStore = (initProps: SelectProduct[]) => {
           [id]: Math.max(state.products[id] - 1, 0),
         },
       })),
-    clearCart: () => set(() => initialCart),
+    clearCart: () => set(() => ({ products: { ...initialCart } })),
     getTotal() {
       const cart = get().products;
       return initProps.reduce(

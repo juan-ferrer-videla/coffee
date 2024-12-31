@@ -1,12 +1,18 @@
 "use server";
 
-import { signIn, signOut } from "./auth";
+import { auth, signIn, signOut } from "./auth";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { adminsTable, productsTable, usersTable } from "./db/schema";
+import {
+  adminsTable,
+  productsTable,
+  usersTable,
+  usersToProducts,
+} from "./db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
+import { redirect } from "next/navigation";
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -180,4 +186,46 @@ export const editProduct = async (formData: FormData) => {
     .where(eq(productsTable.id, parseInt(id)));
 
   revalidatePath("/");
+};
+
+const rawBuySchema = z.object({
+  rawProducts: z.string(),
+});
+const buySchema = z
+  .object({
+    productId: z.number(),
+    quantity: z.number(),
+  })
+  .array();
+
+export const buy = async (formData: FormData) => {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (typeof email !== "string") redirect("/sign-in?redirect=store");
+
+  const [{ id }] = await db
+    .select()
+    .from(usersTable)
+    .where(eq(usersTable.email, email));
+
+  const { rawProducts } = rawBuySchema.parse(Object.fromEntries(formData));
+
+  const { success, data: products } = buySchema.safeParse(
+    JSON.parse(rawProducts),
+  );
+  if (!success) return;
+
+  await db.insert(usersToProducts).values(
+    products.map(({ productId, quantity }) => ({
+      productId: productId,
+      userId: id,
+      quantity: quantity,
+    })),
+  );
+};
+
+export const getOrders = async () => {
+  return await db.query.usersToProducts.findMany({
+    with: { product: true, user: true },
+  });
 };
