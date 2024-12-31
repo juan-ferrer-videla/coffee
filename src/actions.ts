@@ -72,14 +72,14 @@ const productSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   price: z.string(),
-  img: z.unknown(),
+  img: z.instanceof(File),
 });
 
 const editProductSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   price: z.string().optional(),
-  img: z.unknown().optional(),
+  img: z.instanceof(File).optional(),
   publicId: z.string(),
   id: z.string(),
 });

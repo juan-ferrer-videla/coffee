@@ -43,6 +43,7 @@ export const EditProduct = ({
               name="title"
               placeholder="Cogollo"
               defaultValue={title}
+              required
             />
           </div>
           <div className="w-fullitems-center grid gap-1.5">
@@ -63,14 +64,15 @@ export const EditProduct = ({
               name="price"
               placeholder="5000"
               defaultValue={price}
+              required
             />
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="picture">Picture</Label>
             <Input id="picture" type="file" name="img" accept="image/*" />
           </div>
-          <input type="hidden" name="publicId" value={img} />
-          <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="publicId" value={img} required />
+          <input type="hidden" name="id" value={id} required />
           <Button className="justify-self-end">Submit</Button>
         </form>
       </DialogContent>

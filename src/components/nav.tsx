@@ -5,7 +5,7 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { ComponentProps, FC } from "react";
 
 export const getMainLinks = ({ blogs, courses, home, store }: TDictionary) => [
   { path: "", title: home },
@@ -14,12 +14,12 @@ export const getMainLinks = ({ blogs, courses, home, store }: TDictionary) => [
   { path: "/blogs", title: blogs },
 ];
 
-export const Nav = () => {
+export const Nav: FC<ComponentProps<"nav">> = (props) => {
   const dictionary = useDictionary();
   const links = getMainLinks(dictionary);
   const pathname = usePathname();
   return (
-    <nav>
+    <nav {...props}>
       <ul className="flex items-center gap-6">
         {links.map(({ path, title }) => (
           <li key={path}>

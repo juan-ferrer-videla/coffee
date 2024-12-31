@@ -13,7 +13,7 @@ export const CreateProduct = async () => {
       <form action={createProduct} className="grid max-w-sm gap-6">
         <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="title">Title</Label>
-          <Input id="title" name="title" placeholder="Cogollo" />
+          <Input id="title" name="title" placeholder="Cogollo" required />
         </div>
         <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="description">Description</Label>
@@ -26,11 +26,23 @@ export const CreateProduct = async () => {
         </div>
         <div className="w-fullitems-center grid gap-1.5">
           <Label htmlFor="price">Price</Label>
-          <Input type="number" id="price" name="price" placeholder="5000" />
+          <Input
+            type="number"
+            id="price"
+            name="price"
+            placeholder="5000"
+            required
+          />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="picture">Picture</Label>
-          <Input id="picture" type="file" name="img" accept="image/*" />
+          <Input
+            id="picture"
+            type="file"
+            name="img"
+            accept="image/*"
+            required
+          />
         </div>
         <Button className="self-start">Submit</Button>
       </form>
