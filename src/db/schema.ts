@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { z } from "zod";
 
 export const usersTable = sqliteTable("users", {
   id: integer("id").primaryKey(),
@@ -66,3 +67,9 @@ export type SelectProduct = typeof productsTable.$inferSelect;
 
 export type InsertUserToProduct = typeof usersToProducts.$inferInsert;
 export type SelectUserToProduct = typeof usersToProducts.$inferSelect;
+
+export const statusSchema = z.union([
+  z.literal("pending"),
+  z.literal("dispatched"),
+  z.literal("delivered"),
+]);

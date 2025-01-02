@@ -11,7 +11,7 @@ export default async function Home({
 
   return (
     <>
-      <h1 className="mb-8 scroll-m-20 text-center text-4xl font-extrabold uppercase tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
+      <h1 className="mb-8 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
         {title}
       </h1>
     </>

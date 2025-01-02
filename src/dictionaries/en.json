@@ -1,6 +1,6 @@
 {
   "lang": "en",
-  "title": "Universo Coffe",
+  "title": "Universo Coffee",
   "description": "",
   "product": "Product",
   "price": "Price",
@@ -16,5 +16,5 @@
   "courses": "Courses",
   "store": "Store",
   "store_description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt modi voluptas nulla",
-  "blogs": "Blogs"
+  "blogs": "News"
 }

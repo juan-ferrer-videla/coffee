@@ -6,6 +6,7 @@ import { db } from "./db";
 import {
   adminsTable,
   productsTable,
+  SelectUserToProduct,
   usersTable,
   usersToProducts,
 } from "./db/schema";
@@ -228,4 +229,18 @@ export const getOrders = async () => {
   return await db.query.usersToProducts.findMany({
     with: { product: true, user: true },
   });
+};
+
+export const changeStatus = async ({
+  id,
+  status,
+}: {
+  status: SelectUserToProduct["status"];
+  id: SelectUserToProduct["id"];
+}) => {
+  await db
+    .update(usersToProducts)
+    .set({ status })
+    .where(eq(usersToProducts.id, id));
+  revalidatePath("/");
 };
