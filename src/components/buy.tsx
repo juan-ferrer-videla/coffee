@@ -3,8 +3,10 @@
 import { useProductContext } from "@/hooks/useProduct";
 import { Button } from "./ui/button";
 import { buy } from "@/actions";
+import { useDictionary } from "@/hooks/useDictionary";
 
 export const Buy = ({ close }: { close: () => void }) => {
+  const { buy: title } = useDictionary();
   const productsMap = useProductContext((state) => state.products);
   const products = Object.entries(productsMap).map(([productId, quantity]) => ({
     productId: parseInt(productId),
@@ -23,7 +25,7 @@ export const Buy = ({ close }: { close: () => void }) => {
         name="rawProducts"
         value={JSON.stringify(products)}
       />
-      <Button>Buy</Button>
+      <Button>{title}</Button>
     </form>
   );
 };

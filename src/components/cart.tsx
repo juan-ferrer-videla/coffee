@@ -31,7 +31,7 @@ const Count = () => {
 };
 
 export const Cart = ({ products }: { products: SelectProduct[] }) => {
-  const { cart_description } = useDictionary();
+  const { cart_description, cart } = useDictionary();
   const clearCart = useProductContext((state) => state.clearCart);
   const [open, setOpen] = useState(false);
 
@@ -51,7 +51,7 @@ export const Cart = ({ products }: { products: SelectProduct[] }) => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Tus productos</SheetTitle>
+          <SheetTitle>{cart}</SheetTitle>
           <SheetDescription>{cart_description}</SheetDescription>
         </SheetHeader>
         <div className="py-4">

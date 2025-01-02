@@ -16,5 +16,9 @@
   "courses": "Courses",
   "store": "Store",
   "store_description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt modi voluptas nulla",
-  "blogs": "News"
+  "blogs": "News",
+  "cart": "Shopping cart",
+  "buy": "Buy",
+  "follow": "Follow us",
+  "address": "Address"
 }

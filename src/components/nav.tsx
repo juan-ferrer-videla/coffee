@@ -7,11 +7,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { ComponentProps, FC } from "react";
 
-export const getMainLinks = ({ blogs, courses, home, store }: TDictionary) => [
+export const getMainLinks = ({ courses, home, store }: TDictionary) => [
   { path: "", title: home },
   { path: "/store", title: store },
   { path: "/courses", title: courses },
-  { path: "/blogs", title: blogs },
 ];
 
 export const Nav: FC<ComponentProps<"nav">> = (props) => {

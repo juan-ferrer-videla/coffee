@@ -10,21 +10,13 @@ export const CreateProduct = async () => {
       <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
         Añadir Producto
       </h2>
-      <form action={createProduct} className="grid max-w-sm gap-6">
-        <div className="w-fullitems-center grid gap-1.5">
+      <form action={createProduct} className="align-start grid gap-6">
+        <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="title">Title</Label>
           <Input id="title" name="title" placeholder="Cogollo" required />
         </div>
-        <div className="w-fullitems-center grid gap-1.5">
-          <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            name="description"
-            placeholder="Este producto es utilizado para..."
-            rows={4}
-          />
-        </div>
-        <div className="w-fullitems-center grid gap-1.5">
+
+        <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="price">Price</Label>
           <Input
             type="number"
@@ -44,7 +36,18 @@ export const CreateProduct = async () => {
             required
           />
         </div>
-        <Button className="self-start">Submit</Button>
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            id="description"
+            name="description"
+            placeholder="Este producto es utilizado para..."
+            rows={4}
+          />
+        </div>
+        <div>
+          <Button className="self-start">Submit</Button>
+        </div>
       </form>
     </section>
   );
