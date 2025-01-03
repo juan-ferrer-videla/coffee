@@ -143,8 +143,9 @@ export const createProduct = async (formData: FormData) => {
   revalidatePath("/");
 };
 
-export const getProducts = async () => {
-  return await db.select().from(productsTable);
+export const getProducts = async (limit: number | null = null) => {
+  if (limit === null) return await db.select().from(productsTable);
+  return await db.select().from(productsTable).limit(limit);
 };
 
 export const deleteProduct = async (formData: FormData) => {

@@ -23,7 +23,7 @@ export default async function Home({
         </p>
       </div>
       <section className="pb-4 sm:pb-8 md:pb-12 lg:pb-16">
-        <ul className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
+        <ul className="grid justify-center gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
           {products.map((product) => (
             <li key={product.title}>
               <Product {...product} />

@@ -24,14 +24,15 @@ export const Product = ({
   });
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="flex h-full max-w-sm flex-col overflow-hidden">
       <div className="relative aspect-video w-full">
         <CldImage
           key={id}
           alt={title}
-          className="object-cover"
+          className="h-auto w-full object-cover"
           src={img}
-          fill
+          width={358}
+          height={201}
         />
       </div>
       <CardHeader>
@@ -39,7 +40,7 @@ export const Product = ({
         <CardDescription>{description}</CardDescription>
         <p>{currency.format(price)}</p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-grow flex-col items-start justify-end gap-4">
         <div className="flex items-center gap-x-1">
           <DecreaseButton id={id.toString()} />
           <Count id={id.toString()} />
