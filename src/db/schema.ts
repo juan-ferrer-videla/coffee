@@ -24,6 +24,14 @@ export const productsTable = sqliteTable("products", {
     .notNull(),
 });
 
+export const eventsTable = sqliteTable("events", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  date: text("date").notNull(),
+  img: text("img").notNull(),
+  description: text("description").notNull(),
+});
+
 export const usersToProducts = sqliteTable("users_to_products", {
   id: integer("id").primaryKey(),
   userId: integer("user_id")
@@ -70,6 +78,9 @@ export type SelectProduct = typeof productsTable.$inferSelect;
 
 export type InsertUserToProduct = typeof usersToProducts.$inferInsert;
 export type SelectUserToProduct = typeof usersToProducts.$inferSelect;
+
+export type InsertEvent = typeof eventsTable.$inferInsert;
+export type SelectEvent = typeof eventsTable.$inferSelect;
 
 export const statusSchema = z.union([
   z.literal("pending"),

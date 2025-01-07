@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../db";
 import {
   adminsTable,
+  eventsTable,
   productsTable,
   SelectUserToProduct,
   usersTable,
@@ -85,6 +86,22 @@ const editProductSchema = z.object({
   publicId: z.string(),
   id: z.string(),
   isRecommended: z.string().optional(),
+});
+
+const eventSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  description: z.string(),
+  img: z.instanceof(File),
+});
+
+const editEventSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  description: z.string(),
+  img: z.instanceof(File).optional(),
+  id: z.string(),
+  publicId: z.string(),
 });
 
 export const signInAction = async (formData: FormData) => {
@@ -171,13 +188,19 @@ export const deleteProduct = async (formData: FormData) => {
 };
 
 export const editProduct = async (formData: FormData) => {
-  const { title, id, publicId, description, img, price, isRecommended } =
-    editProductSchema.parse(Object.fromEntries(formData));
+  const {
+    title,
+    id,
+    publicId,
+    description,
+    img: file,
+    price,
+    isRecommended,
+  } = editProductSchema.parse(Object.fromEntries(formData));
 
-  const file = img as File;
   let newPublicId = publicId;
 
-  if (file.size) {
+  if (file?.size) {
     cloudinary.uploader.destroy(publicId);
     const { signature, timestamp } = getSignature();
     const id = await uploadImage({ file, signature, timestamp });
@@ -203,6 +226,7 @@ export const editProduct = async (formData: FormData) => {
 const rawBuySchema = z.object({
   rawProducts: z.string(),
 });
+
 const buySchema = z
   .object({
     productId: z.number(),
@@ -254,4 +278,72 @@ export const changeStatus = async ({
     .set({ status })
     .where(eq(usersToProducts.id, id));
   revalidatePath("/");
+};
+
+export const createEvent = async (formData: FormData) => {
+  const { img: file, ...data } = eventSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  let publicId = "";
+
+  if (file.size) {
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file, signature, timestamp });
+    publicId = id ?? "";
+  }
+
+  await db.insert(eventsTable).values({ img: publicId, ...data });
+  revalidatePath("/");
+};
+
+export const editEvent = async (formData: FormData) => {
+  const {
+    title,
+    id,
+    publicId,
+    description,
+    img: file,
+    date,
+  } = editEventSchema.parse(Object.fromEntries(formData));
+
+  let newPublicId = publicId;
+
+  if (file?.size) {
+    cloudinary.uploader.destroy(publicId);
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file, signature, timestamp });
+    if (id) {
+      newPublicId = id;
+    }
+  }
+
+  await db
+    .update(eventsTable)
+    .set({
+      title,
+      description,
+      date,
+      img: newPublicId,
+    })
+    .where(eq(eventsTable.id, parseInt(id)));
+
+  revalidatePath("/");
+};
+
+export const deleteEvent = async (formData: FormData) => {
+  const { id, img } = z
+    .object({ id: z.string(), img: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await Promise.all([
+    db.delete(eventsTable).where(eq(eventsTable.id, parseInt(id))),
+    cloudinary.uploader.destroy(img),
+  ]);
+
+  revalidatePath("/");
+};
+
+export const getEvents = async () => {
+  return await db.select().from(eventsTable);
 };
