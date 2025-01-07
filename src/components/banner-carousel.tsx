@@ -1,7 +1,11 @@
 "use client";
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import img from "@/assets/cogollo.webp";
+import img1 from "@/assets/banner1.jpg";
+import img2 from "@/assets/banner2.jpg";
+import img3 from "@/assets/banner3.jpg";
+
+const images = [img1, img2, img3];
 
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -25,7 +29,7 @@ export function BannerCarousel() {
       opts={{ loop: true }}
     >
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {images.map((img, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
