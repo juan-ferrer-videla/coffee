@@ -1,5 +1,5 @@
 import React from "react";
-import { DataTableDemo, type Payment } from "../table";
+import { DataTableDemo, type Payment } from "../products/table";
 import { getOrders } from "@/_actions/actions";
 
 export default async function Dashboard() {

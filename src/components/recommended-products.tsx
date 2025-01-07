@@ -51,8 +51,12 @@ export function RecommendedCarousel({
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      {products.length > 2 && (
+        <>
+          <CarouselPrevious />
+          <CarouselNext />
+        </>
+      )}
     </Carousel>
   );
 }
