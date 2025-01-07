@@ -7,7 +7,7 @@ import { locales, TLocale } from "@/i18n";
 import { LangProvider } from "@/providers/lang-provider";
 import { getDictionary } from "@/get-dictionary";
 import { ProductsProvider } from "@/providers/products-provider";
-import { getProducts } from "@/actions";
+import { getProducts } from "@/_actions/actions";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import { TikTok } from "@/components/icons/tiktok";
 

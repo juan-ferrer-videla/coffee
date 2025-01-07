@@ -19,6 +19,9 @@ export const productsTable = sqliteTable("products", {
   description: text("description"),
   img: text("img").notNull(),
   price: integer("price").notNull(),
+  isRecommended: integer("is_recommended", { mode: "boolean" })
+    .default(true)
+    .notNull(),
 });
 
 export const usersToProducts = sqliteTable("users_to_products", {

@@ -1,15 +1,15 @@
 "use server";
 
-import { auth, signIn, signOut } from "./auth";
+import { auth, signIn, signOut } from "../auth";
 import { eq } from "drizzle-orm";
-import { db } from "./db";
+import { db } from "../db";
 import {
   adminsTable,
   productsTable,
   SelectUserToProduct,
   usersTable,
   usersToProducts,
-} from "./db/schema";
+} from "../db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
@@ -74,15 +74,17 @@ const productSchema = z.object({
   description: z.string().optional(),
   price: z.string(),
   img: z.instanceof(File),
+  isRecommended: z.string().optional(),
 });
 
 const editProductSchema = z.object({
-  title: z.string().optional(),
+  title: z.string(),
   description: z.string().optional(),
-  price: z.string().optional(),
+  price: z.string(),
   img: z.instanceof(File).optional(),
   publicId: z.string(),
   id: z.string(),
+  isRecommended: z.string().optional(),
 });
 
 export const signInAction = async (formData: FormData) => {
@@ -127,7 +129,7 @@ export const isAdmin = async (email: string) => {
 
 export const createProduct = async (formData: FormData) => {
   const { price, ...rest } = productSchema.parse(Object.fromEntries(formData));
-  const { img, ...data } = { price: Number(price), ...rest };
+  const { img, isRecommended, ...data } = { price: Number(price), ...rest };
 
   const file = img as File;
 
@@ -139,13 +141,20 @@ export const createProduct = async (formData: FormData) => {
     publicId = id ?? "";
   }
 
-  await db.insert(productsTable).values({ img: publicId, ...data });
+  await db
+    .insert(productsTable)
+    .values({ img: publicId, isRecommended: !!isRecommended, ...data });
   revalidatePath("/");
 };
 
-export const getProducts = async (limit: number | null = null) => {
-  if (limit === null) return await db.select().from(productsTable);
-  return await db.select().from(productsTable).limit(limit);
+export const getProducts = async (
+  options: Partial<{ recommended: boolean }> = { recommended: false },
+) => {
+  if (!options.recommended) return await db.select().from(productsTable);
+  return await db
+    .select()
+    .from(productsTable)
+    .where(eq(productsTable.isRecommended, options.recommended));
 };
 
 export const deleteProduct = async (formData: FormData) => {
@@ -162,7 +171,7 @@ export const deleteProduct = async (formData: FormData) => {
 };
 
 export const editProduct = async (formData: FormData) => {
-  const { title, id, publicId, description, img, price } =
+  const { title, id, publicId, description, img, price, isRecommended } =
     editProductSchema.parse(Object.fromEntries(formData));
 
   const file = img as File;
@@ -182,6 +191,7 @@ export const editProduct = async (formData: FormData) => {
     .set({
       title,
       description,
+      isRecommended: !!isRecommended,
       price: typeof price === "string" ? parseInt(price) : price,
       img: newPublicId,
     })

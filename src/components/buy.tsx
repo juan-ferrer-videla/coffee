@@ -2,7 +2,7 @@
 
 import { useProductContext } from "@/hooks/useProduct";
 import { Button } from "./ui/button";
-import { buy } from "@/actions";
+import { buy } from "@/_actions/actions";
 import { useDictionary } from "@/hooks/useDictionary";
 
 export const Buy = ({ close }: { close: () => void }) => {

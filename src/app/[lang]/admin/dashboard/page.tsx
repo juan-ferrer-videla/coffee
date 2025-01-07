@@ -1,6 +1,6 @@
 import React from "react";
 import { DataTableDemo, type Payment } from "../table";
-import { getOrders } from "@/actions";
+import { getOrders } from "@/_actions/actions";
 
 export default async function Dashboard() {
   const orders = await getOrders();

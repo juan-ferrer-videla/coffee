@@ -1,3 +1,5 @@
+"use client";
+
 import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,9 +12,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { editProduct } from "@/actions";
+import { editProduct } from "@/_actions/actions";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectProduct } from "@/db/schema";
+import { useState } from "react";
+import { Submit } from "@/components/submit";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const EditProduct = ({
   description,
@@ -20,9 +25,15 @@ export const EditProduct = ({
   img,
   price,
   title,
+  isRecommended,
 }: SelectProduct) => {
+  const [open, setOpen] = useState(false);
+  const handleAction = async (formData: FormData) => {
+    await editProduct(formData);
+    setOpen(false);
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={"icon"} variant={"secondary"}>
           <Edit />
@@ -35,11 +46,11 @@ export const EditProduct = ({
             Make changes to your profile here.
           </DialogDescription>
         </DialogHeader>
-        <form action={editProduct} className="grid max-w-sm gap-6">
+        <form action={handleAction} className="grid max-w-sm gap-6">
           <div className="w-fullitems-center grid gap-1.5">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="edit_title">Title</Label>
             <Input
-              id="title"
+              id="edit_title"
               name="title"
               placeholder="Cogollo"
               defaultValue={title}
@@ -47,9 +58,9 @@ export const EditProduct = ({
             />
           </div>
           <div className="w-fullitems-center grid gap-1.5">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="edit_description">Description</Label>
             <Textarea
-              id="description"
+              id="edit_description"
               name="description"
               placeholder="Este producto es utilizado para..."
               rows={4}
@@ -57,10 +68,10 @@ export const EditProduct = ({
             />
           </div>
           <div className="w-fullitems-center grid gap-1.5">
-            <Label htmlFor="price">Price</Label>
+            <Label htmlFor="edit_price">Price</Label>
             <Input
               type="number"
-              id="price"
+              id="edit_price"
               name="price"
               placeholder="5000"
               defaultValue={price}
@@ -68,12 +79,25 @@ export const EditProduct = ({
             />
           </div>
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="picture">Picture</Label>
-            <Input id="picture" type="file" name="img" accept="image/*" />
+            <Label htmlFor="edit_picture">Picture</Label>
+            <Input id="edit_picture" type="file" name="img" accept="image/*" />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="edit_is_recommended"
+              defaultChecked={isRecommended}
+              name="isRecommended"
+            />
+            <label
+              htmlFor="edit_is_recommended"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Es recomendado
+            </label>
           </div>
           <input type="hidden" name="publicId" value={img} required />
           <input type="hidden" name="id" value={id} required />
-          <Button className="justify-self-end">Submit</Button>
+          <Submit />
         </form>
       </DialogContent>
     </Dialog>

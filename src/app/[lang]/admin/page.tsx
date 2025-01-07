@@ -1,4 +1,4 @@
-import { getProducts, isAdmin } from "@/actions";
+import { getProducts, isAdmin } from "@/_actions/actions";
 import { auth } from "@/auth";
 import { CreateProduct } from "@/components/create-product";
 import { TLocale } from "@/i18n";

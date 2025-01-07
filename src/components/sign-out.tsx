@@ -2,7 +2,7 @@
 
 import { Button } from "./ui/button";
 import { useDictionary } from "@/hooks/useDictionary";
-import { signOutAction } from "@/actions";
+import { signOutAction } from "@/_actions/actions";
 
 export function SignOut() {
   const { sign_out } = useDictionary();

@@ -1,4 +1,4 @@
-import { logIn } from "@/actions";
+import { logIn } from "@/_actions/actions";
 import { auth } from "../auth";
 import { SignIn } from "./sign-in";
 import { SignOut } from "./sign-out";

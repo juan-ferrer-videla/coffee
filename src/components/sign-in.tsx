@@ -2,7 +2,7 @@
 
 import { Button, ButtonProps } from "./ui/button";
 import { useDictionary } from "@/hooks/useDictionary";
-import { signInAction } from "@/actions";
+import { signInAction } from "@/_actions/actions";
 import { cn } from "@/lib/utils";
 
 export const SignIn = ({

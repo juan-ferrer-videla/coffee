@@ -20,6 +20,7 @@ export const Product = ({
   img,
   price,
   title,
+  isRecommended,
 }: SelectProduct) => {
   return (
     <Card className="w-full max-w-sm overflow-hidden" key={id}>
@@ -37,15 +38,19 @@ export const Product = ({
         <CardDescription>{description}</CardDescription>
         <p>{currency.format(price)}</p>
       </CardHeader>
-      <CardContent className="items flex justify-end space-x-4">
-        <EditProduct
-          id={id}
-          title={title}
-          description={description}
-          price={price}
-          img={img}
-        />
-        <DeleteProduct id={id} img={img} />
+      <CardContent>
+        {isRecommended && <div className="mb-4">Recomendado </div>}
+        <div className="items flex justify-end space-x-4">
+          <EditProduct
+            id={id}
+            title={title}
+            description={description}
+            price={price}
+            img={img}
+            isRecommended={isRecommended}
+          />
+          <DeleteProduct id={id} img={img} />
+        </div>
       </CardContent>
     </Card>
   );

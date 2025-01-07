@@ -1,4 +1,4 @@
-import { getProducts } from "@/actions";
+import { getProducts } from "@/_actions/actions";
 import { Product } from "@/components/product";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";

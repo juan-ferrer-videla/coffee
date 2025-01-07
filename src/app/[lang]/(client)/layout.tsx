@@ -1,4 +1,4 @@
-import { getProducts } from "@/actions";
+import { getProducts } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { MobileDrawer } from "@/components/mobile-drawer";
 import { ModeToggle } from "@/components/mode-toggle";

@@ -1,8 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
-import { createProduct } from "@/actions";
-import { Button } from "./ui/button";
+import { createProduct } from "@/_actions/actions";
+import { Checkbox } from "./ui/checkbox";
+import { Submit } from "./submit";
 
 export const CreateProduct = async () => {
   return (
@@ -36,6 +37,7 @@ export const CreateProduct = async () => {
             required
           />
         </div>
+
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="description">Description</Label>
           <Textarea
@@ -45,8 +47,17 @@ export const CreateProduct = async () => {
             rows={4}
           />
         </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox id="is_recommended" defaultChecked name="isRecommended" />
+          <label
+            htmlFor="is_recommended"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Es recomendado
+          </label>
+        </div>
         <div>
-          <Button className="self-start">Submit</Button>
+          <Submit />
         </div>
       </form>
     </section>

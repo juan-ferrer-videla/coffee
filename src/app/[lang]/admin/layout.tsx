@@ -1,4 +1,4 @@
-import { isAdmin } from "@/actions";
+import { isAdmin } from "@/_actions/actions";
 import { auth } from "@/auth";
 import { ModeToggle } from "@/components/mode-toggle";
 import { TLocale } from "@/i18n";
