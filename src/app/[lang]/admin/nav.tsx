@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 import React, { ComponentProps, FC } from "react";
 
 const links = [
-  { path: "/products", title: "Products" },
-  { path: "/orders", title: "Orders" },
+  { path: "/products", title: "Productos" },
+  { path: "/orders", title: "Ordenes" },
   { path: "/events", title: "Eventos" },
 ];
 
