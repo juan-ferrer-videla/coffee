@@ -29,10 +29,9 @@ export const Product = ({
         <CldImage
           key={id}
           alt={title}
-          className="h-auto w-full object-cover"
+          className="object-cover"
           src={img}
-          width={358}
-          height={201}
+          fill
         />
       </div>
       <CardHeader>

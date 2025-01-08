@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, signIn, signOut } from "../auth";
+import { signIn, signOut } from "../auth";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import {
@@ -14,7 +14,7 @@ import {
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
-import { redirect } from "next/navigation";
+import { Items } from "mercadopago/dist/clients/commonTypes";
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -223,41 +223,32 @@ export const editProduct = async (formData: FormData) => {
   revalidatePath("/");
 };
 
-const rawBuySchema = z.object({
-  rawProducts: z.string(),
-});
-
-const buySchema = z
-  .object({
-    productId: z.number(),
-    quantity: z.number(),
-  })
-  .array();
-
-export const buy = async (formData: FormData) => {
-  const session = await auth();
-  const email = session?.user?.email;
-  if (typeof email !== "string") redirect("/sign-in?redirect=store");
-
-  const [{ id }] = await db
+export const buy = async (items: Items[], email: string) => {
+  let userId;
+  const users = await db
     .select()
     .from(usersTable)
     .where(eq(usersTable.email, email));
 
-  const { rawProducts } = rawBuySchema.parse(Object.fromEntries(formData));
-
-  const { success, data: products } = buySchema.safeParse(
-    JSON.parse(rawProducts),
-  );
-  if (!success) return;
+  if (users.length === 0) {
+    const [{ id }] = await db
+      .insert(usersTable)
+      .values({ email, name: "unknown" })
+      .returning();
+    userId = id;
+  } else {
+    userId = users[0].id;
+  }
 
   await db.insert(usersToProducts).values(
-    products.map(({ productId, quantity }) => ({
-      productId: productId,
-      userId: id,
-      quantity: quantity,
+    items.map(({ id: productId, quantity }) => ({
+      productId: parseInt(productId),
+      userId,
+      quantity,
     })),
   );
+
+  revalidatePath("/");
 };
 
 export const getOrders = async () => {

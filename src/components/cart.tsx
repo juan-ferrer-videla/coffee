@@ -6,7 +6,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -18,6 +17,7 @@ import { useProductContext } from "@/hooks/useProduct";
 import { SelectProduct } from "@/db/schema";
 import { Buy } from "./buy";
 import { useState } from "react";
+import { SessionProvider } from "next-auth/react";
 
 const Count = () => {
   const length = useProductContext((state) => state.getLength());
@@ -33,6 +33,7 @@ const Count = () => {
 export const Cart = ({ products }: { products: SelectProduct[] }) => {
   const { cart_description, cart } = useDictionary();
   const clearCart = useProductContext((state) => state.clearCart);
+  const total = useProductContext((state) => state.getTotal());
   const [open, setOpen] = useState(false);
 
   const close = () => {
@@ -57,9 +58,11 @@ export const Cart = ({ products }: { products: SelectProduct[] }) => {
         <div className="py-4">
           <CartTable products={products} />
         </div>
-        <SheetFooter>
-          <Buy close={close} />
-        </SheetFooter>
+        <div>
+          <SessionProvider>
+            <Buy close={close} disabled={total === 0} />
+          </SessionProvider>
+        </div>
       </SheetContent>
     </Sheet>
   );
