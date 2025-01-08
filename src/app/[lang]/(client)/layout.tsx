@@ -5,6 +5,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { Nav } from "@/components/nav";
 import { ToggleLang } from "@/components/toggle-lang";
 import { User } from "@/components/user";
+import { SessionProvider } from "next-auth/react";
 import Link from "next/link";
 
 export default async function RootLayout({
@@ -24,7 +25,9 @@ export default async function RootLayout({
             <ToggleLang />
             <ModeToggle />
             <User />
-            <Cart products={products} />
+            <SessionProvider>
+              <Cart products={products} />
+            </SessionProvider>
             <MobileDrawer />
           </div>
         </div>

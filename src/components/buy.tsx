@@ -4,20 +4,16 @@ import { useProductContext } from "@/hooks/useProduct";
 import { Button, ButtonProps } from "./ui/button";
 import { useDictionary } from "@/hooks/useDictionary";
 import { createPreference } from "@/_actions/mercadopago";
-import { useSession } from "next-auth/react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { type FC } from "react";
 
-export const Buy: FC<ButtonProps & { close: () => void }> = ({
-  close,
-  ...props
-}) => {
+export const Buy: FC<
+  ButtonProps & { close: () => void; email?: string | null }
+> = ({ close, email, ...props }) => {
   const { buy: title } = useDictionary();
   const productsMap = useProductContext((state) => state.products);
   const products = Object.entries(productsMap);
-  const { data: session } = useSession();
-  const email = session?.user?.email;
 
   return (
     <form
