@@ -1,6 +1,7 @@
 import {
   Card,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -25,33 +26,33 @@ export function RecommendedCarousel({
       opts={{
         align: "start",
       }}
-      className="w-full"
+      className="mb-6 w-full"
     >
       <CarouselContent>
         {products.map((product, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-            <div className="p-1">
-              <Card className="overflow-hidden">
-                <div className="relative aspect-video w-full">
-                  <CldImage
-                    key={product.id}
-                    alt={product.title}
-                    className="object-cover"
-                    src={product.img}
-                    fill
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle>{product.title}</CardTitle>
-                  <CardDescription>{product.description}</CardDescription>
-                  <p>{currency.format(product.price)}</p>
-                </CardHeader>
-              </Card>
-            </div>
+            <Card className="flex h-full flex-col overflow-hidden">
+              <div className="relative aspect-video w-full">
+                <CldImage
+                  key={product.id}
+                  alt={product.title}
+                  className="object-cover"
+                  src={product.img}
+                  fill
+                />
+              </div>
+              <CardHeader className="grow">
+                <CardTitle>{product.title}</CardTitle>
+                <CardDescription>{product.description}</CardDescription>
+              </CardHeader>
+              <CardFooter>
+                <p>{currency.format(product.price)}</p>
+              </CardFooter>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>
-      {products.length > 2 && (
+      {products.length > 3 && (
         <>
           <CarouselPrevious />
           <CarouselNext />

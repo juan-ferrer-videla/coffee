@@ -25,28 +25,26 @@ export function IncommingEvents({ events }: { events: SelectEvent[] }) {
       <CarouselContent>
         {events.map((product, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-            <div className="p-1">
-              <Card className="overflow-hidden">
-                <div className="relative aspect-video w-full">
-                  <CldImage
-                    key={product.id}
-                    alt={product.title}
-                    className="object-cover"
-                    src={product.img}
-                    fill
-                  />
-                </div>
-                <CardHeader>
-                  <CardTitle>{product.title}</CardTitle>
-                  <CardDescription>{product.date}</CardDescription>
-                  <CardDescription>{product.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            </div>
+            <Card className="flex h-full flex-col overflow-hidden">
+              <div className="relative aspect-video w-full">
+                <CldImage
+                  key={product.id}
+                  alt={product.title}
+                  className="object-cover"
+                  src={product.img}
+                  fill
+                />
+              </div>
+              <CardHeader className="grow">
+                <CardTitle>{product.title}</CardTitle>
+                <CardDescription>{product.date}</CardDescription>
+                <CardDescription>{product.description}</CardDescription>
+              </CardHeader>
+            </Card>
           </CarouselItem>
         ))}
       </CarouselContent>
-      {events.length > 2 && (
+      {events.length > 3 && (
         <>
           <CarouselPrevious />
           <CarouselNext />

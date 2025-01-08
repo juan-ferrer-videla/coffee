@@ -13,6 +13,32 @@ export const adminsTable = sqliteTable("admins", {
   email: text("email").unique().notNull(),
 });
 
+export const coursesTable = sqliteTable("courses", {
+  id: integer("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  price: integer("").notNull(),
+  presencial: integer("presencial", { mode: "boolean" })
+    .notNull()
+    .default(true),
+  instructor: text("instructor").notNull(),
+  instructorImg: text("instructor_img").notNull(),
+  instructorDescription: text("instructor_description").notNull(),
+  videoUrl: text("video_url").notNull(),
+});
+
+export const presencialCourseTable = sqliteTable("presencial_course", {
+  id: integer("id").primaryKey(),
+  courseId: integer("course_id")
+    .notNull()
+    .references(() => coursesTable.id, { onDelete: "cascade" }),
+  initialDate: text("initial_date").notNull(),
+  schedule: text("schedule").notNull(),
+  content: text("content").notNull(),
+  vacancies: integer("vacancies").notNull(),
+  location: text("location").notNull(),
+});
+
 export const productsTable = sqliteTable("products", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),

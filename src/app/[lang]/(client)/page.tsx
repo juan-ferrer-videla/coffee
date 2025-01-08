@@ -4,6 +4,11 @@ import { TLocale } from "@/i18n";
 import { BannerCarousel } from "@/components/banner-carousel";
 import { RecommendedCarousel } from "@/components/recommended-products";
 import { IncommingEvents } from "@/components/incomming-events";
+import { AboutUsDescription } from "@/components/about-us-description";
+import { AboutUsCard } from "@/components/about-us-card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default async function Home({
   params,
@@ -11,7 +16,7 @@ export default async function Home({
   params: Promise<{ lang: TLocale }>;
 }>) {
   const { lang } = await params;
-  const [products, events, { title }] = await Promise.all([
+  const [products, events, { title, store }] = await Promise.all([
     getProducts({ recommended: true }),
     getEvents(),
     getDictionary(lang),
@@ -30,12 +35,24 @@ export default async function Home({
           Recommended Products:
         </h2>
         <RecommendedCarousel products={products} />
+        <Button asChild>
+          <Link href={`/${lang}/store`}>
+            {store} <ArrowRight />
+          </Link>
+        </Button>
       </section>
-      <section>
+      <section className="mb-6 sm:mb-10 md:mb-16">
         <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
           Incomming Events:
         </h2>
         <IncommingEvents events={events} />
+      </section>
+      <section className="mb-6 sm:mb-10 md:mb-16">
+        <h3 className="mb-4 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-6 md:mb-8 lg:text-5xl xl:text-6xl">
+          About Us
+        </h3>
+        <AboutUsDescription />
+        <AboutUsCard />
       </section>
     </>
   );
