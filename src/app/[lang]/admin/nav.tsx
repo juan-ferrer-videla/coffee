@@ -10,6 +10,7 @@ const links = [
   { path: "/products", title: "Productos" },
   { path: "/orders", title: "Ordenes" },
   { path: "/events", title: "Eventos" },
+  { path: "/courses", title: "Cursos" },
 ];
 
 export const Nav: FC<ComponentProps<"nav">> = (props) => {

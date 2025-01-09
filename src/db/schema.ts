@@ -13,26 +13,15 @@ export const adminsTable = sqliteTable("admins", {
   email: text("email").unique().notNull(),
 });
 
-export const coursesTable = sqliteTable("courses", {
+export const presentialCourseTable = sqliteTable("presential_course", {
   id: integer("id").primaryKey(),
-  name: text("name").notNull(),
+  title: text("title").notNull(),
   description: text("description").notNull(),
   price: integer("").notNull(),
-  presencial: integer("presencial", { mode: "boolean" })
-    .notNull()
-    .default(true),
+  initialDate: text("initial_date").notNull(),
   instructor: text("instructor").notNull(),
   instructorImg: text("instructor_img").notNull(),
   instructorDescription: text("instructor_description").notNull(),
-  videoUrl: text("video_url").notNull(),
-});
-
-export const presencialCourseTable = sqliteTable("presencial_course", {
-  id: integer("id").primaryKey(),
-  courseId: integer("course_id")
-    .notNull()
-    .references(() => coursesTable.id, { onDelete: "cascade" }),
-  initialDate: text("initial_date").notNull(),
   schedule: text("schedule").notNull(),
   content: text("content").notNull(),
   vacancies: integer("vacancies").notNull(),
@@ -108,8 +97,75 @@ export type SelectUserToProduct = typeof usersToProducts.$inferSelect;
 export type InsertEvent = typeof eventsTable.$inferInsert;
 export type SelectEvent = typeof eventsTable.$inferSelect;
 
+export type InsertPresencialCourse = typeof presentialCourseTable.$inferInsert;
+export type SelectPresencialCourse = typeof presentialCourseTable.$inferSelect;
+
 export const statusSchema = z.union([
   z.literal("pending"),
   z.literal("dispatched"),
   z.literal("delivered"),
 ]);
+
+export const productSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  price: z.string(),
+  img: z.instanceof(File),
+  isRecommended: z.string().optional(),
+});
+
+export const editProductSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  price: z.string(),
+  img: z.instanceof(File).optional(),
+  publicId: z.string(),
+  id: z.string(),
+  isRecommended: z.string().optional(),
+});
+
+export const eventSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  description: z.string(),
+  img: z.instanceof(File),
+});
+
+export const editEventSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  description: z.string(),
+  img: z.instanceof(File).optional(),
+  id: z.string(),
+  publicId: z.string(),
+});
+
+export const presentialCourseSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  price: z.string(),
+  location: z.string(),
+  initialDate: z.string(),
+  schedule: z.string(),
+  instructor: z.string(),
+  instructorImg: z.instanceof(File),
+  instructorDescription: z.string(),
+  content: z.string(),
+  vacancies: z.string(),
+});
+
+export const editPresentialCourseSchema = z.object({
+  id: z.string(),
+  publicId: z.string(),
+  title: z.string(),
+  description: z.string(),
+  price: z.string(),
+  location: z.string(),
+  initialDate: z.string(),
+  schedule: z.string(),
+  instructor: z.string(),
+  instructorImg: z.instanceof(File).optional(),
+  instructorDescription: z.string(),
+  content: z.string(),
+  vacancies: z.string(),
+});

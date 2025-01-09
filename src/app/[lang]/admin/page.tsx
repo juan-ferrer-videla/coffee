@@ -18,7 +18,7 @@ export default async function Admin({
   if (!isAuthorized) redirect(`/${lang}`);
 
   return (
-    <h1 className="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+    <h1 className="text-center text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
       Administrador
     </h1>
   );
