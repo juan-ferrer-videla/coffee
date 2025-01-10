@@ -12,9 +12,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { CldImage } from "./cld-image";
-import { SelectEvent } from "@/db/schema";
+import { getEvents } from "@/_actions/actions";
 
-export function IncommingEvents({ events }: { events: SelectEvent[] }) {
+export async function IncommingEvents() {
+  const events = await getEvents();
+
   return (
     <Carousel
       opts={{
@@ -23,22 +25,22 @@ export function IncommingEvents({ events }: { events: SelectEvent[] }) {
       className="w-full"
     >
       <CarouselContent>
-        {events.map((product, index) => (
+        {events.map((event, index) => (
           <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
             <Card className="flex h-full flex-col overflow-hidden">
               <div className="relative aspect-video w-full">
                 <CldImage
-                  key={product.id}
-                  alt={product.title}
+                  key={event.id}
+                  alt={event.title}
                   className="object-cover"
-                  src={product.img}
+                  src={event.img}
                   fill
                 />
               </div>
               <CardHeader className="grow">
-                <CardTitle>{product.title}</CardTitle>
-                <CardDescription>{product.date}</CardDescription>
-                <CardDescription>{product.description}</CardDescription>
+                <CardTitle>{event.title}</CardTitle>
+                <CardDescription>{event.date}</CardDescription>
+                <CardDescription>{event.description}</CardDescription>
               </CardHeader>
             </Card>
           </CarouselItem>

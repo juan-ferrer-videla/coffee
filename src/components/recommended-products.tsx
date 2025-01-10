@@ -14,13 +14,10 @@ import {
 } from "@/components/ui/carousel";
 import { CldImage } from "./cld-image";
 import { currency } from "@/lib/utils";
-import { SelectProduct } from "@/db/schema";
+import { getProducts } from "@/_actions/actions";
 
-export function RecommendedCarousel({
-  products,
-}: {
-  products: SelectProduct[];
-}) {
+export async function RecommendedCarousel() {
+  const products = await getProducts({ recommended: true });
   return (
     <Carousel
       opts={{

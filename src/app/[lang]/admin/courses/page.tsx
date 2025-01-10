@@ -1,26 +1,24 @@
-import { getPresentialCourses, isAdmin } from "@/_actions/actions";
-import { auth } from "@/auth";
-import { TLocale } from "@/i18n";
-import { redirect } from "next/navigation";
+import { getPresentialCourses } from "@/_actions/actions";
 import { CreateCourse } from "./create-presential-course";
 import { PresentialCourse } from "./course";
+import { Suspense } from "react";
+import { GridSkeleton } from "@/components/grid-skeleton";
 
-export default async function Courses({
-  params,
-}: Readonly<{
-  params: Promise<{ lang: TLocale }>;
-}>) {
-  const { lang } = await params;
-
-  const session = await auth();
-  const email = session?.user?.email;
-  if (!email) redirect(`/${lang}/sign-in?redirect=admin`);
-
-  const isAuthorized = await isAdmin(email);
-  if (!isAuthorized) redirect(`/${lang}`);
-
+const PresentialCourses = async () => {
   const courses = await getPresentialCourses();
 
+  return (
+    <ul>
+      {courses.map((course) => (
+        <li key={course.id}>
+          <PresentialCourse {...course} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default function Courses() {
   return (
     <>
       <div className="flex flex-col items-center text-center">
@@ -32,14 +30,9 @@ export default async function Courses({
         </p>
       </div>
       <CreateCourse />
-
-      <ul>
-        {courses.map((course) => (
-          <li key={course.id}>
-            <PresentialCourse {...course} />
-          </li>
-        ))}
-      </ul>
+      <Suspense fallback={<GridSkeleton />}>
+        <PresentialCourses />
+      </Suspense>
     </>
   );
 }

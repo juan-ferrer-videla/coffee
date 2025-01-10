@@ -2,6 +2,21 @@ import { getPresentialCourses } from "@/_actions/actions";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 import { PresentialCourse } from "./course";
+import { Suspense } from "react";
+
+const Courses = async () => {
+  const courses = await getPresentialCourses();
+
+  return (
+    <ul>
+      {courses.map((course) => (
+        <li key={course.id}>
+          <PresentialCourse {...course} />
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export default async function Home({
   params,
@@ -10,7 +25,6 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
-  const courses = await getPresentialCourses();
 
   return (
     <>
@@ -22,12 +36,11 @@ export default async function Home({
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam facere
         </p>
       </div>
-      <ul>
-        {courses.map((course) => (
-          <PresentialCourse {...course} key={course.id} />
-        ))}
-        <li></li>
-      </ul>
+      <section className="mb-6">
+        <Suspense fallback={"Loading..."}>
+          <Courses />
+        </Suspense>
+      </section>
     </>
   );
 }

@@ -1,26 +1,24 @@
-import { getEvents, isAdmin } from "@/_actions/actions";
-import { auth } from "@/auth";
-import { TLocale } from "@/i18n";
-import { redirect } from "next/navigation";
+import { getEvents } from "@/_actions/actions";
 import { CreateEvent } from "./create-event";
 import { Event } from "./event";
+import { Suspense } from "react";
+import { GridSkeleton } from "@/components/grid-skeleton";
 
-export default async function Admin({
-  params,
-}: Readonly<{
-  params: Promise<{ lang: TLocale }>;
-}>) {
-  const { lang } = await params;
-
-  const session = await auth();
-  const email = session?.user?.email;
-  if (!email) redirect(`/${lang}/sign-in?redirect=admin`);
-
-  const isAuthorized = await isAdmin(email);
-  if (!isAuthorized) redirect(`/${lang}`);
-
+const Events = async () => {
   const events = await getEvents();
 
+  return (
+    <ul className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
+      {events.map((event) => (
+        <li key={event.title} className="w-full">
+          <Event {...event} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export default async function EventPage() {
   return (
     <>
       <div className="flex flex-col items-center text-center">
@@ -32,13 +30,9 @@ export default async function Admin({
         </p>
       </div>
       <CreateEvent />
-      <ul className="grid gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
-        {events.map((event) => (
-          <li key={event.title} className="w-full">
-            <Event {...event} />
-          </li>
-        ))}
-      </ul>
+      <Suspense fallback={<GridSkeleton />}>
+        <Events />
+      </Suspense>
     </>
   );
 }

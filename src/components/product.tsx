@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { SelectProduct } from "@/db/schema";
 import { CldImage } from "./cld-image";
+import { currency } from "@/lib/utils";
 
 export const Product = ({
   title,
@@ -17,12 +18,6 @@ export const Product = ({
   img,
   description,
 }: SelectProduct) => {
-  const currency = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  });
-
   return (
     <Card className="flex h-full max-w-sm flex-col overflow-hidden">
       <div className="relative aspect-video w-full">
