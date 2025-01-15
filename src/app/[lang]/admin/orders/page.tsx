@@ -7,7 +7,16 @@ export default async function Dashboard() {
   const payments = orders.map(
     ({
       product: { title },
-      user: { email },
+      user: {
+        email,
+        city,
+        indications,
+        postalCode,
+        state,
+        street,
+        streetNumber,
+      },
+
       quantity,
       status,
       id,
@@ -19,6 +28,12 @@ export default async function Dashboard() {
       email,
       status,
       purchasedAt,
+      city,
+      indications,
+      postalCode,
+      state,
+      street,
+      streetNumber,
     }),
   ) satisfies Payment[];
 
