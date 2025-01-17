@@ -315,12 +315,14 @@ export const getEvents = async () => {
 export const createPresentialCourse = async (formData: FormData) => {
   const {
     price,
+    img: imgFile,
     instructorImg: file,
     vacancies,
     ...data
   } = presentialCourseSchema.parse(Object.fromEntries(formData));
 
   let publicId = "";
+  let imgPublicId = "";
 
   if (file.size) {
     const { signature, timestamp } = getSignature();
@@ -328,8 +330,15 @@ export const createPresentialCourse = async (formData: FormData) => {
     publicId = id ?? "";
   }
 
+  if (imgFile.size) {
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file, signature, timestamp });
+    imgPublicId = id ?? "";
+  }
+
   await db.insert(presentialCourseTable).values({
     instructorImg: publicId,
+    img: imgPublicId,
     price: parseInt(price),
     vacancies: parseInt(vacancies),
     ...data,
@@ -343,6 +352,7 @@ export const editPresentialCourse = async (formData: FormData) => {
     id,
     publicId,
     description,
+    img: imgFile,
     content,
     instructor,
     instructorDescription,
@@ -355,6 +365,7 @@ export const editPresentialCourse = async (formData: FormData) => {
   } = editPresentialCourseSchema.parse(Object.fromEntries(formData));
 
   let newPublicId = publicId;
+  let newImgPublicId = publicId;
 
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
@@ -365,6 +376,15 @@ export const editPresentialCourse = async (formData: FormData) => {
     }
   }
 
+  if (imgFile?.size) {
+    cloudinary.uploader.destroy(publicId);
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file: imgFile, signature, timestamp });
+    if (id) {
+      newImgPublicId = id;
+    }
+  }
+
   await db
     .update(presentialCourseTable)
     .set({
@@ -372,6 +392,7 @@ export const editPresentialCourse = async (formData: FormData) => {
       description,
       content,
       instructor,
+      img: newImgPublicId,
       instructorDescription,
       location,
       price: parseInt(price),

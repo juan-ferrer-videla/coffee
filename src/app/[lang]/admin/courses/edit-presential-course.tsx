@@ -106,6 +106,10 @@ export const EditPresentialCourse = ({
               defaultValue={price}
             />
           </div>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="edit_picture">Imagen</Label>
+            <Input id="edit_picture" type="file" name="img" accept="image/*" />
+          </div>
           <div className="grid w-full items-center gap-1.5">
             <Label htmlFor="schedule">Horarios</Label>
             <Textarea

@@ -56,6 +56,10 @@ export const CreateCourse = () => {
         />
       </div>
       <div className="grid w-full items-center gap-1.5">
+        <Label htmlFor="price">Imagen</Label>
+        <Input id="image" type="file" name="img" accept="image/*" required />
+      </div>
+      <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="schedule">Horarios</Label>
         <Textarea
           id="schedule"
