@@ -100,7 +100,7 @@ export default async function RootLayout({
               {children}
               <footer className="container mt-6 md:mt-12 lg:mt-16">
                 <div className="border-t" />
-                <div className="my-6 grid gap-6 text-center md:my-10 md:grid-cols-3 md:text-start lg:my-14">
+                <div className="my-6 flex flex-col items-center justify-around gap-6 text-center md:my-10 md:flex-row md:text-start lg:my-14">
                   <div>
                     <h3 className="mb-2 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
                       {follow}
@@ -109,7 +109,7 @@ export default async function RootLayout({
                       <ul className="flex items-center justify-center space-x-3 md:justify-start">
                         <li>
                           <a
-                            href="https://www.facebook.com/universo.coffe?_rdc=1&_rdr"
+                            href="https://www.facebook.com/profile.php?id=61569930794954"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -118,7 +118,7 @@ export default async function RootLayout({
                         </li>
                         <li>
                           <a
-                            href="https://www.instagram.com/universo.coffeeok"
+                            href="https://www.instagram.com/universocoffee.ar"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -127,7 +127,7 @@ export default async function RootLayout({
                         </li>
                         <li>
                           <a
-                            href="https://www.youtube.com/@Universo.Coffee"
+                            href="https://www.youtube.com/@ucoffeear"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -136,7 +136,7 @@ export default async function RootLayout({
                         </li>
                         <li>
                           <a
-                            href="https://www.tiktok.com/@universo.coffee"
+                            href="https://www.tiktok.com/@universo.coffee.a"
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -147,27 +147,25 @@ export default async function RootLayout({
                     </nav>
                   </div>
                   <div>
-                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
-                      {address}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Thames 2326 Palermo Caba.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Buenos Aires – Argentina.
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
-                      Representante
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Rafael Mancini
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      CEO Co-Founder & Coffee Máster.
-                    </p>
-                  </div>
+                <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                  {address}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Thames 2326 Palermo Caba.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Buenos Aires – Argentina.
+                </p>
+              </div>
+              <div>
+                <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                  Contacto
+                </h3>
+                <p className="text-sm text-muted-foreground">universo.coffee@gmail.com</p>
+                <p className="text-sm text-muted-foreground">
+                   +54 11-1234-5678
+                </p>
+              </div>
                 </div>
               </footer>
             </ProductsProvider>

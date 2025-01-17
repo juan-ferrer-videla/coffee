@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/carousel";
 import { CldImage } from "./cld-image";
 import { getEvents } from "@/_actions/actions";
+import Link from "next/link";
 
 export async function IncommingEvents() {
   const events = await getEvents();
@@ -26,7 +27,8 @@ export async function IncommingEvents() {
     >
       <CarouselContent>
         {events.map((event, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 transition-transform duration-300 hover:scale-95">
+            <Link href={`/events/${event.id}`} key={event.id}>
             <Card className="flex h-full flex-col overflow-hidden">
               <div className="relative aspect-video w-full">
                 <CldImage
@@ -40,10 +42,11 @@ export async function IncommingEvents() {
               <CardHeader className="grow">
                 <CardTitle>{event.title}</CardTitle>
                 <CardDescription>{event.date}</CardDescription>
-                <CardDescription>{event.description}</CardDescription>
+                <CardDescription className="line-clamp-2">{event.description}</CardDescription>
               </CardHeader>
             </Card>
-          </CarouselItem>
+            </Link>
+          </CarouselItem>    
         ))}
       </CarouselContent>
       {events.length > 3 && (

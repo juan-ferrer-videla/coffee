@@ -10,6 +10,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Suspense } from "react";
 import { CarouselSkeleton } from "@/components/carousel-skeleton";
+import Image from "next/image";
+import logo from "@/assets/cafeLogo.png";
 
 export default async function Home({
   params,
@@ -18,12 +20,22 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const { title, store } = await getDictionary(lang);
+  const [firstPart, secondPart] = title.split(" ")
 
   return (
     <>
-      <h1 className="mb-8 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
-        {title}
+      <h1 className="flex items-center justify-center mb-8 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-4 lg:text-5xl xl:text-6xl">
+        {firstPart}
+        <Image
+            src={logo}
+            alt="logo"
+            width={120}
+            height={120}
+            className="mb-6"
+          />
+        {secondPart}
       </h1>
+      
       <section>
         <BannerCarousel />
       </section>
