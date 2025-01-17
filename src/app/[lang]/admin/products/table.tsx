@@ -148,7 +148,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "address",
     header: () => <div>Dirección</div>,
     cell: ({ row }) => {
-      if (row.original.delivery) return <div>Retiro en deposito</div>;
+      if (!row.original.delivery) return <div>Retiro en deposito</div>;
       return (
         <div className="font-medium">
           <p>{row.original.state}</p>

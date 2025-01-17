@@ -357,6 +357,7 @@ export const editPresentialCourse = async (formData: FormData) => {
     title,
     id,
     publicId,
+    imgPublicId,
     description,
     img: imgFile,
     content,
@@ -371,7 +372,7 @@ export const editPresentialCourse = async (formData: FormData) => {
   } = editPresentialCourseSchema.parse(Object.fromEntries(formData));
 
   let newPublicId = publicId;
-  let newImgPublicId = publicId;
+  let newImgPublicId = imgPublicId;
 
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
@@ -383,7 +384,7 @@ export const editPresentialCourse = async (formData: FormData) => {
   }
 
   if (imgFile?.size) {
-    cloudinary.uploader.destroy(publicId);
+    cloudinary.uploader.destroy(imgPublicId);
     const { signature, timestamp } = getSignature();
     const id = await uploadImage({ file: imgFile, signature, timestamp });
     if (id) {

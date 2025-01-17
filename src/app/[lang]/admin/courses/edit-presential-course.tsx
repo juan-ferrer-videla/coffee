@@ -23,6 +23,7 @@ export const EditPresentialCourse = ({
   description,
   content,
   id,
+  img,
   initialDate,
   instructor,
   instructorDescription,
@@ -175,6 +176,7 @@ export const EditPresentialCourse = ({
             />
           </div>
           <input type="hidden" name="publicId" value={instructorImg} required />
+          <input type="hidden" name="imgPublicId" value={img} required />
           <input type="hidden" name="id" value={id} required />
           <div>
             <Submit />

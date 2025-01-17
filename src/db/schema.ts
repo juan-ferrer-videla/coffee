@@ -167,6 +167,7 @@ export const presentialCourseSchema = z.object({
 
 export const editPresentialCourseSchema = z.object({
   id: z.string(),
+  imgPublicId: z.string(),
   publicId: z.string(),
   title: z.string(),
   description: z.string(),
