@@ -13,12 +13,12 @@ export const CreateProduct = async () => {
       </h2>
       <form action={createProduct} className="align-start grid gap-6">
         <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="title">Title</Label>
+          <Label htmlFor="title">Titulo</Label>
           <Input id="title" name="title" placeholder="Cogollo" required />
         </div>
 
         <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="price">Price</Label>
+          <Label htmlFor="price">Precio</Label>
           <Input
             type="number"
             id="price"
@@ -28,7 +28,7 @@ export const CreateProduct = async () => {
           />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="picture">Picture</Label>
+          <Label htmlFor="picture">Imagen</Label>
           <Input
             id="picture"
             type="file"
@@ -39,7 +39,7 @@ export const CreateProduct = async () => {
         </div>
 
         <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="description">Description</Label>
+          <Label htmlFor="description">Descripción</Label>
           <Textarea
             id="description"
             name="description"

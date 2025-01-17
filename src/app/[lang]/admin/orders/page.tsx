@@ -6,7 +6,7 @@ export default async function Dashboard() {
   const orders = await getOrders();
   const payments = orders.map(
     ({
-      product: { title },
+      product: { title, delivery },
       user: {
         email,
         city,
@@ -34,6 +34,7 @@ export default async function Dashboard() {
       state,
       street,
       streetNumber,
+      delivery,
     }),
   ) satisfies Payment[];
 

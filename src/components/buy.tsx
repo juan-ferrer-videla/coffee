@@ -6,10 +6,12 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { createPreference } from "@/_actions/mercadopago";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { editUser } from "@/_actions/actions";
 import { SelectUser } from "@/db/schema";
 import { Textarea } from "./ui/textarea";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Pin, Truck } from "lucide-react";
 
 export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
   close,
@@ -19,6 +21,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
   const { buy: title } = useDictionary();
   const productsMap = useProductContext((state) => state.products);
   const products = Object.entries(productsMap);
+  const [delivery, setDelivery] = useState(false);
 
   return (
     <form
@@ -32,6 +35,43 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
       }}
     >
       <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+        <RadioGroup
+          defaultValue="deposit"
+          className="mb-3 grid grid-cols-3 gap-4"
+          name="delivery"
+          onValueChange={(value) => {
+            setDelivery(value === "delivery");
+          }}
+        >
+          <div>
+            <RadioGroupItem
+              value="delivery"
+              id="delivery"
+              className="peer sr-only"
+            />
+            <Label
+              htmlFor="delivery"
+              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+            >
+              <Truck className="mb-3 h-6 w-6" />
+              Delivery
+            </Label>
+          </div>
+          <div>
+            <RadioGroupItem
+              value="deposit"
+              id="deposit"
+              className="peer sr-only"
+            />
+            <Label
+              htmlFor="deposit"
+              className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+            >
+              <Pin className="mb-3 h-6 w-6" />
+              Deposito
+            </Label>
+          </div>
+        </RadioGroup>
         <Label htmlFor="phone">Telefono</Label>
         <Input
           id="phone"
@@ -41,67 +81,70 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
           defaultValue={user.phone ?? ""}
         />
       </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="postalCode">Código Postal</Label>
-        <Input
-          type="number"
-          id="postalCode"
-          placeholder="5572"
-          name="postalCode"
-          required
-          defaultValue={user.postalCode ?? ""}
-        />
-      </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="street">Calle</Label>
-        <Input
-          id="street"
-          placeholder="San Martin"
-          name="street"
-          required
-          defaultValue={user.street ?? ""}
-        />
-      </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="streetNumber">Numeración</Label>
-        <Input
-          id="streetNumber"
-          placeholder="2608"
-          name="streetNumber"
-          required
-          defaultValue={user.streetNumber ?? ""}
-        />
-      </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="state">Provincia</Label>
-        <Input
-          id="state"
-          placeholder="Mendoza"
-          name="state"
-          required
-          defaultValue={user.state ?? ""}
-        />
-      </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="city">Localidad</Label>
-        <Input
-          id="city"
-          placeholder="Ciudad de Mendoza"
-          name="city"
-          required
-          defaultValue={user.city ?? ""}
-        />
-      </div>
-      <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="indications">Indicaciones</Label>
-        <Textarea
-          id="indications"
-          name="indications"
-          defaultValue={user.indications ?? ""}
-          rows={4}
-        />
-      </div>
-
+      {delivery && (
+        <>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="postalCode">Código Postal</Label>
+            <Input
+              type="number"
+              id="postalCode"
+              placeholder="5572"
+              name="postalCode"
+              required
+              defaultValue={user.postalCode ?? ""}
+            />
+          </div>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="street">Calle</Label>
+            <Input
+              id="street"
+              placeholder="San Martin"
+              name="street"
+              required
+              defaultValue={user.street ?? ""}
+            />
+          </div>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="streetNumber">Numeración</Label>
+            <Input
+              id="streetNumber"
+              placeholder="2608"
+              name="streetNumber"
+              required
+              defaultValue={user.streetNumber ?? ""}
+            />
+          </div>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="state">Provincia</Label>
+            <Input
+              id="state"
+              placeholder="Mendoza"
+              name="state"
+              required
+              defaultValue={user.state ?? ""}
+            />
+          </div>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="city">Localidad</Label>
+            <Input
+              id="city"
+              placeholder="Ciudad de Mendoza"
+              name="city"
+              required
+              defaultValue={user.city ?? ""}
+            />
+          </div>
+          <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="indications">Indicaciones</Label>
+            <Textarea
+              id="indications"
+              name="indications"
+              defaultValue={user.indications ?? ""}
+              rows={4}
+            />
+          </div>
+        </>
+      )}
       <input
         type="hidden"
         name="rawProducts"

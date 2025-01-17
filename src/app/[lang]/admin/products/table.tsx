@@ -48,6 +48,7 @@ export type Payment = {
   state: string | null;
   street: string | null;
   streetNumber: number | null;
+  delivery: boolean;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -144,47 +145,21 @@ export const columns: ColumnDef<Payment>[] = [
     },
   },
   {
-    accessorKey: "city",
-    header: () => <div>Localidad</div>,
+    accessorKey: "address",
+    header: () => <div>Dirección</div>,
     cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("city")}</div>;
-    },
-  },
-  {
-    accessorKey: "street",
-    header: () => <div>Calle</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("street")}</div>;
-    },
-  },
-  {
-    accessorKey: "streetNumber",
-    header: () => <div>Numeración</div>,
-    cell: ({ row }) => {
-      const streetNumber = parseInt(row.getValue("streetNumber"));
-
-      return <div className="font-medium">{streetNumber}</div>;
-    },
-  },
-  {
-    accessorKey: "postalCode",
-    header: () => <div>Codigo Postal</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("postalCode")}</div>;
-    },
-  },
-  {
-    accessorKey: "state",
-    header: () => <div>Provincia</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("state")}</div>;
-    },
-  },
-  {
-    accessorKey: "indications",
-    header: () => <div>Indicaciones</div>,
-    cell: ({ row }) => {
-      return <div className="font-medium">{row.getValue("indications")}</div>;
+      if (row.original.delivery) return <div>Retiro en deposito</div>;
+      return (
+        <div className="font-medium">
+          <p>{row.original.state}</p>
+          <p>{row.original.city}</p>
+          <p>
+            {row.original.street} {row.original.streetNumber}
+          </p>
+          <p>Codigo postal: {row.original.postalCode}</p>
+          <p>{row.original.indications}</p>
+        </div>
+      );
     },
   },
   {

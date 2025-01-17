@@ -119,7 +119,10 @@ export const isAdmin = async (email: string) => {
 
 export const createProduct = async (formData: FormData) => {
   const { price, ...rest } = productSchema.parse(Object.fromEntries(formData));
-  const { img, isRecommended, ...data } = { price: Number(price), ...rest };
+  const { img, isRecommended, delivery, ...data } = {
+    price: Number(price),
+    ...rest,
+  };
 
   const file = img as File;
 
@@ -131,9 +134,12 @@ export const createProduct = async (formData: FormData) => {
     publicId = id ?? "";
   }
 
-  await db
-    .insert(productsTable)
-    .values({ img: publicId, isRecommended: !!isRecommended, ...data });
+  await db.insert(productsTable).values({
+    img: publicId,
+    isRecommended: !!isRecommended,
+    delivery: delivery === "delivery",
+    ...data,
+  });
   revalidatePath("/");
 };
 
