@@ -201,9 +201,11 @@ export const editProduct = async (formData: FormData) => {
   revalidatePath("/");
 };
 
-export const buy = async (items: Items[], description: string) => {
+export const buy = async (
+  items: Items[],
+  { email, delivery }: { email: string; delivery: boolean },
+) => {
   let userId;
-  const { email, delivery } = JSON.parse(description);
   const users = await db
     .select()
     .from(usersTable)
@@ -438,18 +440,22 @@ export const editUser = async (formData: FormData) => {
     .object({
       id: z.string(),
       phone: z.string(),
-      postalCode: z.string(),
-      street: z.string(),
-      streetNumber: z.string(),
-      city: z.string(),
-      state: z.string(),
+      postalCode: z.string().optional(),
+      street: z.string().optional(),
+      streetNumber: z.string().optional(),
+      city: z.string().optional(),
+      state: z.string().optional(),
       indications: z.string().optional(),
     })
     .parse(Object.fromEntries(formData));
 
   await db
     .update(usersTable)
-    .set({ streetNumber: parseInt(streetNumber), ...data })
+    .set(
+      streetNumber
+        ? { streetNumber: parseInt(streetNumber), ...data }
+        : { ...data },
+    )
     .where(eq(usersTable.id, parseInt(id)));
   revalidatePath("/");
 };

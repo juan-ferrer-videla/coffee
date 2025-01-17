@@ -19,12 +19,11 @@ export async function POST(request: NextRequest) {
     const payment = await new Payment(client).get({ id });
     const items = payment.additional_info?.items;
     if (payment.status === "approved" && items) {
-      const description = items[0]?.description;
-      if (!description) {
-        console.warn("Missed description");
+      if (!payment.metadata) {
+        console.warn("Missed metadata");
         return;
       }
-      await buy(items, description);
+      await buy(items, payment.metadata);
     }
   } catch (error) {
     console.warn(error);

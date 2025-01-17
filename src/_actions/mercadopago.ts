@@ -22,7 +22,6 @@ export const createPreference = async (
         quantity,
         title: product.title,
         unit_price: product.price,
-        description: JSON.stringify({ email, delivery }),
       });
     }
     return acc;
@@ -31,6 +30,7 @@ export const createPreference = async (
   const preferenceResponse = await preference.create({
     body: {
       items,
+      metadata: { email, delivery },
     },
   });
   const initPoint = preferenceResponse.init_point;
