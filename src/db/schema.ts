@@ -42,7 +42,6 @@ export const productsTable = sqliteTable("products", {
   description: text("description"),
   img: text("img").notNull(),
   price: integer("price").notNull(),
-  delivery: integer("delivery", { mode: "boolean" }).default(true).notNull(),
   isRecommended: integer("is_recommended", { mode: "boolean" })
     .default(true)
     .notNull(),
@@ -65,6 +64,7 @@ export const usersToProducts = sqliteTable("users_to_products", {
     .notNull()
     .references(() => productsTable.id),
   quantity: integer("quantity").notNull(),
+  delivery: integer("delivery", { mode: "boolean" }).default(true).notNull(),
   status: text("status", { enum: ["pending", "dispatched", "delivered"] })
     .notNull()
     .default("pending"),
@@ -120,7 +120,6 @@ export const productSchema = z.object({
   description: z.string().optional(),
   price: z.string(),
   img: z.instanceof(File),
-  delivery: z.string(),
   isRecommended: z.string().optional(),
 });
 

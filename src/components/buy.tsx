@@ -28,7 +28,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
       action={async (formData: FormData) => {
         if (!user?.email) return;
         await Promise.allSettled([
-          createPreference(products, user.email),
+          createPreference(products, user.email, delivery),
           editUser(formData),
         ]);
         close();

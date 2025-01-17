@@ -6,7 +6,7 @@ export default async function Dashboard() {
   const orders = await getOrders();
   const payments = orders.map(
     ({
-      product: { title, delivery },
+      product: { title },
       user: {
         email,
         city,
@@ -16,7 +16,7 @@ export default async function Dashboard() {
         street,
         streetNumber,
       },
-
+      delivery,
       quantity,
       status,
       id,

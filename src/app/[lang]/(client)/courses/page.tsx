@@ -1,25 +1,10 @@
 import { getPresentialCourses } from "@/_actions/actions";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
-import { PresentialCourse } from "./course";
 import { Suspense } from "react";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { CourseCard } from "@/components/course-card";
-
-/* const Courses = async () => {
-  const courses = await getPresentialCourses();
-
-  return (
-    <ul>
-      {courses.map((course) => (
-        <li key={course.id}>
-          <PresentialCourse {...course} />
-        </li>
-      ))}
-    </ul>
-  );
-}; */
 
 export default async function Home({
   params,
@@ -44,10 +29,10 @@ export default async function Home({
         <div className="mb-12 mt-2">
           <p className="mt-4 text-center text-lg">
             We are a team of passionate people whose goal is to improve
-            everyone's life through disruptive products. We build great products
-            to solve your business problems. loren ipsum dolor sit amet,
-            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Lorem ipsum dolor sit amet
+            everyone&apos;s life through disruptive products. We build great
+            products to solve your business problems. loren ipsum dolor sit
+            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet
             consectetur adipisicing elit. Hic veniam quam et quaerat,
             voluptatibus harum illum magnam dolores totam repudiandae dolore sed
             inventore aspernatur nostrum blanditiis enim sapiente! Laudantium,
@@ -74,10 +59,6 @@ export default async function Home({
           ))}
         </Suspense>
       </div>
-
-      {/* <section className="mb-6">
-          <Courses />
-      </section> */}
     </>
   );
 }

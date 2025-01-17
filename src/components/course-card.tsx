@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Card,
   CardContent,
@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Image, { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
 import { SelectPresencialCourse } from "@/db/schema";
 import { currency } from "@/lib/utils";
@@ -25,12 +24,12 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
         <div className="relative h-48 w-full lg:h-full">
           <CldImage
-          key={id}
-          alt={title}
-          className="object-cover"
-          src={img}
-          fill
-        />
+            key={id}
+            alt={title}
+            className="object-cover"
+            src={img}
+            fill
+          />
         </div>
       </CardHeader>
       <CardContent className="flex flex-col p-4">

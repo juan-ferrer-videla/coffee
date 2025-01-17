@@ -11,6 +11,7 @@ const preference = new Preference(client);
 export const createPreference = async (
   store: [string, number][],
   email: string,
+  delivery: boolean,
 ) => {
   const products = await getProducts();
   const items = store.reduce<Items[]>((acc, [id, quantity]) => {
@@ -21,7 +22,7 @@ export const createPreference = async (
         quantity,
         title: product.title,
         unit_price: product.price,
-        description: email,
+        description: JSON.stringify({ email, delivery }),
       });
     }
     return acc;

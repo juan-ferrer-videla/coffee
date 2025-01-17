@@ -8,14 +8,12 @@ const EventId = async (id: number) => {
   return events.find((event) => event.id === id);
 };
 
-// Define las interfaces para las props
 interface EventDescProps {
-  params: Promise<{ id: string; lang: string }>; // Aquí agregamos 'lang' junto con 'id'
+  params: Promise<{ id: string; lang: string }>;
 }
 
 export default async function EventDesc({ params }: EventDescProps) {
-  // Desestructuramos el objeto params y esperamos su resolución
-  const { id, lang } = await params;
+  const { id } = await params;
   const Evntid = await Number(id);
   const event = await EventId(Evntid);
 
