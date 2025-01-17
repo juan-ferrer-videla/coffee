@@ -1,11 +1,10 @@
-import { getProducts } from "@/_actions/actions";
+import { getProducts, getUser } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { MobileDrawer } from "@/components/mobile-drawer";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Nav } from "@/components/nav";
 import { ToggleLang } from "@/components/toggle-lang";
 import { User } from "@/components/user";
-import { SessionProvider } from "next-auth/react";
 import Link from "next/link";
 
 export default async function RootLayout({
@@ -14,6 +13,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const products = await getProducts();
+  const user = await getUser();
 
   return (
     <>
@@ -25,9 +25,7 @@ export default async function RootLayout({
             <ToggleLang />
             <ModeToggle />
             <User />
-            <SessionProvider>
-              <Cart products={products} />
-            </SessionProvider>
+            {user && <Cart products={products} user={user} />}
             <MobileDrawer />
           </div>
         </div>

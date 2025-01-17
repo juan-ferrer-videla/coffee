@@ -14,10 +14,9 @@ import { ShoppingCart } from "lucide-react";
 import { CartTable } from "./cart-table";
 import { useDictionary } from "@/hooks/useDictionary";
 import { useProductContext } from "@/hooks/useProduct";
-import { SelectProduct } from "@/db/schema";
+import { SelectProduct, SelectUser } from "@/db/schema";
 import { Buy } from "./buy";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 
 const Count = () => {
   const length = useProductContext((state) => state.getLength());
@@ -30,13 +29,17 @@ const Count = () => {
   );
 };
 
-export const Cart = ({ products }: { products: SelectProduct[] }) => {
+export const Cart = ({
+  products,
+  user,
+}: {
+  products: SelectProduct[];
+  user: SelectUser;
+}) => {
   const { cart_description, cart } = useDictionary();
   const clearCart = useProductContext((state) => state.clearCart);
   const total = useProductContext((state) => state.getTotal());
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
-  const email = session?.user?.email;
 
   const close = () => {
     clearCart();
@@ -52,7 +55,7 @@ export const Cart = ({ products }: { products: SelectProduct[] }) => {
           <span className="sr-only">Open cart</span>
         </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-auto">
         <SheetHeader>
           <SheetTitle>{cart}</SheetTitle>
           <SheetDescription>{cart_description}</SheetDescription>
@@ -61,7 +64,7 @@ export const Cart = ({ products }: { products: SelectProduct[] }) => {
           <CartTable products={products} />
         </div>
         <div>
-          <Buy close={close} disabled={total === 0} email={email} />
+          <Buy close={close} disabled={total === 0} user={user} />{" "}
         </div>
       </SheetContent>
     </Sheet>

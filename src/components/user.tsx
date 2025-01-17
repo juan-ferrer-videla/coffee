@@ -31,7 +31,13 @@ export async function User() {
             {email}
           </DropdownMenuLabel>
         )}
-        {!session?.user ? <SignIn /> : <SignOut />}
+        {!session?.user ? (
+          <>
+            <SignIn />
+          </>
+        ) : (
+          <SignOut />
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

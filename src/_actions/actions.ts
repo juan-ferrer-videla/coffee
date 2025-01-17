@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from "../auth";
+import { auth, signIn, signOut } from "../auth";
 import { eq } from "drizzle-orm";
 import { db } from "../db";
 import {
@@ -402,4 +402,35 @@ export const deletePresentialCourse = async (formData: FormData) => {
 
 export const getPresentialCourses = async () => {
   return await db.select().from(presentialCourseTable);
+};
+
+export const editUser = async (formData: FormData) => {
+  const { id, streetNumber, ...data } = z
+    .object({
+      id: z.string(),
+      phone: z.string(),
+      postalCode: z.string(),
+      street: z.string(),
+      streetNumber: z.string(),
+      city: z.string(),
+      state: z.string(),
+      indications: z.string().optional(),
+    })
+    .parse(Object.fromEntries(formData));
+
+  await db
+    .update(usersTable)
+    .set({ streetNumber: parseInt(streetNumber), ...data })
+    .where(eq(usersTable.id, parseInt(id)));
+  revalidatePath("/");
+};
+
+export const getUser = async () => {
+  const session = await auth();
+  const email = session?.user?.email;
+  if (!email) return;
+
+  return await db.query.usersTable.findFirst({
+    where: eq(usersTable.email, email),
+  });
 };
