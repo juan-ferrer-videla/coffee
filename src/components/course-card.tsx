@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { SelectPresencialCourse } from "@/db/schema";
 import { currency } from "@/lib/utils";
 import { CldImage } from "./cld-image";
+import Link from "next/link";
 
 export const CourseCard: React.FC<SelectPresencialCourse> = ({
   id,
@@ -21,6 +22,7 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
 }) => {
   return (
     <Card className="mb-4 flex transform flex-col transition-transform duration-300 hover:scale-105 lg:flex-row">
+      <Link href={`/courses/${id}`} key={id}>
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
         <div className="relative h-48 w-full lg:h-full">
           <CldImage
@@ -49,6 +51,7 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
           </Button>
         </CardFooter>
       </CardContent>
+      </Link>
     </Card>
   );
 };
