@@ -20,6 +20,7 @@ export const PresentialCourse = (course: SelectPresencialCourse) => {
     id,
     description,
     instructorImg,
+    img,
     initialDate,
     content,
     instructor,
@@ -31,22 +32,22 @@ export const PresentialCourse = (course: SelectPresencialCourse) => {
     title,
   } = course;
   return (
-    <Card className="w-full max-w-sm overflow-hidden" key={id}>
-      <div className="relative aspect-video w-full">
+    <Card className="mb-4 flex transform flex-col lg:flex-row" key={id}>
+      <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
+      <div className="relative h-48 w-full lg:h-full">
         <CldImage
           key={id}
           alt={title}
-          className="object-cover"
-          src={instructorImg}
+          className="object-cover rounded-xl"
+          src={img}
           fill
         />
       </div>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-        <CardDescription>Vacantes: {vacancies}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col p-4">
+      <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
+        <CardDescription className="mb-1 text-base">{description}</CardDescription>
+        <CardDescription>Vacantes: {vacancies}</CardDescription>
         <p>Intructor: {instructor}</p>
         <p className="text-muted-foreground">{instructorDescription}</p>
         <p>{schedule}</p>

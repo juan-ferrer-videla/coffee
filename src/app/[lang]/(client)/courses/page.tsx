@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { CourseCard } from "@/components/course-card";
+import Link from "next/link";
 
 export default async function Home({
   params,
@@ -55,7 +56,9 @@ export default async function Home({
       <div className="mt-8">
         <Suspense fallback={"Loading..."}>
           {courses.map((course) => (
-            <CourseCard key={course.id} {...course} />
+            <Link href={`/courses/${course.id}`} key={course.id}>
+              <CourseCard key={course.id} {...course} />
+            </Link>
           ))}
         </Suspense>
       </div>

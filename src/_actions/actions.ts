@@ -341,7 +341,7 @@ export const createPresentialCourse = async (formData: FormData) => {
 
   if (imgFile.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
+    const id = await uploadImage({ file: imgFile, signature, timestamp });
     imgPublicId = id ?? "";
   }
 
