@@ -2,6 +2,7 @@ import { getProducts } from "@/_actions/actions";
 import { auth } from "@/auth";
 import { GridSkeleton } from "@/components/grid-skeleton";
 import { Product } from "@/components/product";
+
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";

@@ -4,15 +4,30 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
 import { Nav } from "./nav";
+import { Providers } from "@/providers/tanstack-query";
 
-export default async function RootLayout({
+export default function RootLayout({
   params,
   children,
-}: Readonly<{
-  params: Promise<{ lang: TLocale }>;
+}: {
+  params: { lang: TLocale };
   children: React.ReactNode;
-}>) {
-  const { lang } = await params;
+}) {
+  return (
+    <Providers>
+      <AdminLayout params={params}>{children}</AdminLayout>
+    </Providers>
+  );
+}
+
+async function AdminLayout({
+  params,
+  children,
+}: {
+  params: { lang: TLocale };
+  children: React.ReactNode;
+}) {
+  const { lang } = params;
 
   const session = await auth();
   const email = session?.user?.email;

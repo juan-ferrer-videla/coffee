@@ -76,7 +76,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: "Estado",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("status")}</div>
     ),
@@ -98,7 +98,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "title",
-    header: () => <div>Product</div>,
+    header: () => <div>Producto</div>,
     cell: ({ row }) => {
       return <div className="font-medium">{row.getValue("title")}</div>;
     },
@@ -111,7 +111,7 @@ export const columns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Purchased At
+          Pagado en
           <ArrowUpDown />
         </Button>
       );
@@ -137,7 +137,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "quantity",
-    header: () => <div>Quantity</div>,
+    header: () => <div>Cantidad</div>,
     cell: ({ row }) => {
       const amount = parseInt(row.getValue("quantity"));
 
@@ -203,7 +203,7 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filtrar emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
@@ -213,7 +213,7 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
+              Columnas <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -280,7 +280,7 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No hay resultados.
                 </TableCell>
               </TableRow>
             )}
@@ -289,8 +289,8 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} fila(s) seleccionadas.
         </div>
         <div className="space-x-2">
           <Button
@@ -299,7 +299,7 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Previo
           </Button>
           <Button
             variant="outline"
@@ -307,7 +307,7 @@ export function DataTableDemo({ data }: { data: Payment[] }) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
       </div>

@@ -1,10 +1,17 @@
 import React from "react";
-import { DataTableDemo, type Payment } from "../products/table";
+import { Payment } from "../products/table";
 import { getOrders } from "@/_actions/actions";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+  useQuery,
+} from "@tanstack/react-query";
+import { DataTable } from "./data-table";
 
-export default async function Dashboard() {
-  const orders = await getOrders();
-  const payments = orders.map(
+const fetchOrders = async () => {
+  const response = await getOrders(); // Fetch data from your server or API
+  return response.map(
     ({
       product: { title },
       user: {
@@ -36,7 +43,26 @@ export default async function Dashboard() {
       streetNumber,
       delivery,
     }),
-  ) satisfies Payment[];
+  );
+};
 
-  return <DataTableDemo data={payments} />;
+export const useOrders = (initialData: Payment[]) =>
+  useQuery({
+    queryKey: ["orders"],
+    queryFn: fetchOrders,
+    refetchInterval: 30000,
+    initialData,
+  });
+
+export default async function Dashboard() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["orders"],
+    queryFn: getOrders,
+  });
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <DataTable />
+    </HydrationBoundary>
+  );
 }
