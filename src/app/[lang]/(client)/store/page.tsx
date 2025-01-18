@@ -1,12 +1,12 @@
 import { getProducts } from "@/_actions/actions";
 import { auth } from "@/auth";
 import { GridSkeleton } from "@/components/grid-skeleton";
-import { Product } from "@/components/product";
 
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
+import { Products } from "./products";
 
 export default async function Home({
   params,
@@ -18,6 +18,7 @@ export default async function Home({
   const session = await auth();
   const email = session?.user?.email;
   if (!email) redirect(`/${lang}/sign-in?redirect=store`);
+  const productsPromise = getProducts();
 
   return (
     <>
@@ -31,22 +32,9 @@ export default async function Home({
       </div>
       <section className="pb-4 sm:pb-8 md:pb-12 lg:pb-16">
         <Suspense fallback={<GridSkeleton />}>
-          <Products />
+          <Products productsPromise={productsPromise} />
         </Suspense>
       </section>
     </>
   );
 }
-
-const Products = async () => {
-  const products = await getProducts();
-  return (
-    <ul className="grid justify-center gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
-      {products.map((product) => (
-        <li key={product.title}>
-          <Product {...product} />
-        </li>
-      ))}
-    </ul>
-  );
-};
