@@ -7,12 +7,12 @@ import { Nav } from "./nav";
 import { Providers } from "@/providers/tanstack-query";
 
 export default function RootLayout({
-  params,
   children,
-}: {
-  params: { lang: TLocale };
+  params,
+}: Readonly<{
   children: React.ReactNode;
-}) {
+  params: Promise<{ lang: TLocale }>;
+}>) {
   return (
     <Providers>
       <AdminLayout params={params}>{children}</AdminLayout>
@@ -21,13 +21,13 @@ export default function RootLayout({
 }
 
 async function AdminLayout({
-  params,
   children,
-}: {
-  params: { lang: TLocale };
+  params,
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  const { lang } = params;
+  params: Promise<{ lang: TLocale }>;
+}>) {
+  const { lang } = await params;
 
   const session = await auth();
   const email = session?.user?.email;
