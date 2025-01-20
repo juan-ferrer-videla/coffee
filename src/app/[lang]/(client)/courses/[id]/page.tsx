@@ -18,7 +18,7 @@ interface EventDescProps {
 
 export default async function CoursesDetail({ params }: EventDescProps) {
   const { id } = await params;
-  const courseId = await Number(id);
+  const courseId = Number(id);
   const course = await FindCourse(courseId);
 
   if (!course) {
@@ -39,7 +39,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
       {/* SECCIÓN DEL INSTRUCTOR */}
       <h2 className="mt-4 text-center text-3xl">Instructor</h2>
-      <div className="flex flex-col lg:flex-row lg:gap-12 items-center justify-center w-full">
+      <div className="flex w-full flex-col items-center justify-center lg:flex-row lg:gap-12">
         {/* Tarjeta del Instructor */}
         <InstructorCard {...course} />
 

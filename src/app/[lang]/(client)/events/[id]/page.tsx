@@ -14,7 +14,7 @@ interface EventDescProps {
 
 export default async function EventDesc({ params }: EventDescProps) {
   const { id } = await params;
-  const Evntid = await Number(id);
+  const Evntid = Number(id);
   const event = await EventId(Evntid);
 
   if (!event) {
