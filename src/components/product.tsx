@@ -10,6 +10,7 @@ import {
 import { SelectProduct } from "@/db/schema";
 import { CldImage } from "./cld-image";
 import { currency } from "@/lib/utils";
+import Link from "next/link";
 
 export const Product = ({
   title,
@@ -18,8 +19,10 @@ export const Product = ({
   img,
   description,
 }: SelectProduct) => {
+
   return (
     <Card className="flex h-full max-w-sm flex-col overflow-hidden">
+      <Link href={`/products/${id}`} key={id}>
       <div className="relative aspect-video w-full">
         <CldImage
           key={id}
@@ -31,9 +34,10 @@ export const Product = ({
       </div>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="line-clamp-2">{description}</CardDescription>
         <p>{currency.format(price)}</p>
       </CardHeader>
+      </Link>
       <CardContent className="flex flex-grow flex-col items-start justify-end gap-4">
         <div className="flex items-center gap-x-1">
           <DecreaseButton id={id.toString()} />

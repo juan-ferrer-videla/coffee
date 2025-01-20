@@ -15,6 +15,8 @@ import {
 import { CldImage } from "./cld-image";
 import { currency } from "@/lib/utils";
 import { getProducts } from "@/_actions/actions";
+import Link from "next/link";
+import { Count, DecreaseButton, IncreaseButton } from "./product.client";
 
 export async function RecommendedCarousel() {
   const products = await getProducts({ recommended: true });
@@ -26,24 +28,33 @@ export async function RecommendedCarousel() {
       className="mb-6 w-full"
     >
       <CarouselContent>
-        {products.map((product, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+        {products.map((product) => (
+          <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
             <Card className="flex h-full flex-col overflow-hidden">
-              <div className="relative aspect-video w-full">
-                <CldImage
-                  key={product.id}
-                  alt={product.title}
-                  className="object-cover"
-                  src={product.img}
-                  fill
-                />
-              </div>
-              <CardHeader className="grow">
-                <CardTitle>{product.title}</CardTitle>
-                <CardDescription>{product.description}</CardDescription>
-              </CardHeader>
+              <Link href={`/products/${product.id}`} key={product.id}>
+                <div className="relative aspect-video w-full">
+                  <CldImage
+                    key={product.id}
+                    alt={product.title}
+                    className="object-cover"
+                    src={product.img}
+                    fill
+                  />
+                </div>
+                <CardHeader className="grow">
+                  <CardTitle>{product.title}</CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {product.description}
+                  </CardDescription>
+                  <p>{currency.format(product.price)}</p>
+                </CardHeader>
+              </Link>
               <CardFooter>
-                <p>{currency.format(product.price)}</p>
+                <div className="flex items-center gap-x-1">
+                  <DecreaseButton id={product.id.toString()} />
+                  <Count id={product.id.toString()} />
+                  <IncreaseButton id={product.id.toString()} />
+                </div>
               </CardFooter>
             </Card>
           </CarouselItem>

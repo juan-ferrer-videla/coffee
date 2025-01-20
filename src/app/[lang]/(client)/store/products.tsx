@@ -9,7 +9,7 @@ import { use, useState } from "react";
 export const Products = ({
   productsPromise,
 }: {
-  productsPromise: Promise<SelectProduct[]>;
+  productsPromise: Promise<SelectProduct[]>,
 }) => {
   const products = use(productsPromise);
   const [query, setQuery] = useState("");
