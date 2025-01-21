@@ -27,12 +27,9 @@ export async function IncommingEvents() {
     >
       <CarouselContent>
         {events.map((event, index) => (
-          <CarouselItem
-            key={index}
-            className="transition-transform duration-300 hover:scale-95 md:basis-1/2 lg:basis-1/3"
-          >
+          <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
             <Link href={`/events/${event.id}`} key={event.id}>
-              <Card className="flex h-full flex-col overflow-hidden">
+              <Card className="flex h-full flex-col overflow-hidden transition-transform duration-300 hover:scale-95">
                 <div className="relative aspect-video w-full">
                   <CldImage
                     key={event.id}

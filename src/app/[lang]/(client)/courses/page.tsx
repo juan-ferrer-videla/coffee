@@ -7,6 +7,22 @@ import Image from "next/image";
 import { CourseCard } from "@/components/course-card";
 import Link from "next/link";
 
+const Courses = async () => {
+  const courses = await getPresentialCourses();
+
+  return (
+    <ul className="grid gap-6">
+      {courses.map((course) => (
+        <li key={course.id}>
+          <Link href={`/courses/${course.id}`}>
+            <CourseCard key={course.id} {...course} />
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export default async function Home({
   params,
 }: Readonly<{
@@ -14,52 +30,45 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
-  const courses = await getPresentialCourses();
 
   return (
     <>
-      <div className="flex flex-col items-center text-center">
-        <h1 className="mb-8 text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
-          {dictionary.ourCourses}
-        </h1>
-        <Image
-          src={banner}
-          alt="banner"
-          className="mb-6 w-full rounded-2xl object-cover xl:h-96"
-        />
-        <div className="mb-12 mt-2">
-          <p className="mt-4 text-center text-lg">
-            We are a team of passionate people whose goal is to improve
-            everyone&apos;s life through disruptive products. We build great
-            products to solve your business problems. loren ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Hic veniam quam et quaerat,
-            voluptatibus harum illum magnam dolores totam repudiandae dolore sed
-            inventore aspernatur nostrum blanditiis enim sapiente! Laudantium,
-            nihil. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Asperiores excepturi expedita temporibus. Vero aspernatur
-            asperiores, fuga, accusantium earum alias dolor dignissimos fugiat
-            vel, harum a. Consectetur reiciendis eveniet mollitia fuga.
-          </p>
-        </div>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
-          title="YouTube video player"
-          className="aspect-video h-full w-full rounded-2xl"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-        ></iframe>
-      </div>
+      <h1 className="mb-8 text-center text-4xl font-extrabold uppercase tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
+        {dictionary.ourCourses}
+      </h1>
+      <Image
+        src={banner}
+        alt="banner"
+        className="w-full rounded-2xl object-cover xl:h-96"
+      />
+
+      <p className="mx-auto my-8 max-w-screen-lg text-center text-xl text-muted-foreground sm:my-12 md:my-16 lg:my-24">
+        We are a team of passionate people whose goal is to improve
+        everyone&apos;s life through disruptive products. We build great
+        products to solve your business problems. loren ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua. Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Hic veniam quam et quaerat, voluptatibus harum illum
+        magnam dolores totam repudiandae dolore sed inventore aspernatur nostrum
+        blanditiis enim sapiente! Laudantium, nihil. Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Asperiores excepturi expedita temporibus.
+        Vero aspernatur asperiores, fuga, accusantium earum alias dolor
+        dignissimos fugiat vel, harum a. Consectetur reiciendis eveniet mollitia
+        fuga.
+      </p>
+
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
+        title="YouTube video player"
+        className="my-8 aspect-video h-full w-full rounded-2xl sm:my-12 md:my-16 lg:my-24"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+      ></iframe>
 
       <div className="mt-8">
         <Suspense fallback={"Loading..."}>
-          {courses.map((course) => (
-            <Link href={`/courses/${course.id}`} key={course.id}>
-              <CourseCard key={course.id} {...course} />
-            </Link>
-          ))}
+          <Courses />
         </Suspense>
       </div>
     </>

@@ -25,15 +25,15 @@ export default async function Home({
   return (
     <>
       <h1 className="mb-8 flex scroll-m-20 flex-wrap items-center justify-center text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-4 lg:text-5xl xl:text-6xl">
-        {firstPart}
+        <span>{firstPart}</span>
         <Image
           src={logo}
           alt="logo"
           width={120}
           height={120}
-          className="md:mb-6"
+          className="hidden sm:mb-6 sm:inline"
         />
-        {secondPart}
+        <span>{secondPart}</span>
       </h1>
 
       <section>

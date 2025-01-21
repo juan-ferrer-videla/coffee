@@ -22,7 +22,7 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
 }) => {
   console.log("img", img);
   return (
-    <Card className="mb-4 flex flex-col lg:flex-row">
+    <Card className="flex flex-col lg:flex-row">
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
         <div className="relative h-48 w-full lg:h-full">
           <CldImage

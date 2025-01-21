@@ -29,7 +29,7 @@ export async function RecommendedCarousel() {
     >
       <CarouselContent>
         {products.map((product) => (
-          <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={product.id} className="sm:basis-1/2 lg:basis-1/3">
             <Card className="flex h-full flex-col overflow-hidden">
               <Link href={`/products/${product.id}`} key={product.id}>
                 <div className="relative aspect-video w-full">
@@ -62,8 +62,8 @@ export async function RecommendedCarousel() {
       </CarouselContent>
       {products.length > 3 && (
         <>
-          <CarouselPrevious className="hidden md:inline-flex" />
-          <CarouselNext className="hidden md:inline-flex" />
+          <CarouselPrevious className="hidden lg:inline-flex" />
+          <CarouselNext className="hidden lg:inline-flex" />
         </>
       )}
     </Carousel>
