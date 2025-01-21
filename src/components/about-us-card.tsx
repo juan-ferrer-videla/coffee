@@ -3,32 +3,37 @@ import imgOwner from "@/assets/us1.jpg";
 import imgOwner2 from "@/assets/us2.jpg";
 
 export const AboutUsCard: React.FC = () => {
-    return (
-      <div className="mt-6 flex flex-wrap justify-evenly gap-6">
-        {/* Primera tarjeta */}
-        <div className="flex max-w-lg shadow-lg rounded-lg overflow-hidden w-full md:w-[48%] lg:w-[30%] transform-gpu hover:scale-110 transition-transform duration-300">
-          <Image src={imgOwner} alt="Owner" className="w-1/3 object-cover" />
-          <div className="p-4">
-            <h2 className="text-xl font-bold">Nicolas Piñol</h2>
-            <p className="text-base">
-              Founder and CEO of Amazing Website. Passionate about innovation and
-              creating unique experiences.
-            </p>
-          </div>
-        </div>
-  
-        {/* Segunda tarjeta */}
-        <div className="flex max-w-lg shadow-2xl rounded-lg overflow-hidden w-full md:w-[48%] lg:w-[30%] transform-gpu hover:scale-110 transition-transform duration-300">
-          <Image src={imgOwner2} alt="Owner" className="w-1/3 object-cover" />
-          <div className="p-4">
-            <h2 className="text-xl font-bold">Martin Gutierrez</h2>
-            <p className="text-base">
-              Founder and CEO of Amazing Website. Passionate about innovation and
-              creating unique experiences.
-            </p>
-          </div>
+  return (
+    <div className="mt-6 flex flex-wrap justify-evenly gap-6">
+      {/* Primera tarjeta */}
+      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-110 md:w-[48%] lg:w-[48%]">
+        <Image src={imgOwner} alt="Owner" className="w-1/3 object-cover" />
+        <div className="p-4">
+          <h2 className="text-xl font-bold">Arq. Duarte Eduardo </h2>
+          <p className="text-base">
+            <strong>Presidente de Universo Coffee Argentina</strong>
+            <br />
+            Desarrollador Comercial e Imagen CO.
+            <br />
+            MANAGEMENT SENIOR PRENSA - DIFUSIÓN - EVENTOS CORPORATIVOS
+          </p>
         </div>
       </div>
-    );
-  };
 
+      {/* Segunda tarjeta */}
+      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-2xl transition-transform duration-300 hover:scale-110 md:w-[48%] lg:w-[48%]">
+        <Image src={imgOwner2} alt="Owner" className="w-1/3 object-cover" />
+        <div className="p-4">
+          <h2 className="text-xl font-bold">Coffee Master Mancini Rafael</h2>
+          <p className="text-base">
+            <strong>CEO de Universo Coffee ARGENTINA</strong>
+            <br/>
+            Capacitador Técnico e Instructor Barista.  
+            <br/>
+            MANAGEMENT SALES ROASTER - CURSOS - CAPACITACIÓN
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};

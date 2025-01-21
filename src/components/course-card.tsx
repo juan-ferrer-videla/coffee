@@ -40,14 +40,14 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
           <p className="mb-3 line-clamp-4 text-sm">{description}</p>
           <Badge>Presencial</Badge>
         </CardDescription>
-        <CardFooter className="mt-auto p-0">
+        <CardFooter className="ml-auto mt-auto flex p-0">
           <div>
             <p className="mb-4 mt-auto w-min rounded py-1 text-lg font-bold">
               {currency.format(price)}
             </p>
             <Button className="mt-auto">Adquirir</Button>
           </div>
-        </CardFooter>
+          </CardFooter>
       </CardContent>
     </Card>
   );
