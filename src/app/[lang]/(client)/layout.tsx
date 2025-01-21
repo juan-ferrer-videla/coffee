@@ -7,6 +7,8 @@ import { Nav } from "@/components/nav";
 import { ToggleLang } from "@/components/toggle-lang";
 import { User } from "@/components/user";
 import Link from "next/link";
+import logo from "@/assets/cafeLogo.png";
+import Image from "next/image";
 
 export default async function RootLayout({
   children,

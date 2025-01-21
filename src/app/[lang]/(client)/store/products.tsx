@@ -9,7 +9,7 @@ import { use, useState } from "react";
 export const Products = ({
   productsPromise,
 }: {
-  productsPromise: Promise<SelectProduct[]>,
+  productsPromise: Promise<SelectProduct[]>;
 }) => {
   const products = use(productsPromise);
   const [query, setQuery] = useState("");
@@ -28,13 +28,13 @@ export const Products = ({
           }}
         />
       </div>
-      <ul className="grid justify-center gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
+      <ul className="grid w-full gap-6 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 lg:gap-16">
         {products
           .filter(({ title }) =>
             title.toLowerCase().includes(query.toLowerCase()),
           )
           .map((product) => (
-            <li key={product.title}>
+            <li key={product.title} className="flex w-full justify-center">
               <Product {...product} />
             </li>
           ))}

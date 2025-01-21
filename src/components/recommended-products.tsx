@@ -62,8 +62,8 @@ export async function RecommendedCarousel() {
       </CarouselContent>
       {products.length > 3 && (
         <>
-          <CarouselPrevious className="invisible sm:visible"/>
-          <CarouselNext  className="invisible sm:visible"/>
+          <CarouselPrevious className="hidden md:inline-flex" />
+          <CarouselNext className="hidden md:inline-flex" />
         </>
       )}
     </Carousel>
