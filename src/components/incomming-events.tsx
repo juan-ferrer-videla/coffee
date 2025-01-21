@@ -27,32 +27,37 @@ export async function IncommingEvents() {
     >
       <CarouselContent>
         {events.map((event, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 transition-transform duration-300 hover:scale-95">
+          <CarouselItem
+            key={index}
+            className="transition-transform duration-300 hover:scale-95 md:basis-1/2 lg:basis-1/3"
+          >
             <Link href={`/events/${event.id}`} key={event.id}>
-            <Card className="flex h-full flex-col overflow-hidden">
-              <div className="relative aspect-video w-full">
-                <CldImage
-                  key={event.id}
-                  alt={event.title}
-                  className="object-cover"
-                  src={event.img}
-                  fill
-                />
-              </div>
-              <CardHeader className="grow">
-                <CardTitle>{event.title}</CardTitle>
-                <CardDescription>{event.date}</CardDescription>
-                <CardDescription className="line-clamp-2">{event.description}</CardDescription>
-              </CardHeader>
-            </Card>
+              <Card className="flex h-full flex-col overflow-hidden">
+                <div className="relative aspect-video w-full">
+                  <CldImage
+                    key={event.id}
+                    alt={event.title}
+                    className="object-cover"
+                    src={event.img}
+                    fill
+                  />
+                </div>
+                <CardHeader className="grow">
+                  <CardTitle>{event.title}</CardTitle>
+                  <CardDescription>{event.date}</CardDescription>
+                  <CardDescription className="line-clamp-2">
+                    {event.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             </Link>
-          </CarouselItem>    
+          </CarouselItem>
         ))}
       </CarouselContent>
       {events.length > 3 && (
         <>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="hidden md:inline-flex" />
+          <CarouselNext className="hidden md:inline-flex" />
         </>
       )}
     </Carousel>

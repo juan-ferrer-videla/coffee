@@ -20,22 +20,22 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const { title, store } = await getDictionary(lang);
-  const [firstPart, secondPart] = title.split(" ")
+  const [firstPart, secondPart] = title.split(" ");
 
   return (
     <>
-      <h1 className="flex items-center justify-center mb-8 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-4 lg:text-5xl xl:text-6xl">
+      <h1 className="mb-8 flex scroll-m-20 flex-wrap items-center justify-center text-center text-4xl font-extrabold tracking-tight sm:mb-12 md:mb-4 lg:text-5xl xl:text-6xl">
         {firstPart}
         <Image
-            src={logo}
-            alt="logo"
-            width={120}
-            height={120}
-            className="mb-6"
-          />
+          src={logo}
+          alt="logo"
+          width={120}
+          height={120}
+          className="md:mb-6"
+        />
         {secondPart}
       </h1>
-      
+
       <section>
         <BannerCarousel />
       </section>
