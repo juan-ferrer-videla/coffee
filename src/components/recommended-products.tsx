@@ -1,7 +1,6 @@
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,7 +15,6 @@ import { CldImage } from "./cld-image";
 import { currency } from "@/lib/utils";
 import { getProducts } from "@/_actions/actions";
 import Link from "next/link";
-import { Count, DecreaseButton, IncreaseButton } from "./product.client";
 
 export async function RecommendedCarousel() {
   const products = await getProducts({ recommended: true });
@@ -49,13 +47,6 @@ export async function RecommendedCarousel() {
                   <p>{currency.format(product.price)}</p>
                 </CardHeader>
               </Link>
-              <CardFooter>
-                <div className="flex items-center gap-x-1">
-                  <DecreaseButton id={product.id.toString()} />
-                  <Count id={product.id.toString()} />
-                  <IncreaseButton id={product.id.toString()} />
-                </div>
-              </CardFooter>
             </Card>
           </CarouselItem>
         ))}

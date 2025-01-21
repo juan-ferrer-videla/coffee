@@ -30,7 +30,7 @@ export default async function Home({
           alt="logo"
           width={120}
           height={120}
-          className="hidden sm:mb-6 sm:inline"
+          className="hidden dark:invert sm:mb-6 sm:inline"
         />
         <span>{secondPart}</span>
       </h1>
