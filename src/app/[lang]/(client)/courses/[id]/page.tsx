@@ -60,7 +60,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
       </div>
 
       {/* DETALLES DEL CURSO */}
-      <div className="mt-8 w-full rounded-lg bg-gray-500 p-6 shadow-lg lg:w-4/5">
+      <div className="mt-8 w-full rounded-lg p-6 shadow-lg lg:w-4/5">
         <div>
           <h2 className="mb-4 text-2xl">Detalles del Curso Presencial</h2>
           <ul className="space-y-2">
@@ -94,7 +94,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
       {/* PRECIO Y BOTÓN DE COMPRA */}
       <div className="mt-8 flex w-full items-center justify-center gap-4 lg:w-4/5 lg:flex-row">
-        <p className="flex h-full items-center justify-center rounded bg-customYellow px-4 py-2 text-xl font-bold text-black shadow">
+        <p className="flex h-full items-center justify-center rounded px-4 py-2 text-xl font-bold shadow">
           {currency.format(course.price)}
         </p>
         <Button
