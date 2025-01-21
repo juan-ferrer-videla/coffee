@@ -1,5 +1,6 @@
 import { getProducts, getUser } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
+import { FaqModal } from "@/components/faq-modal";
 import { MobileDrawer } from "@/components/mobile-drawer";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Nav } from "@/components/nav";
@@ -18,10 +19,11 @@ export default async function RootLayout({
   return (
     <>
       <header className="container sticky top-0 z-50 mb-6 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:mb-8 md:mb-12">
-        <div className="flex items-center justify-between border-b py-4">
-          <Link href={"/"}>UniversoCoffee.ar</Link>
+        <div className="flex items-center justify-end md:justify-between border-b py-4">
+          <Link href={"/"} className="hidden md:block">UniversoCoffee.ar</Link>
           <Nav className="hidden md:block" />
           <div className="flex items-center space-x-3">
+          <FaqModal/>
             <ToggleLang />
             <ModeToggle />
             <User />

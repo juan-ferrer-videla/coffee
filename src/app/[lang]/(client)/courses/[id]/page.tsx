@@ -44,7 +44,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         <InstructorCard {...course} />
 
         {/* Video del Curso */}
-        <div className="w-full lg:w-[48%]">
+        <div className="w-[32%] lg:w-[48%]">
           <iframe
             src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
             title="YouTube video player"
@@ -60,7 +60,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
       </div>
 
       {/* DETALLES DEL CURSO */}
-      <div className="mt-8 w-full rounded-lg bg-gray-800 p-6 shadow-lg lg:w-4/5">
+      <div className="mt-8 w-full rounded-lg bg-gray-500 p-6 shadow-lg lg:w-4/5">
         <div>
           <h2 className="mb-4 text-2xl">Detalles del Curso Presencial</h2>
           <ul className="space-y-2">

@@ -45,7 +45,7 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
           <p className="mr-2 mt-auto w-min justify-end rounded bg-customYellow px-3 py-1 text-lg font-bold text-black shadow">
             {currency.format(price)}
           </p>
-          <Button variant="secondary" className="mt-auto">
+          <Button variant="secondary" className="mt-auto text-base">
             Adquirir
           </Button>
         </CardFooter>

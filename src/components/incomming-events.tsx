@@ -51,8 +51,8 @@ export async function IncommingEvents() {
       </CarouselContent>
       {events.length > 3 && (
         <>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="invisible sm:visible"/>
+          <CarouselNext  className="invisible sm:visible"/>
         </>
       )}
     </Carousel>

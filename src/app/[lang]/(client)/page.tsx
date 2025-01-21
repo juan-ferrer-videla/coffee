@@ -11,7 +11,7 @@ import { ArrowRight } from "lucide-react";
 import { Suspense } from "react";
 import { CarouselSkeleton } from "@/components/carousel-skeleton";
 import Image from "next/image";
-import logo from "@/assets/cafeLogo.png";
+import logo from "@/assets/logo.png";
 
 export default async function Home({
   params,
