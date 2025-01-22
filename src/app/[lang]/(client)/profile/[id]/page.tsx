@@ -13,7 +13,19 @@ export default async function Profile() {
   //Info de las compras
   const allOrders = await getOrders();
 
-  const data = allOrders.filter((order) => order.userId === user.id)
+  const data = allOrders
+  .filter((order) => order.userId === user.id)
+  .map((order) => ({
+    id: order.id,
+    userId: order.userId,
+    productId: order.productId,
+    quantity: order.quantity,
+    delivery: order.delivery,
+    status: order.status,
+    purchasedAt: order.purchasedAt,
+    title: order.product.title,
+    price: order.product.price,
+  }));
 
   return (
     <>

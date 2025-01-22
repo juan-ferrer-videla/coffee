@@ -14,19 +14,8 @@ export interface PurchaseInfo {
   delivery: boolean;
   status: "pending" | "dispatched" | "delivered";
   purchasedAt: string;
-  product: {
-    id: number;
-    title: string;
-    img: string;
-    description: string | null;
-    price: number;
-    isRecommended: boolean;
-  };
-  user: {
-    id: number;
-    name: string;
-    email: string;
-  };
+  title: string;
+  price: number;
 }
 
 
@@ -39,7 +28,7 @@ export const columns: ColumnDef<PurchaseInfo>[] = [
     ),
   },
   {
-    accessorKey: "product.title",
+    accessorKey: "title",
     header: "Product",
     cell: ({ row }) => (
       <div className="lowercase">{row.getValue("title")}</div>
@@ -60,16 +49,16 @@ export const columns: ColumnDef<PurchaseInfo>[] = [
     ),
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "price",
+    header: () => <div className="text-right">Price</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const price = parseFloat(row.getValue("price"));
 
       // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("es-AR", {
         style: "currency",
-        currency: "USD",
-      }).format(amount);
+        currency: "ARS",
+      }).format(price);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
