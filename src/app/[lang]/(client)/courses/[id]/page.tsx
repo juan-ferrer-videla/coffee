@@ -27,7 +27,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
-      {/* TÍTULO */}
       <h1 className="mb-2 text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
         {course.title}
       </h1>
@@ -37,13 +36,10 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         className="w-full rounded-2xl object-cover shadow-lg xl:h-96"
       />
 
-      {/* SECCIÓN DEL INSTRUCTOR */}
       <h2 className="mt-4 text-center text-3xl">Instructor</h2>
       <div className="flex w-full flex-col items-center justify-center lg:flex-row lg:gap-12">
-        {/* Tarjeta del Instructor */}
         <InstructorCard {...course} />
 
-        {/* Video del Curso */}
         <div className="w-[32%] lg:w-[48%]">
           <iframe
             src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
@@ -54,12 +50,10 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         </div>
       </div>
 
-      {/* DESCRIPCION DEL CURSO DE NUEVO ?? */}
       <div className="mt-2">
         <p className="mt-4 text-center text-lg">{course.description}</p>
       </div>
 
-      {/* DETALLES DEL CURSO */}
       <div className="mt-8 w-full rounded-lg p-6 shadow-lg lg:w-4/5">
         <div>
           <h2 className="mb-4 text-2xl">Detalles del Curso Presencial</h2>
@@ -92,7 +86,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         </div>
       </div>
 
-      {/* PRECIO Y BOTÓN DE COMPRA */}
       <div className="mt-8 flex w-full items-center justify-center gap-4 lg:w-4/5 lg:flex-row">
         <p className="flex h-full items-center justify-center rounded px-4 py-2 text-xl font-bold shadow">
           {currency.format(course.price)}
@@ -105,7 +98,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         </Button>
       </div>
 
-      {/* PREGUNTAS FRECUENTES */}
       <div className="mt-12 w-full lg:w-4/5">
         <h2 className="mb-4 text-center text-3xl">Preguntas Frecuentes</h2>
         <FrequentQuestions />

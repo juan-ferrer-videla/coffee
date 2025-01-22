@@ -436,10 +436,11 @@ export const getPresentialCourses = async () => {
 };
 
 export const editUser = async (formData: FormData) => {
-  const { id, streetNumber, ...data } = z
+  const { id, streetNumber, dni, ...data } = z
     .object({
       id: z.string(),
       phone: z.string(),
+      dni: z.string().optional(),
       postalCode: z.string().optional(),
       street: z.string().optional(),
       streetNumber: z.string().optional(),
@@ -451,11 +452,11 @@ export const editUser = async (formData: FormData) => {
 
   await db
     .update(usersTable)
-    .set(
-      streetNumber
-        ? { streetNumber: parseInt(streetNumber), ...data }
-        : { ...data },
-    )
+    .set({
+      streetNumber: streetNumber ? parseInt(streetNumber) : null,
+      dni: dni ? parseInt(dni) : null,
+      ...data,
+    })
     .where(eq(usersTable.id, parseInt(id)));
   revalidatePath("/");
 };
@@ -467,5 +468,12 @@ export const getUser = async () => {
 
   return await db.query.usersTable.findFirst({
     where: eq(usersTable.email, email),
+  });
+};
+
+export const getUserOrders = async (id: number) => {
+  return await db.query.usersToProducts.findMany({
+    with: { product: true, user: true },
+    where: eq(usersToProducts.userId, id),
   });
 };

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
-} from "@/components/ui/dialog"
-import { FrequentQuestions } from "./faq-courses"
+  DialogClose,
+} from "@/components/ui/dialog";
+import { FrequentQuestions } from "./faq-courses";
 
 export function FaqModal() {
   return (
@@ -17,21 +17,19 @@ export function FaqModal() {
       <DialogTrigger asChild>
         <Button variant="outline">Info</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[420px] md:max-w-lg">
+      <DialogContent className="max-h-dvh max-w-[420px] overflow-auto md:max-w-lg">
         <DialogHeader>
           <DialogTitle>Preguntas Frecuentes</DialogTitle>
           <DialogDescription asChild>
-            <FrequentQuestions/>
+            <FrequentQuestions />
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-        <DialogClose asChild>
-            <Button type="button">
-              Entendido
-            </Button>
+          <DialogClose asChild>
+            <Button type="button">Entendido</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

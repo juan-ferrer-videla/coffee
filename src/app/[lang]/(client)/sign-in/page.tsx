@@ -39,7 +39,10 @@ export default async function Home({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <SignIn variant={"default"} redirect={`/${lang}/${redirect}`} />
+            <SignIn
+              variant={"default"}
+              redirect={`/${lang}/${redirect ?? ""}`}
+            />
           </CardContent>
         </Card>
       </div>
