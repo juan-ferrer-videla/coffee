@@ -40,7 +40,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
       <div className="flex w-full flex-col items-center justify-center lg:flex-row lg:gap-12">
         <InstructorCard {...course} />
 
-        <div className="w-[32%] lg:w-[48%]">
+        <div className="w-[90%]  sm:w-[70%]  lg:w-[48%]">
           <iframe
             src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
             title="YouTube video player"
@@ -91,7 +91,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
           {currency.format(course.price)}
         </p>
         <Button
-          variant="secondary"
           className="flex h-full w-full items-center justify-center px-4 py-2 text-lg lg:w-min"
         >
           Adquirir

@@ -151,7 +151,7 @@ export default async function RootLayout({
                   {address}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Thames 2326 Palermo Caba.
+                  San Telmo, CABA.
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Buenos Aires – Argentina.

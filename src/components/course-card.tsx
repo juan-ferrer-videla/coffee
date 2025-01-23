@@ -38,13 +38,13 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
         <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
         <CardDescription className="mb-3 text-base">
           <p className="mb-3 line-clamp-4 text-sm">{description}</p>
-          <Badge>Presencial</Badge>
+          <Badge className="text-base">Presencial</Badge>
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex items-center gap-x-4 p-0">
           <p className="w-min rounded text-lg font-bold">
             {currency.format(price)}
           </p>
-          <Button>Adquirir</Button>
+          <Button className="text-base">Ver más</Button>
         </CardFooter>
       </CardContent>
     </Card>

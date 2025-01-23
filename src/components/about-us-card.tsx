@@ -6,7 +6,7 @@ export const AboutUsCard: React.FC = () => {
   return (
     <div className="mt-6 flex flex-wrap justify-evenly gap-6">
       {/* Primera tarjeta */}
-      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-110 md:w-[48%] lg:w-[48%]">
+      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-lg md:w-[48%] lg:w-[48%]">
         <Image src={imgOwner} alt="Owner" className="w-1/3 object-cover" />
         <div className="p-4">
           <h2 className="text-xl font-bold">Arq. Duarte Eduardo </h2>
@@ -21,7 +21,7 @@ export const AboutUsCard: React.FC = () => {
       </div>
 
       {/* Segunda tarjeta */}
-      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-2xl transition-transform duration-300 hover:scale-110 md:w-[48%] lg:w-[48%]">
+      <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-2xl md:w-[48%] lg:w-[48%]">
         <Image src={imgOwner2} alt="Owner" className="w-1/3 object-cover" />
         <div className="p-4">
           <h2 className="text-xl font-bold">Coffee Master Mancini Rafael</h2>
