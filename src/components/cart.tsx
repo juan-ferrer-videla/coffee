@@ -60,7 +60,7 @@ export const Cart = ({
           <SheetTitle>{cart}</SheetTitle>
           <SheetDescription>{cart_description}</SheetDescription>
         </SheetHeader>
-        <div className="py-4">
+        <div className="py-4 max-w-full overflow-x-auto">
           <CartTable products={products} />
         </div>
         <div>

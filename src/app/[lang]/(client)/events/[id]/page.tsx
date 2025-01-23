@@ -27,9 +27,9 @@ export default async function EventDesc({ params }: EventDescProps) {
         {event.title}
       </h1>
       <EventCardDesc key={event.id} {...event} />
-      <div>
+      <div className="w-full">
         <ContactButton
-          phoneNumber="+34643027559"
+          phoneNumber="+5491153414003"
           message="¡Hola! Estoy interesado/a en organizar un evento con ustedes."
         />
       </div>

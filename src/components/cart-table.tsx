@@ -15,6 +15,7 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { useProductContext } from "@/hooks/useProduct";
 import { currency } from "@/lib/utils";
 import { ReactNode } from "react";
+import { DecreaseButton, IncreaseButton } from "./product.client";
 
 export const CartTable = ({ products }: { products: SelectProduct[] }) => {
   const store = useProductContext((state) => state.products);
@@ -39,7 +40,12 @@ export const CartTable = ({ products }: { products: SelectProduct[] }) => {
                 <TableCell className="font-medium">{title}</TableCell>
                 <TableCell>{price}</TableCell>
                 <TableCell>{store[id]}</TableCell>
-              </TableRow>,
+                <TableCell className="flex gap-2 items-center">
+                    <DecreaseButton id={id.toString()} />
+                    -
+                    <IncreaseButton id={id.toString()} />
+                </TableCell>
+              </TableRow>
             );
           return acc;
         }, [])}

@@ -19,7 +19,7 @@ export const ContactButton: React.FC<ContactButtonProps> = ({
 
   return (
     <Button onClick={handleWhatsAppClick}>
-      ¿Querés realizar un evento con nosotros? ¡Contactanos!
+     ¿Querés un evento con nosotros? ¡Escribinos!
     </Button>
   );
 };
