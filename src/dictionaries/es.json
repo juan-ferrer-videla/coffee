@@ -63,5 +63,7 @@
   "next": "Siguiente",
   "no_results": "Sin Resultados",
   "status": "Estado",
-  "purchased_at": "Fecha de Compra"
+  "purchased_at": "Fecha de Compra",
+  "more_info": "Ver más",
+  "on_site": "Presencial"
 }

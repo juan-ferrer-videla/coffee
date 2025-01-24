@@ -63,5 +63,7 @@
   "next": "Next",
   "no_results": "No Results",
   "status": "Status",
-  "purchased_at": "Purchased At"
+  "purchased_at": "Purchased At",
+  "more_info": "View More",
+  "on_site": "On Site"
 }
