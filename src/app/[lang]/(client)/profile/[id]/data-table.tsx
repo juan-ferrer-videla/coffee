@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
+import { useDictionary } from "@/hooks/useDictionary";
 
 interface DataTableProps<PurchaseInfo> {
   columns: ColumnDef<PurchaseInfo>[];
@@ -32,6 +33,8 @@ export function DataTable<PurchaseInfo>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const {previous, next, no_results} = useDictionary()
 
   return (
     <div className="w-full">
@@ -78,7 +81,7 @@ export function DataTable<PurchaseInfo>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {no_results}
                 </TableCell>
               </TableRow>
             )}
@@ -93,7 +96,7 @@ export function DataTable<PurchaseInfo>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {previous}
           </Button>
           <Button
             variant="outline"
@@ -101,7 +104,7 @@ export function DataTable<PurchaseInfo>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+           {next}
           </Button>
         </div>
       </div>

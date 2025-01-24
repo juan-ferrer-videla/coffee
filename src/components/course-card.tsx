@@ -12,6 +12,7 @@ import { SelectPresencialCourse } from "@/db/schema";
 import { currency } from "@/lib/utils";
 import { CldImage } from "./cld-image";
 import { Badge } from "./ui/badge";
+import { useDictionary } from "@/hooks/useDictionary";
 
 export const CourseCard: React.FC<SelectPresencialCourse> = ({
   id,
@@ -20,6 +21,7 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
   price,
   img,
 }) => {
+  const { more_info, on_site } = useDictionary();
   return (
     <Card className="flex flex-col lg:flex-row">
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
@@ -37,13 +39,13 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
         <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
         <CardDescription className="mb-3 text-base">
           <p className="mb-3 line-clamp-4 text-sm">{description}</p>
-          <Badge>Presencial</Badge>
+          <Badge className="text-base">{on_site}</Badge>
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex items-center gap-x-4 p-0">
           <p className="w-min rounded text-lg font-bold">
             {currency.format(price)}
           </p>
-          <Button>Adquirir</Button>
+          <Button className="text-base">{more_info}</Button>
         </CardFooter>
       </CardContent>
     </Card>

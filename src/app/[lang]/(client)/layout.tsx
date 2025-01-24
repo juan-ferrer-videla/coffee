@@ -11,7 +11,7 @@ import Link from "next/link";
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode,
 }>) {
   const products = await getProducts();
   const user = await getUser();

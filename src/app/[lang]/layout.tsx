@@ -79,7 +79,7 @@ export default async function RootLayout({
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
   const products = await getProducts();
-  const { follow, address } = dictionary;
+  const { follow, address, contact } = dictionary;
 
   return (
     <html lang={lang} suppressHydrationWarning>
@@ -100,9 +100,9 @@ export default async function RootLayout({
               {children}
               <footer className="container mt-6 md:mt-12 lg:mt-16">
                 <div className="border-t" />
-                <div className="my-6 flex flex-col items-center justify-around gap-6 text-center md:my-10 md:flex-row md:text-start lg:my-14">
+                <div className="my-6 flex flex-col justify-around gap-6 text-center md:my-10 md:flex-row md:text-start lg:my-14">
                   <div>
-                    <h3 className="mb-2 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
                       {follow}
                     </h3>
                     <nav>
@@ -151,7 +151,7 @@ export default async function RootLayout({
                   {address}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Thames 2326 Palermo Caba.
+                  San Telmo, CABA.
                 </p>
                 <p className="text-sm text-muted-foreground">
                   Buenos Aires – Argentina.
@@ -159,11 +159,11 @@ export default async function RootLayout({
               </div>
               <div>
                 <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
-                  Contacto
+                  {contact}
                 </h3>
                 <p className="text-sm text-muted-foreground">universo.coffee@gmail.com</p>
                 <p className="text-sm text-muted-foreground">
-                   +54 11-1234-5678
+                   +54 11-5341-4003
                 </p>
               </div>
                 </div>

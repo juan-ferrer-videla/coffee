@@ -3,6 +3,7 @@
 import { Product } from "@/components/product";
 import { Input } from "@/components/ui/input";
 import { SelectProduct } from "@/db/schema";
+import { useDictionary } from "@/hooks/useDictionary";
 import { Label } from "@radix-ui/react-label";
 import { use, useState } from "react";
 
@@ -13,10 +14,13 @@ export const Products = ({
 }) => {
   const products = use(productsPromise);
   const [query, setQuery] = useState("");
+
+  const {find_your_product} = useDictionary()
+
   return (
     <>
       <div className="mb-6 grid w-full items-center gap-1.5 md:mb-10">
-        <Label htmlFor="title">Busca tu producto</Label>
+        <Label htmlFor="title">{find_your_product}</Label>
         <Input
           id="title"
           name="title"

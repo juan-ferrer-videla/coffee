@@ -18,7 +18,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
   user,
   ...props
 }) => {
-  const { buy: title } = useDictionary();
+  const { buy: title, warehouse, phone, street, zip_code, indications, province, town, number } = useDictionary();
   const productsMap = useProductContext((state) => state.products);
   const products = Object.entries(productsMap);
   const [delivery, setDelivery] = useState(false);
@@ -68,11 +68,11 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
               className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
             >
               <Pin className="mb-3 h-6 w-6" />
-              Deposito
+              {warehouse}
             </Label>
           </div>
         </RadioGroup>
-        <Label htmlFor="phone">Telefono</Label>
+        <Label htmlFor="phone">{phone}</Label>
         <Input
           id="phone"
           placeholder="2615332606"
@@ -84,7 +84,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
       {delivery && (
         <>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="postalCode">Código Postal</Label>
+            <Label htmlFor="postalCode">{zip_code}</Label>
             <Input
               type="number"
               id="postalCode"
@@ -95,7 +95,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
             />
           </div>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="street">Calle</Label>
+            <Label htmlFor="street">{street}</Label>
             <Input
               id="street"
               placeholder="San Martin"
@@ -105,7 +105,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
             />
           </div>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="streetNumber">Numeración</Label>
+            <Label htmlFor="streetNumber">{number}</Label>
             <Input
               id="streetNumber"
               placeholder="2608"
@@ -115,7 +115,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
             />
           </div>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="state">Provincia</Label>
+            <Label htmlFor="state">{province}</Label>
             <Input
               id="state"
               placeholder="Mendoza"
@@ -125,7 +125,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
             />
           </div>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="city">Localidad</Label>
+            <Label htmlFor="city">{town}</Label>
             <Input
               id="city"
               placeholder="Ciudad de Mendoza"
@@ -135,7 +135,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
             />
           </div>
           <div className="mb-4 grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="indications">Indicaciones</Label>
+            <Label htmlFor="indications">{indications}</Label>
             <Textarea
               id="indications"
               name="indications"
