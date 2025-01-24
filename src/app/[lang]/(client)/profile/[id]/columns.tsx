@@ -1,10 +1,8 @@
 "use client";
 
 import * as React from "react";
-import {
-  ColumnDef,
-} from "@tanstack/react-table";
-
+import { ColumnDef } from "@tanstack/react-table";
+import { useDictionary } from "@/hooks/useDictionary";
 
 export interface PurchaseInfo {
   id: number;
@@ -18,49 +16,53 @@ export interface PurchaseInfo {
   price: number;
 }
 
+export const useColumns = (): ColumnDef<PurchaseInfo>[] => {
 
-export const columns: ColumnDef<PurchaseInfo>[] = [
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "title",
-    header: "Product",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("title")}</div>
-    ),
-  },
-  {
-    accessorKey: "purchasedAt",
-    header: "Purchased At",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("purchasedAt")}</div>
-    ),
-  },
-  {
-    accessorKey: "quantity",
-    header: "Quantity",
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("quantity")}</div>
-    ),
-  },
-  {
-    accessorKey: "price",
-    header: () => <div className="text-right">Price</div>,
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("es-AR", {
-        style: "currency",
-        currency: "ARS",
-      }).format(price);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+  const {status, product, purchased_at, quantity, price} = useDictionary()
+  
+  return [
+    {
+      accessorKey: "status",
+      header: status,
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("status")}</div>
+      ),
     },
-  },
-];
+    {
+      accessorKey: "title",
+      header: product,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("title")}</div>
+      ),
+    },
+    {
+      accessorKey: "purchasedAt",
+      header: purchased_at,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("purchasedAt")}</div>
+      ),
+    },
+    {
+      accessorKey: "quantity",
+      header: quantity,
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("quantity")}</div>
+      ),
+    },
+    {
+      accessorKey: price,
+      header: () => <div className="text-right">Price</div>,
+      cell: ({ row }) => {
+        const price = parseFloat(row.getValue("price"));
+
+        // Format the amount as a dollar amount
+        const formatted = new Intl.NumberFormat("es-AR", {
+          style: "currency",
+          currency: "ARS",
+        }).format(price);
+
+        return <div className="text-right font-medium">{formatted}</div>;
+      },
+    },
+  ];
+};

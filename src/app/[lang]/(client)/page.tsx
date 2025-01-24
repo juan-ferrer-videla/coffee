@@ -18,7 +18,7 @@ export default async function Home({
   params: Promise<{ lang: TLocale }>;
 }>) {
   const { lang } = await params;
-  const { title, store } = await getDictionary(lang);
+  const { title, store, recommended_products, incomming_events, about_us, about_us_description } = await getDictionary(lang);
   const [firstPart, secondPart] = title.split(" ");
 
   return (
@@ -40,7 +40,7 @@ export default async function Home({
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">
         <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
-          Recommended Products:
+         {recommended_products}
         </h2>
 
         <Suspense fallback={<CarouselSkeleton />}>
@@ -55,7 +55,7 @@ export default async function Home({
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">
         <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
-          Incomming Events:
+          {incomming_events}
         </h2>
         <Suspense fallback={<CarouselSkeleton />}>
           <IncommingEvents />
@@ -63,18 +63,10 @@ export default async function Home({
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">
         <h3 className="mb-4 scroll-m-20 text-center text-4xl font-extrabold tracking-tight sm:mb-6 md:mb-8 lg:text-5xl xl:text-6xl">
-          About Us
+          {about_us}
         </h3>
         <p className="mx-auto mb-8 max-w-screen-lg text-center text-xl text-muted-foreground sm:mb-12 md:mb-16 lg:mb-24">
-          Somos un nuevo concepto de “CAFÉ DE EXCELENCIA” en Argentina con más
-          de 15 años de experiencia en recorrido de fincas tradicionales
-          cafeteras colombianas, brasileras, bolivianas y peruanas. Aprendiendo
-          técnicas de filtrado y cata en la zona central y norte de la selva
-          peruana con capacitaciones en fertilización, recolección y selección
-          de granos (“Pos cosecha”); variadas técnicas de secado. Experiencia en
-          comercialización exterior de granos a diferentes sitios como TAIWAN;
-          CHINA; ESPAÑA; CHILE. Nuestra materia prima posee un valor superior a
-          89 puntos en taza. - PREMIUM COFFEE / HEALTHY LINE / MEDICAL COFFEE -
+          {about_us_description}
         </p>
         <AboutUsCard />
       </section>

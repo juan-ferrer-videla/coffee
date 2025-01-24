@@ -10,9 +10,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User2 } from "lucide-react";
-import Link from "next/link";
+import { GoProfile } from "./goProfile";
 
-export async function User() {
+export async function User(){
   const session = await auth();
   const name = session?.user?.name;
   const email = session?.user?.email;
@@ -20,7 +20,6 @@ export async function User() {
   
   const user = await getUser()
   const id = user?.id
-
 
   return (
     <DropdownMenu>
@@ -42,11 +41,7 @@ export async function User() {
           </>
         ) : (
           <>
-            <Link href={`/profile/${id}`}>
-              <Button type="submit" variant={"ghost"} className="w-full">
-                Ir a tu Perfil
-              </Button>
-            </Link>
+            {id && <GoProfile id={id}/>}
             <SignOut />
           </>
         )}
