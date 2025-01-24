@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { ComponentProps, FC } from "react";
-import { adminLinks } from "./page";
+import { adminLinks } from "./links";
 
 export const Nav: FC<ComponentProps<"nav">> = (props) => {
   const pathname = usePathname();

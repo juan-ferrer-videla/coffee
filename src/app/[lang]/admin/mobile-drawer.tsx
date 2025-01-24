@@ -13,7 +13,7 @@ import {
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { adminLinks } from "./page";
+import { adminLinks } from "./links";
 
 export const MobileDrawer = () => {
   const [open, setOpen] = useState(false);

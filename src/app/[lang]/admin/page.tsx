@@ -4,13 +4,7 @@ import { Button } from "@/components/ui/button";
 import { TLocale } from "@/i18n";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-export const adminLinks = [
-  { path: "/products", title: "Productos" },
-  { path: "/orders", title: "Ordenes" },
-  { path: "/events", title: "Eventos" },
-  { path: "/courses", title: "Cursos" },
-];
+import { adminLinks } from "./links";
 
 export default async function Admin({
   params,
