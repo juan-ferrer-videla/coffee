@@ -1,7 +1,7 @@
 "use server";
 
 import { auth, signIn, signOut } from "../auth";
-import { eq } from "drizzle-orm";
+import { eq, count } from "drizzle-orm";
 import { db } from "../db";
 import {
   adminsTable,
@@ -16,6 +16,7 @@ import {
   productsTable,
   SelectUserToProduct,
   usersTable,
+  usersToPresentialCourses,
   usersToProducts,
 } from "../db/schema";
 import { z } from "zod";
@@ -152,6 +153,10 @@ export const getProducts = async (
     .where(eq(productsTable.isRecommended, options.recommended));
 };
 
+export const getCourses = async () => {
+  return await db.select().from(presentialCourseTable);
+};
+
 export const deleteProduct = async (formData: FormData) => {
   const { id, img } = z
     .object({ id: z.string(), img: z.string() })
@@ -214,7 +219,7 @@ export const buy = async (
   if (users.length === 0) {
     const [{ id }] = await db
       .insert(usersTable)
-      .values({ email, name: "unknown" })
+      .values({ email, name: "" })
       .returning();
     userId = id;
   } else {
@@ -229,6 +234,20 @@ export const buy = async (
       delivery,
     })),
   );
+
+  revalidatePath("/");
+};
+
+export const buyCourse = async ({
+  userId,
+  presentialCourseId,
+}: {
+  userId: number;
+  presentialCourseId: number;
+}) => {
+  await db
+    .insert(usersToPresentialCourses)
+    .values({ userId, presentialCourseId });
 
   revalidatePath("/");
 };
@@ -475,5 +494,26 @@ export const getUserOrders = async (id: number) => {
   return await db.query.usersToProducts.findMany({
     with: { product: true, user: true },
     where: eq(usersToProducts.userId, id),
+  });
+};
+
+export const getUserPresentialCourses = async (id: number) => {
+  return await db.query.usersToPresentialCourses.findMany({
+    with: { presentialCourses: true, user: true },
+    where: eq(usersToPresentialCourses.userId, id),
+  });
+};
+
+export const getPresentialCoursesVacancies = async () => {
+  const result = await db
+    .select({ count: count() })
+    .from(usersToPresentialCourses);
+
+  return result[0]?.count || 0;
+};
+
+export const getUsersToPresentialCourses = async () => {
+  return await db.query.usersToPresentialCourses.findMany({
+    with: { presentialCourses: true, user: true },
   });
 };

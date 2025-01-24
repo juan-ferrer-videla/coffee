@@ -1,20 +1,67 @@
-import { getPresentialCourses } from "@/_actions/actions";
+import {
+  getPresentialCourses,
+  getUsersToPresentialCourses,
+} from "@/_actions/actions";
 import { CreateCourse } from "./create-presential-course";
 import { PresentialCourse } from "./course";
 import { Suspense } from "react";
 import { GridSkeleton } from "@/components/grid-skeleton";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const PresentialCourses = async () => {
   const courses = await getPresentialCourses();
 
   return (
-    <ul>
+    <ul className="mb-6 sm:mb-10 md:mb-16">
       {courses.map((course) => (
         <li key={course.id}>
           <PresentialCourse {...course} />
         </li>
       ))}
     </ul>
+  );
+};
+
+const CoursesInscriptions = async () => {
+  const inscriptions = await getUsersToPresentialCourses();
+  return (
+    <Table>
+      <TableCaption className="sr-only">Una lista de tus cursos.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Nombre</TableHead>
+          <TableHead>Pagado el</TableHead>
+          <TableHead>Ubiucación</TableHead>
+          <TableHead>Fecha de inicio</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="max-h-[70dvh] overflow-auto">
+        {inscriptions.map(
+          ({
+            presentialCourses: { initialDate, title, location },
+            id,
+            purchasedAt,
+          }) => (
+            <>
+              <TableRow key={id}>
+                <TableCell className="font-medium">{title}</TableCell>
+                <TableCell>{purchasedAt}</TableCell>
+                <TableCell>{location}</TableCell>
+                <TableCell>{initialDate}</TableCell>
+              </TableRow>
+            </>
+          ),
+        )}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -32,6 +79,12 @@ export default function Courses() {
       <CreateCourse />
       <Suspense fallback={<GridSkeleton />}>
         <PresentialCourses />
+      </Suspense>
+      <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+        Cursos presenciales
+      </h2>
+      <Suspense fallback="loading...">
+        <CoursesInscriptions />
       </Suspense>
     </>
   );

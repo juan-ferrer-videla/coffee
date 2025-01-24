@@ -1,16 +1,16 @@
-import { getPresentialCourses } from "@/_actions/actions";
-import { SelectPresencialCourse } from "@/db/schema";
+import {
+  getPresentialCourses,
+  getPresentialCoursesVacancies,
+  getUser,
+} from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { currency } from "@/lib/utils";
 import { FrequentQuestions } from "@/components/faq-courses";
 import { InstructorCard } from "@/components/instructor-card";
-
-const FindCourse = async (id: number) => {
-  const courses: SelectPresencialCourse[] = await getPresentialCourses();
-  return courses.find((course) => course.id === id);
-};
+import { redirect } from "next/navigation";
+import { createCoursePreference } from "@/_actions/mercadopago";
 
 interface EventDescProps {
   params: Promise<{ id: string; lang: string }>;
@@ -19,11 +19,19 @@ interface EventDescProps {
 export default async function CoursesDetail({ params }: EventDescProps) {
   const { id } = await params;
   const courseId = Number(id);
-  const course = await FindCourse(courseId);
+  const [user, courses, coursesCount] = await Promise.all([
+    getUser(),
+    getPresentialCourses(),
+    getPresentialCoursesVacancies(),
+  ]);
+  if (!user) redirect(`/sign-in?redirect=courses/${courseId}`);
+
+  const course = courses.find((course) => course.id === courseId);
 
   if (!course) {
     return <div>Curso no encontrado</div>;
   }
+  const vacancies = course.vacancies - coursesCount;
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
@@ -69,9 +77,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
             <li>
               <strong className="">Vacantes disponibles:</strong>{" "}
               <span className="">
-                {course.vacancies
-                  ? course.vacancies
-                  : "No hay vacantes disponibles"}
+                {vacancies > 0 ? vacancies : "No hay vacantes disponibles"}
               </span>
             </li>
             <li>
@@ -90,12 +96,14 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         <p className="flex h-full items-center justify-center rounded px-4 py-2 text-xl font-bold shadow">
           {currency.format(course.price)}
         </p>
-        <Button
-          variant="secondary"
-          className="flex h-full w-full items-center justify-center px-4 py-2 text-lg lg:w-min"
+        <form
+          action={async () => {
+            "use server";
+            await createCoursePreference(user.id, courseId);
+          }}
         >
-          Adquirir
-        </Button>
+          <Button>Adquirir</Button>
+        </form>
       </div>
 
       <div className="mt-12 w-full lg:w-4/5">

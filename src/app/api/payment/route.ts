@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { Payment } from "mercadopago";
 import { z } from "zod";
 import { client } from "@/mercadopago";
-import { buy } from "@/_actions/actions";
+import { buy, buyCourse } from "@/_actions/actions";
 
 const paymentSchema = z.object({
   data: z.object({
@@ -23,7 +23,11 @@ export async function POST(request: NextRequest) {
         console.warn("Missed metadata");
         return;
       }
-      await buy(items, payment.metadata);
+      if ("courseId" in payment.metadata) {
+        await buyCourse(payment.metadata);
+      } else {
+        await buy(items, payment.metadata);
+      }
     }
   } catch (error) {
     console.warn(error);

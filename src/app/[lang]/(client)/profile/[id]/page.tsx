@@ -1,4 +1,9 @@
-import { editUser, getUser, getUserOrders } from "@/_actions/actions";
+import {
+  editUser,
+  getUser,
+  getUserOrders,
+  getUserPresentialCourses,
+} from "@/_actions/actions";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { Suspense } from "react";
@@ -8,6 +13,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { redirect } from "next/navigation";
 import { TLocale } from "@/i18n";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const Orders = async ({ id }: { id: number }) => {
   const allOrders = await getUserOrders(id);
@@ -24,6 +39,40 @@ const Orders = async ({ id }: { id: number }) => {
     price: order.product.price,
   }));
   return <DataTable data={data} columns={columns} />;
+};
+
+const Courses = async ({ id }: { id: number }) => {
+  const courses = await getUserPresentialCourses(id);
+
+  return (
+    <Table>
+      <TableCaption className="sr-only">Una lista de tus cursos.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Nombre</TableHead>
+          <TableHead>Pagado el</TableHead>
+          <TableHead>Ubiucación</TableHead>
+          <TableHead>Fecha de inicio</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {courses.map(
+          ({
+            presentialCourses: { initialDate, title, location },
+            id,
+            purchasedAt,
+          }) => (
+            <TableRow key={id}>
+              <TableCell className="font-medium">{title}</TableCell>
+              <TableCell>{purchasedAt}</TableCell>
+              <TableCell>{location}</TableCell>
+              <TableCell>{initialDate}</TableCell>
+            </TableRow>
+          ),
+        )}
+      </TableBody>
+    </Table>
+  );
 };
 
 export default async function Profile({
@@ -146,8 +195,14 @@ export default async function Profile({
         <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
           Purchased Items:
         </h2>
-        <Suspense fallback={"Cargando datos..."}>
+        <Suspense fallback={"Cargando ordenes..."}>
           <Orders id={user.id} />
+        </Suspense>
+        <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+          Cursos presenciales
+        </h2>
+        <Suspense fallback={"Cargando cursos..."}>
+          <Courses id={user.id} />
         </Suspense>
       </div>
     </>

@@ -20,7 +20,6 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
   price,
   img,
 }) => {
-  console.log("img", img);
   return (
     <Card className="flex flex-col lg:flex-row">
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">

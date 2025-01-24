@@ -73,6 +73,23 @@ export const usersToProducts = sqliteTable("users_to_products", {
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
 });
+
+export const usersToPresentialCourses = sqliteTable(
+  "users_to_presential_courses",
+  {
+    id: integer("id").primaryKey(),
+    userId: integer("user_id")
+      .notNull()
+      .references(() => usersTable.id),
+    presentialCourseId: integer("presential_course_id")
+      .notNull()
+      .references(() => presentialCourseTable.id),
+    purchasedAt: text("purchased_at")
+      .default(sql`(CURRENT_TIMESTAMP)`)
+      .notNull(),
+  },
+);
+
 export const usersRelations = relations(usersTable, ({ many }) => ({
   usersToProducts: many(usersToProducts),
 }));
@@ -95,6 +112,20 @@ export const usersToProductsRelations = relations(
   }),
 );
 
+export const usersToPresentialCoursesRelations = relations(
+  usersToPresentialCourses,
+  ({ one }) => ({
+    presentialCourses: one(presentialCourseTable, {
+      fields: [usersToPresentialCourses.presentialCourseId],
+      references: [presentialCourseTable.id],
+    }),
+    user: one(usersTable, {
+      fields: [usersToPresentialCourses.userId],
+      references: [usersTable.id],
+    }),
+  }),
+);
+
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;
 
@@ -103,6 +134,11 @@ export type SelectProduct = typeof productsTable.$inferSelect;
 
 export type InsertUserToProduct = typeof usersToProducts.$inferInsert;
 export type SelectUserToProduct = typeof usersToProducts.$inferSelect;
+
+export type InsertUserToPresentialCourse =
+  typeof usersToPresentialCourses.$inferInsert;
+export type SelectUserToPresentialCourse =
+  typeof usersToPresentialCourses.$inferSelect;
 
 export type InsertEvent = typeof eventsTable.$inferInsert;
 export type SelectEvent = typeof eventsTable.$inferSelect;

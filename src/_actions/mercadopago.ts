@@ -4,7 +4,7 @@ import { Preference } from "mercadopago";
 import type { Items } from "mercadopago/dist/clients/commonTypes";
 import { redirect } from "next/navigation";
 import { client } from "@/mercadopago";
-import { getProducts } from "./actions";
+import { getPresentialCourses, getProducts } from "./actions";
 
 const preference = new Preference(client);
 
@@ -33,6 +33,36 @@ export const createPreference = async (
       metadata: { email, delivery },
     },
   });
+  const initPoint = preferenceResponse.init_point;
+
+  if (initPoint) {
+    redirect(initPoint);
+  }
+};
+
+export const createCoursePreference = async (
+  presentialCourseId: number,
+  userId: number,
+) => {
+  const courses = await getPresentialCourses();
+  const course = courses.find((course) => course.id === presentialCourseId);
+  if (!course) return;
+  const items: Items[] = [
+    {
+      id: course.id.toString(),
+      title: course.title,
+      quantity: 1,
+      unit_price: course.price,
+    },
+  ];
+
+  const preferenceResponse = await preference.create({
+    body: {
+      items,
+      metadata: { userId, presentialCourseId },
+    },
+  });
+
   const initPoint = preferenceResponse.init_point;
 
   if (initPoint) {
