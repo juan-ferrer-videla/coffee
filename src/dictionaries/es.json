@@ -10,7 +10,7 @@
   "first_about_us_tasks": "MANAGEMENT SENIOR PRENSA - DIFUSIÓN - EVENTOS CORPORATIVOS",
   "second_about_us_title": "CEO de Universo Coffee ARGENTINA",
   "second_about_us_actions": "Capacitador Técnico e Instructor Barista.",
-  "second_about_us_tasks":"MANAGEMENT SALES ROASTER - CURSOS - CAPACITACIÓN",
+  "second_about_us_tasks": "MANAGEMENT SALES ROASTER - CURSOS - CAPACITACIÓN",
   "description": "",
   "product": "Producto",
   "price": "Precio",
@@ -19,7 +19,7 @@
   "cart_description": "Estas a pocos pasos de concretar tu compra",
   "sign_in": "Iniciar sesión",
   "sign_out": "Cerrar sesión",
-  "go_to_profile":"Ver Perfil",
+  "go_to_profile": "Ver Perfil",
   "system": "Sistema",
   "light": "Claro",
   "dark": "Oscuro",
@@ -65,5 +65,6 @@
   "status": "Estado",
   "purchased_at": "Fecha de Compra",
   "more_info": "Ver más",
-  "on_site": "Presencial"
+  "on_site": "Presencial",
+  "cancel": "Cancelar"
 }

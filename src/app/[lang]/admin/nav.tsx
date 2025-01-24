@@ -1,25 +1,17 @@
 "use client";
 
-import { useDictionary } from "@/hooks/useDictionary";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { ComponentProps, FC } from "react";
-
-const links = [
-  { path: "/products", title: "Productos" },
-  { path: "/orders", title: "Ordenes" },
-  { path: "/events", title: "Eventos" },
-  { path: "/courses", title: "Cursos" },
-];
+import { adminLinks } from "./page";
 
 export const Nav: FC<ComponentProps<"nav">> = (props) => {
-  const dictionary = useDictionary();
   const pathname = usePathname();
   return (
-    <nav {...props}>
+    <nav {...props} className="hidden md:block">
       <ul className="flex items-center gap-6">
-        {links.map(({ path, title }) => (
+        {adminLinks.map(({ path, title }) => (
           <li key={path}>
             <Link
               className={cn(
@@ -28,7 +20,7 @@ export const Nav: FC<ComponentProps<"nav">> = (props) => {
                   ? "text-foreground"
                   : "text-muted-foreground",
               )}
-              href={`/${dictionary.lang}/admin${path}`}
+              href={`/es/admin${path}`}
             >
               {title}
             </Link>

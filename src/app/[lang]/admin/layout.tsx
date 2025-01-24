@@ -5,6 +5,7 @@ import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
 import { Nav } from "./nav";
 import { Providers } from "@/providers/tanstack-query";
+import { MobileDrawer } from "./mobile-drawer";
 
 export default function RootLayout({
   children,
@@ -45,6 +46,7 @@ async function AdminLayout({
           <Nav />
           <div className="flex items-center space-x-3">
             <ModeToggle />
+            <MobileDrawer />
           </div>
         </div>
       </header>

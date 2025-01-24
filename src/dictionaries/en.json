@@ -10,7 +10,7 @@
   "first_about_us_tasks": "SENIOR MANAGEMENT PRESS - DISSEMINATION - CORPORATE EVENTS",
   "second_about_us_title": "CEO at Universo Coffee ARGENTINA",
   "second_about_us_actions": "Technical Trainer and Barista Instructor.",
-  "second_about_us_tasks":"MANAGEMENT SALES ROASTER - COURSES - TRAINING",
+  "second_about_us_tasks": "MANAGEMENT SALES ROASTER - COURSES - TRAINING",
   "description": "",
   "product": "Product",
   "price": "Price",
@@ -47,8 +47,8 @@
   "wsp_button": "Do you want an event with us? Write to us!",
   "more_products": "More Products",
   "faq": "FAQ",
-   "course_buy_button": "Buy",
-   "course_details": "Course Details",
+  "course_buy_button": "Buy",
+  "course_details": "Course Details",
   "start_date": "Start date",
   "schedule": "Schedule",
   "vacancies": "Vacancies",
@@ -65,5 +65,6 @@
   "status": "Status",
   "purchased_at": "Purchased At",
   "more_info": "View More",
-  "on_site": "On Site"
+  "on_site": "On Site",
+  "cancel": "Cancel"
 }

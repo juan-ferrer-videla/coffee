@@ -10,17 +10,14 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useDictionary } from "@/hooks/useDictionary";
 import { Menu } from "lucide-react";
-import { getMainLinks } from "./nav";
 import Link from "next/link";
 import { useState } from "react";
+import { adminLinks } from "./page";
 
 export const MobileDrawer = () => {
   const [open, setOpen] = useState(false);
-  const dictionary = useDictionary();
-  const { title } = dictionary;
-  const links = getMainLinks(dictionary);
+
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild className="md:hidden">
@@ -32,13 +29,13 @@ export const MobileDrawer = () => {
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>{title}</DrawerTitle>
+            <DrawerTitle>Universo Coffee</DrawerTitle>
           </DrawerHeader>
           <ul className="grid justify-center gap-3 text-center">
-            {links.map(({ path, title }) => (
+            {adminLinks.map(({ path, title }) => (
               <li key={path}>
                 <Link
-                  href={`/${dictionary.lang}${path}`}
+                  href={`/es${path}`}
                   onClick={() => {
                     setOpen(false);
                   }}
@@ -50,7 +47,7 @@ export const MobileDrawer = () => {
           </ul>
           <DrawerFooter>
             <DrawerClose asChild>
-              <Button variant="outline">{dictionary.cancel}</Button>
+              <Button variant="outline">Cancelar</Button>
             </DrawerClose>
           </DrawerFooter>
         </div>
