@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import localFont from "next/font/local";
+import { Lexend_Giga, Geist_Mono, Montserrat } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { locales, TLocale } from "@/i18n";
@@ -11,16 +11,19 @@ import { getProducts } from "@/_actions/actions";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import { TikTok } from "@/components/icons/tiktok";
 
-const geistSans = localFont({
-  src: "../fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const LexendSansSerif = Lexend_Giga({
+  variable: "--font-lexend",
+  subsets: ["latin"],
 });
 
-const geistMono = localFont({
-  src: "../fonts/GeistMonoVF.woff",
+const MontserratSans = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  weight: "100 900",
+  subsets: ["latin"],
 });
 
 export async function generateMetadata({
@@ -85,7 +88,7 @@ export default async function RootLayout({
     <html lang={lang} suppressHydrationWarning>
       <body
         className={cn(
-          `${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`,
+          `${LexendSansSerif.variable} ${MontserratSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`,
           "font-sans",
         )}
       >
@@ -147,25 +150,27 @@ export default async function RootLayout({
                     </nav>
                   </div>
                   <div>
-                <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
-                  {address}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  San Telmo, CABA.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Buenos Aires – Argentina.
-                </p>
-              </div>
-              <div>
-                <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
-                  {contact}
-                </h3>
-                <p className="text-sm text-muted-foreground">universo.coffee@gmail.com</p>
-                <p className="text-sm text-muted-foreground">
-                   +54 11-5341-4003
-                </p>
-              </div>
+                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                      {address}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      San Telmo, CABA.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Buenos Aires – Argentina.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                      {contact}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      universo.coffee@gmail.com
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      +54 11-5341-4003
+                    </p>
+                  </div>
                 </div>
               </footer>
             </ProductsProvider>

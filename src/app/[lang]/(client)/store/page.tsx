@@ -23,7 +23,7 @@ export default async function Home({
   return (
     <>
       <div className="flex flex-col items-center text-center">
-        <h1 className="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+        <h1 className="font-serif text-4xl tracking-tight lg:text-5xl xl:text-6xl">
           {store}
         </h1>
         <p className="mb-8 max-w-2xl scroll-m-20 text-lg font-light text-muted-foreground sm:mb-12 md:mb-16">
