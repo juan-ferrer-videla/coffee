@@ -41,6 +41,7 @@ export type Inscriptions = {
   initialDate: string;
   purchasedAt: string;
   name: string;
+  phone: string;
 };
 
 export const columns: ColumnDef<Inscriptions>[] = [
@@ -87,6 +88,13 @@ export const columns: ColumnDef<Inscriptions>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "phone",
+    header: () => <div>Telefono</div>,
+    cell: ({ row }) => {
+      return <div className="font-medium">{row.getValue("phone")}</div>;
+    },
   },
   {
     accessorKey: "initialDate",

@@ -32,6 +32,7 @@ export const DataTable = () => {
               state,
               street,
               streetNumber,
+              phone,
             },
             delivery,
             quantity,
@@ -52,6 +53,7 @@ export const DataTable = () => {
             street,
             streetNumber,
             delivery,
+            phone: phone ?? "unknown",
           }),
         ) ?? []
       }

@@ -34,6 +34,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
     return <div>Curso no encontrado</div>;
   }
   const vacancies = course.vacancies - coursesCount;
+  console.log(course.vacancies, coursesCount);
 
   const { lang } = await params;
   const {
@@ -44,6 +45,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
     start_date,
     location,
     content,
+    vacancies: vacanciesTitle,
   } = await getDictionary(lang);
 
   return (
@@ -88,9 +90,11 @@ export default async function CoursesDetail({ params }: EventDescProps) {
               <span className="">{course.schedule}:</span>
             </li>
             <li>
-              <strong className="">{vacancies}:</strong>{" "}
+              <strong className="">{vacanciesTitle}:</strong>{" "}
               <span className="">
-                {vacancies > 0 ? vacancies : "No hay vacantes disponibles"}
+                {vacancies > 0
+                  ? `${vacancies}/${course.vacancies}`
+                  : "No hay vacantes disponibles"}
               </span>
             </li>
             <li>
@@ -115,7 +119,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
             await createCoursePreference(user.id, courseId);
           }}
         >
-          <Button> {course_buy_button}</Button>
+          <Button disabled={vacancies < 1}> {course_buy_button}</Button>
         </form>
       </div>
 

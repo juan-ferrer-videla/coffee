@@ -49,6 +49,7 @@ export type Payment = {
   street: string | null;
   streetNumber: number | null;
   delivery: boolean;
+  phone: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -95,6 +96,21 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "phone",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Telefono
+          <ArrowUpDown />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="lowercase">{row.getValue("phone")}</div>,
   },
   {
     accessorKey: "title",

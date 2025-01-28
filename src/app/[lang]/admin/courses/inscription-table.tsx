@@ -24,7 +24,7 @@ export const InscriptionTable = () => {
         inscriptions?.map(
           ({
             presentialCourses: { title, initialDate },
-            user: { email, name },
+            user: { email, name, phone },
             id,
             purchasedAt,
           }) => ({
@@ -34,6 +34,7 @@ export const InscriptionTable = () => {
             email,
             purchasedAt,
             name,
+            phone: phone ?? "unknown",
           }),
         ) ?? []
       }

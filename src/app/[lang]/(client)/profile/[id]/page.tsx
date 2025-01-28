@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
 const Orders = async ({ id }: { id: number }) => {
   const allOrders = await getUserOrders(id);
@@ -60,12 +61,14 @@ const Courses = async ({ id }: { id: number }) => {
       <TableBody>
         {courses.map(
           ({
-            presentialCourses: { initialDate, title, location },
+            presentialCourses: { initialDate, title, location, id: courseId },
             id,
             purchasedAt,
           }) => (
             <TableRow key={id}>
-              <TableCell className="font-medium">{title}</TableCell>
+              <TableCell className="font-medium">
+                <Link href={`/courses/${courseId}`}>{title}</Link>
+              </TableCell>
               <TableCell>{purchasedAt}</TableCell>
               <TableCell>{location}</TableCell>
               <TableCell>{initialDate}</TableCell>

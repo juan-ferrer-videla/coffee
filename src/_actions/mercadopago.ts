@@ -4,7 +4,11 @@ import { Preference } from "mercadopago";
 import type { Items } from "mercadopago/dist/clients/commonTypes";
 import { redirect } from "next/navigation";
 import { client } from "@/mercadopago";
-import { getPresentialCourses, getProducts } from "./actions";
+import {
+  getPresentialCourses,
+  getPresentialCoursesVacancies,
+  getProducts,
+} from "./actions";
 
 const preference = new Preference(client);
 
@@ -44,9 +48,13 @@ export const createCoursePreference = async (
   presentialCourseId: number,
   userId: number,
 ) => {
-  const courses = await getPresentialCourses();
+  const [courses, courseCount] = await Promise.all([
+    getPresentialCourses(),
+    getPresentialCoursesVacancies(),
+  ]);
+
   const course = courses.find((course) => course.id === presentialCourseId);
-  if (!course) return;
+  if (!course || course.vacancies <= courseCount) return;
   const items: Items[] = [
     {
       id: course.id.toString(),
