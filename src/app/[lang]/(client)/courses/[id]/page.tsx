@@ -50,7 +50,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
-      <h1 className="mb-2 text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+      <h1 className="mb-2 text-4xl font-serif tracking-tight lg:text-5xl xl:text-6xl">
         {course.title}
       </h1>
       <Image

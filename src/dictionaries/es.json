@@ -17,8 +17,8 @@
   "quantity": "Cantidad",
   "cart_table_caption": "Lista de productos añadidos al carrito",
   "cart_description": "Estas a pocos pasos de concretar tu compra",
-  "sign_in": "Iniciar sesión",
-  "sign_out": "Cerrar sesión",
+  "sign_in": "Iniciar Sesión",
+  "sign_out": "Cerrar Sesión",
   "go_to_profile": "Ver Perfil",
   "system": "Sistema",
   "light": "Claro",
@@ -66,5 +66,8 @@
   "purchased_at": "Fecha de Compra",
   "more_info": "Ver más",
   "on_site": "Presencial",
-  "cancel": "Cancelar"
+  "cancel": "Cancelar",
+  "sign_in_desc": "Debes iniciar sesion para acceder a esta pagina. Gracias!",
+  "sign_in_email": "Ingrese su correo electrónico para iniciar sesión en su cuenta",
+  "sign_in_login": "Ingresar"
 }

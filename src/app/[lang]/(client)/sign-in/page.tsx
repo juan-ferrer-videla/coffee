@@ -19,23 +19,23 @@ export default async function Home({
   searchParams: SearchParams;
 }>) {
   const { lang } = await params;
-  const { sign_in } = await getDictionary(lang);
+  const { sign_in, sign_in_desc, sign_in_email, sign_in_login } = await getDictionary(lang);
   const { redirect } = await searchParams;
 
   return (
     <>
       <div className="flex flex-col items-center text-center">
-        <h1 className="text-4xl font-extrabold uppercase tracking-tight lg:text-5xl xl:text-6xl">
+        <h1 className="text-4xl font-serif tracking-tight lg:text-5xl xl:text-6xl">
           {sign_in}
         </h1>
         <p className="mb-8 max-w-2xl scroll-m-20 text-lg font-light text-muted-foreground sm:mb-12 md:mb-16">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam facere
+          {sign_in_desc}
         </p>
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardTitle className="text-2xl">{sign_in_login}</CardTitle>
             <CardDescription>
-              Enter your email below to login to your account
+              {sign_in_email}
             </CardDescription>
           </CardHeader>
           <CardContent>

@@ -66,5 +66,9 @@
   "purchased_at": "Purchased At",
   "more_info": "View More",
   "on_site": "On Site",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "sign_in_desc": "You must log in to access this page. Thank you!",
+  "sign_in_email": "Enter your email below to login to your account",
+   "sign_in_login": "Login"
+  
 }

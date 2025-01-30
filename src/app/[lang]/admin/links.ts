@@ -3,4 +3,5 @@ export const adminLinks = [
   { path: "/orders", title: "Ordenes" },
   { path: "/events", title: "Eventos" },
   { path: "/courses", title: "Cursos" },
+  { path: "/users", title: "Usuarios" }
 ];
