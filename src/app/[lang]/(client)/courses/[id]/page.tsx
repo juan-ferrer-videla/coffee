@@ -34,7 +34,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
     return <div>Curso no encontrado</div>;
   }
   const vacancies = course.vacancies - coursesCount;
-  console.log(course.vacancies, coursesCount);
 
   const { lang } = await params;
   const {
@@ -50,7 +49,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
-      <h1 className="mb-2 text-4xl font-serif tracking-tight lg:text-5xl xl:text-6xl">
+      <h1 className="mb-2 font-serif text-4xl tracking-tight lg:text-5xl xl:text-6xl">
         {course.title}
       </h1>
       <Image
@@ -65,7 +64,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
 
         <div className="w-[90%] sm:w-[70%] lg:w-[48%]">
           <iframe
-            src="https://www.youtube.com/embed/Nnxxfi0tuDg?si=7fmxQ3znvp-hDaSG"
+            src={course.introVideoURL}
             title="YouTube video player"
             className="aspect-video w-full rounded-2xl shadow-lg"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"

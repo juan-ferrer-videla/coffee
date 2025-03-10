@@ -13,7 +13,17 @@ export const CreateCourse = () => {
     >
       <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="title">Titulo</Label>
-        <Input id="title" name="title" placeholder="Evento de ..." required />
+        <Input id="title" name="title" placeholder="Curso de ..." required />
+      </div>
+
+      <div className="grid w-full items-center gap-1.5">
+        <Label htmlFor="introVideoURL">Video de introduccion URL</Label>
+        <Input
+          id="introVideoURL"
+          name="introVideoURL"
+          placeholder="https://www.youtube.com/embed/Nnxx..."
+          required
+        />
       </div>
 
       <div className="grid w-full items-center gap-1.5">
@@ -21,7 +31,7 @@ export const CreateCourse = () => {
         <Textarea
           id="description"
           name="description"
-          placeholder="Este producto es utilizado para..."
+          placeholder="Escribe tu descripcion aqui..."
           rows={4}
           required
         />
@@ -41,7 +51,7 @@ export const CreateCourse = () => {
           type="number"
           id="vacancies"
           name="vacancies"
-          placeholder="15 de Enero, 2025"
+          placeholder="100"
           required
         />
       </div>
@@ -51,7 +61,7 @@ export const CreateCourse = () => {
           type="number"
           id="price"
           name="price"
-          placeholder="15 de Enero, 2025"
+          placeholder="2500"
           required
         />
       </div>
@@ -64,7 +74,7 @@ export const CreateCourse = () => {
         <Textarea
           id="schedule"
           name="schedule"
-          placeholder="15 de Enero, 2025"
+          placeholder="8:15hs a 20:00hs"
           required
           rows={4}
         />
@@ -74,7 +84,7 @@ export const CreateCourse = () => {
         <Input
           id="location"
           name="location"
-          placeholder="15 de Enero, 2025"
+          placeholder="Mendoza, Ciudad, San martin 123"
           required
         />
       </div>
@@ -83,7 +93,7 @@ export const CreateCourse = () => {
         <Input
           id="instructor"
           name="instructor"
-          placeholder="15 de Enero, 2025"
+          placeholder="Juan Ferrer"
           required
         />
       </div>
@@ -94,7 +104,7 @@ export const CreateCourse = () => {
         <Textarea
           id="instructorDescription"
           name="instructorDescription"
-          placeholder="Este producto es utilizado para..."
+          placeholder="Escribe la descripción aquí..."
           rows={4}
           required
         />
@@ -114,7 +124,7 @@ export const CreateCourse = () => {
         <Textarea
           id="content"
           name="content"
-          placeholder="Este producto es utilizado para..."
+          placeholder="Escribe mas info sobre el curso..."
           rows={4}
           required
         />
