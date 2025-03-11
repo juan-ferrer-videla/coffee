@@ -6,19 +6,39 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { ComponentProps, FC } from "react";
+import { HTMLAttributes } from "react";
 
-export const getMainLinks = ({ courses, home, store }: TDictionary) => [
-  { path: "", title: home },
-  { path: "/store", title: store },
-  { path: "/courses", title: courses },
-];
+type NavbarProps = HTMLAttributes<HTMLElement> & {
+  hasCourses: boolean;
+};
 
-export const Nav: FC<ComponentProps<"nav">> = (props) => {
+export const getMainLinks = (
+  { courses, home, store, my_courses }: TDictionary,
+  hasCourses: boolean,
+) => {
+  const links = [
+    { path: "", title: home },
+    { path: "/store", title: store },
+    { path: "/courses", title: courses },
+  ];
+
+  if (!hasCourses) {
+    links.push({ path: "/myCourses", title: my_courses });
+  }
+
+  return links;
+};
+
+export const Nav: FC<NavbarProps> = ({
+  className,
+  hasCourses,
+  ...rest
+}: NavbarProps) => {
   const dictionary = useDictionary();
-  const links = getMainLinks(dictionary);
+  const links = getMainLinks(dictionary, hasCourses);
   const pathname = usePathname();
   return (
-    <nav {...props}>
+    <nav className={cn(className)} {...rest}>
       <ul className="flex items-center gap-6">
         {links.map(({ path, title }) => (
           <li key={path}>

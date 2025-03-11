@@ -497,7 +497,7 @@ export const getUserOrders = async (id: number) => {
   });
 };
 
-export const getUserPresentialCourses = async (id: number) => {
+export const getUserPresentialCourses = async (id: number ) => {
   return await db.query.usersToPresentialCourses.findMany({
     with: { presentialCourses: true, user: true },
     where: eq(usersToPresentialCourses.userId, id),

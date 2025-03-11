@@ -69,5 +69,6 @@
   "cancel": "Cancelar",
   "sign_in_desc": "Debes iniciar sesion para acceder a esta pagina. Gracias!",
   "sign_in_email": "Ingrese su correo electrónico para iniciar sesión en su cuenta",
-  "sign_in_login": "Ingresar"
+  "sign_in_login": "Ingresar",
+  "my_courses": "Mis Cursos"
 }

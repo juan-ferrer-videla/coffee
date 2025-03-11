@@ -69,6 +69,7 @@
   "cancel": "Cancel",
   "sign_in_desc": "You must log in to access this page. Thank you!",
   "sign_in_email": "Enter your email below to login to your account",
-   "sign_in_login": "Login"
+   "sign_in_login": "Login",
+   "my_courses": "My Courses"
   
 }

@@ -1,4 +1,4 @@
-import { getProducts, getUser } from "@/_actions/actions";
+import { getProducts, getUser, getUserPresentialCourses } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { FaqModal } from "@/components/faq-modal";
 import { MobileDrawer } from "@/components/mobile-drawer";
@@ -16,6 +16,13 @@ export default async function RootLayout({
   const products = await getProducts();
   const user = await getUser();
 
+  let hasCourses = false;
+
+  if (user) {
+    const courses = await getUserPresentialCourses(user.id)
+     hasCourses = courses.length > 0;
+  }
+
   return (
     <>
       <header className="container sticky top-0 z-50 mb-6 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:mb-8 md:mb-12">
@@ -23,7 +30,7 @@ export default async function RootLayout({
           <Link href={"/"} className="hidden md:block">
             UniversoCoffee.ar
           </Link>
-          <Nav className="hidden md:block" />
+          <Nav className="hidden md:block" hasCourses={hasCourses} />
           <div className="flex items-center space-x-3">
             <FaqModal />
             <ToggleLang />
