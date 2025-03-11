@@ -22,7 +22,7 @@ export const getMainLinks = (
     { path: "/courses", title: courses },
   ];
 
-  if (!hasCourses) {
+  if (hasCourses) {
     links.push({ path: "/myCourses", title: my_courses });
   }
 
