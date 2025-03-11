@@ -5,7 +5,7 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { ComponentProps, FC } from "react";
+import React, {FC } from "react";
 import { HTMLAttributes } from "react";
 
 type NavbarProps = HTMLAttributes<HTMLElement> & {
@@ -14,7 +14,7 @@ type NavbarProps = HTMLAttributes<HTMLElement> & {
 
 export const getMainLinks = (
   { courses, home, store, my_courses }: TDictionary,
-  hasCourses: boolean,
+  hasCourses: boolean = false,
 ) => {
   const links = [
     { path: "", title: home },
@@ -23,7 +23,7 @@ export const getMainLinks = (
   ];
 
   if (hasCourses) {
-    links.push({ path: "/myCourses", title: my_courses });
+    links.push({ path: "/my-courses", title: my_courses });
   }
 
   return links;

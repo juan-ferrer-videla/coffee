@@ -14,12 +14,17 @@ import { CldImage } from "./cld-image";
 import { Badge } from "./ui/badge";
 import { useDictionary } from "@/hooks/useDictionary";
 
-export const CourseCard: React.FC<SelectPresencialCourse> = ({
+type CourseCardProps = SelectPresencialCourse & {
+  showPrice?: boolean;
+}
+
+export const CourseCard: React.FC<CourseCardProps> = ({
   id,
   title,
   description,
   price,
   img,
+  showPrice = true
 }) => {
   const { more_info, on_site } = useDictionary();
   return (
@@ -42,9 +47,11 @@ export const CourseCard: React.FC<SelectPresencialCourse> = ({
           <Badge className="text-base">{on_site}</Badge>
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex items-center gap-x-4 p-0">
-          <p className="w-min rounded text-lg font-bold">
-            {currency.format(price)}
-          </p>
+        {showPrice && (
+            <p className="w-min rounded text-lg font-bold">
+              {currency.format(price)}
+            </p>
+          )}
           <Button className="text-base">{more_info}</Button>
         </CardFooter>
       </CardContent>
