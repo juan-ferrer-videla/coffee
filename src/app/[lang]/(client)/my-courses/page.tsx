@@ -4,6 +4,7 @@ import { getUser, getUserPresentialCourses } from "@/_actions/actions";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { CourseCard } from "@/components/course-card";
+import Link from "next/link";
 
 const UserCourses = async ({params}:{params: TLocale}) => {
   const user = await getUser();
@@ -22,7 +23,9 @@ const UserCourses = async ({params}:{params: TLocale}) => {
       <ul>
         {courses.map(({presentialCourses}) => (
           <li key={presentialCourses.id}>
+            <Link href={`/${lang}/my-courses/${presentialCourses.id}`}>
             <CourseCard {...presentialCourses} showPrice={false}/>
+            </Link>
           </li>
         ))}
       </ul>

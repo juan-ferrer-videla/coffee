@@ -1,9 +1,14 @@
 "use client";
-import { SelectPresencialCourse } from "@/db/schema";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 
-export const InstructorCard: React.FC<SelectPresencialCourse> = ({
+type CardInstructor = {
+  instructorImg: string,
+  instructor: string,
+  instructorDescription: string,
+}
+
+export const InstructorCard: React.FC<CardInstructor> = ({
   instructorImg,
   instructor,
   instructorDescription,
