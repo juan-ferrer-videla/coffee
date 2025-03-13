@@ -5,9 +5,8 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { CourseCard } from "@/components/course-card";
 
-const UserCourses = async ({params}:{params: TLocale}) => {
+const UserCourses = async ({ lang }: { lang: TLocale }) => {
   const user = await getUser();
-  const lang = await params;
 
   if (!user) redirect(`/${lang}/sign-in?redirect=my-courses`);
 
@@ -20,9 +19,9 @@ const UserCourses = async ({params}:{params: TLocale}) => {
   return (
     <>
       <ul>
-        {courses.map(({presentialCourses}) => (
+        {courses.map(({ presentialCourses }) => (
           <li key={presentialCourses.id}>
-            <CourseCard {...presentialCourses} showPrice={false}/>
+            <CourseCard {...presentialCourses} showPrice={false} />
           </li>
         ))}
       </ul>
@@ -43,7 +42,7 @@ export default async function MyCourses({
         {dictionary.my_courses}
       </h1>
       <Suspense fallback={"...Cargando cursos"}>
-        <UserCourses params={lang}/>
+        <UserCourses lang={lang} />
       </Suspense>
     </div>
   );

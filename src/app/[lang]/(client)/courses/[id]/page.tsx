@@ -19,7 +19,7 @@ interface EventDescProps {
 }
 
 export default async function CoursesDetail({ params }: EventDescProps) {
-  const { id } = await params;
+  const { id, lang } = await params;
   const courseId = Number(id);
   const [user, courses, coursesCount] = await Promise.all([
     getUser(),
@@ -35,7 +35,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
   }
   const vacancies = course.vacancies - coursesCount;
 
-  const { lang } = await params;
   const {
     faq,
     course_buy_button,
