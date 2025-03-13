@@ -21,11 +21,11 @@ export const adminsTable = sqliteTable("admins", {
   email: text("email").unique().notNull(),
 });
 
-export const presentialCourseTable = sqliteTable("presential_course", {
+export const presentialCoursesTable = sqliteTable("presential_courses", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  price: integer("").notNull(),
+  price: integer("price").notNull(),
   img: text("img").notNull(),
   introVideoURL: text("intro_video_url").notNull(),
   initialDate: text("initial_date").notNull(),
@@ -37,6 +37,65 @@ export const presentialCourseTable = sqliteTable("presential_course", {
   vacancies: integer("vacancies").notNull(),
   location: text("location").notNull(),
 });
+
+export const remoteCoursesTable = sqliteTable("remote_courses", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  price: integer("price").notNull(),
+  img: text("img").notNull(),
+  introVideoURL: text("intro_video_url").notNull(),
+  instructor: text("instructor").notNull(),
+  instructorImg: text("instructor_img").notNull(),
+  instructorDescription: text("instructor_description").notNull(),
+  content: text("content").notNull(),
+});
+
+export const remoteModulesTable = sqliteTable("remote_modules", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  remoteCourseId: integer("remote_course_id")
+    .notNull()
+    .references(() => remoteCoursesTable.id, { onDelete: "cascade" }),
+});
+
+export const remoteModuleFilesTable = sqliteTable("remote_module_files", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  file: text("file").notNull(),
+  remoteModuleId: integer("remote_module_id")
+    .notNull()
+    .references(() => remoteModulesTable.id, { onDelete: "cascade" }),
+});
+
+export const remoteModuleVideosTable = sqliteTable("remote_module_videos", {
+  id: integer("id").primaryKey(),
+  title: text("title").notNull(),
+  url: text("url").notNull(),
+  remoteModuleId: integer("remote_module_id")
+    .notNull()
+    .references(() => remoteModulesTable.id, { onDelete: "cascade" }),
+});
+
+export const moduleQuestionsTable = sqliteTable("module_questions", {
+  id: integer("id").primaryKey(),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  remoteModuleId: integer("remote_module_id")
+    .notNull()
+    .references(() => remoteModulesTable.id, { onDelete: "cascade" }),
+});
+
+export const moduleQuestionChoicesTable = sqliteTable(
+  "module_question_choices",
+  {
+    id: integer("id").primaryKey(),
+    choice: text("choice").notNull(),
+    moduleQuestionId: integer("module_question_id")
+      .notNull()
+      .references(() => moduleQuestionsTable.id, { onDelete: "cascade" }),
+  },
+);
 
 export const productsTable = sqliteTable("products", {
   id: integer("id").primaryKey(),
@@ -84,12 +143,25 @@ export const usersToPresentialCourses = sqliteTable(
       .references(() => usersTable.id),
     presentialCourseId: integer("presential_course_id")
       .notNull()
-      .references(() => presentialCourseTable.id),
+      .references(() => presentialCoursesTable.id),
     purchasedAt: text("purchased_at")
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
   },
 );
+
+export const usersToRemoteCourses = sqliteTable("users_to_remote_courses", {
+  id: integer("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => usersTable.id),
+  remoteCourseId: integer("remote_course_id")
+    .notNull()
+    .references(() => remoteCoursesTable.id),
+  purchasedAt: text("purchased_at")
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+});
 
 export const usersRelations = relations(usersTable, ({ many }) => ({
   usersToProducts: many(usersToProducts),
@@ -116,13 +188,88 @@ export const usersToProductsRelations = relations(
 export const usersToPresentialCoursesRelations = relations(
   usersToPresentialCourses,
   ({ one }) => ({
-    presentialCourses: one(presentialCourseTable, {
+    presentialCourses: one(presentialCoursesTable, {
       fields: [usersToPresentialCourses.presentialCourseId],
-      references: [presentialCourseTable.id],
+      references: [presentialCoursesTable.id],
     }),
     user: one(usersTable, {
       fields: [usersToPresentialCourses.userId],
       references: [usersTable.id],
+    }),
+  }),
+);
+
+export const usersToRemoteCoursesRelations = relations(
+  usersToRemoteCourses,
+  ({ one }) => ({
+    remoteCourses: one(remoteCoursesTable, {
+      fields: [usersToRemoteCourses.remoteCourseId],
+      references: [remoteCoursesTable.id],
+    }),
+    user: one(usersTable, {
+      fields: [usersToRemoteCourses.userId],
+      references: [usersTable.id],
+    }),
+  }),
+);
+
+export const remoteCourseRelations = relations(
+  remoteCoursesTable,
+  ({ many }) => ({
+    modules: many(remoteModulesTable),
+  }),
+);
+
+export const remoteModuleRelations = relations(
+  remoteModulesTable,
+  ({ one, many }) => ({
+    module: one(remoteCoursesTable, {
+      fields: [remoteModulesTable.remoteCourseId],
+      references: [remoteCoursesTable.id],
+    }),
+    questions: many(moduleQuestionsTable),
+    files: many(remoteModuleFilesTable),
+    videos: many(remoteModuleVideosTable),
+  }),
+);
+
+export const remoteModuleVideoRelations = relations(
+  remoteModuleVideosTable,
+  ({ one }) => ({
+    module: one(remoteModulesTable, {
+      fields: [remoteModuleVideosTable.remoteModuleId],
+      references: [remoteModulesTable.id],
+    }),
+  }),
+);
+
+export const remoteModuleFileRelations = relations(
+  remoteModuleFilesTable,
+  ({ one }) => ({
+    module: one(remoteModulesTable, {
+      fields: [remoteModuleFilesTable.remoteModuleId],
+      references: [remoteModulesTable.id],
+    }),
+  }),
+);
+
+export const moduleQuestionRelations = relations(
+  moduleQuestionsTable,
+  ({ one, many }) => ({
+    module: one(remoteModulesTable, {
+      fields: [moduleQuestionsTable.remoteModuleId],
+      references: [remoteModulesTable.id],
+    }),
+    items: many(moduleQuestionChoicesTable),
+  }),
+);
+
+export const moduleQuestionChoiceRelations = relations(
+  moduleQuestionChoicesTable,
+  ({ one }) => ({
+    module: one(moduleQuestionsTable, {
+      fields: [moduleQuestionChoicesTable.moduleQuestionId],
+      references: [moduleQuestionsTable.id],
     }),
   }),
 );
@@ -144,8 +291,14 @@ export type SelectUserToPresentialCourse =
 export type InsertEvent = typeof eventsTable.$inferInsert;
 export type SelectEvent = typeof eventsTable.$inferSelect;
 
-export type InsertPresencialCourse = typeof presentialCourseTable.$inferInsert;
-export type SelectPresencialCourse = typeof presentialCourseTable.$inferSelect;
+export type InsertPresencialCourse = typeof presentialCoursesTable.$inferInsert;
+export type SelectPresencialCourse = typeof presentialCoursesTable.$inferSelect;
+
+export type InsertRemoteCourse = typeof remoteCoursesTable.$inferInsert;
+export type SelectRemoteCourse = typeof remoteCoursesTable.$inferSelect;
+
+export type InsertRemoteModule = typeof remoteModulesTable.$inferInsert;
+export type SelectRemoteModule = typeof remoteModulesTable.$inferSelect;
 
 export const statusSchema = z.union([
   z.literal("pending"),
@@ -219,4 +372,47 @@ export const editPresentialCourseSchema = z.object({
   instructorDescription: z.string(),
   content: z.string(),
   vacancies: z.string(),
+});
+
+export const remoteCourseSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  price: z.string(),
+  introVideoURL: z.string(),
+  img: z.instanceof(File),
+  instructor: z.string(),
+  instructorImg: z.instanceof(File),
+  instructorDescription: z.string(),
+  content: z.string(),
+});
+
+export const editRemoteCourseSchema = z.object({
+  id: z.string(),
+  imgPublicId: z.string(),
+  publicId: z.string(),
+  title: z.string(),
+  description: z.string(),
+  price: z.string(),
+  img: z.instanceof(File),
+  instructor: z.string(),
+  instructorImg: z.instanceof(File).optional(),
+  instructorDescription: z.string(),
+  content: z.string(),
+});
+
+export const createModuleSchema = z.object({
+  title: z.string(),
+  remoteCourseId: z.string(),
+});
+
+export const createModuleVideoSchema = z.object({
+  title: z.string(),
+  remoteModuleId: z.string(),
+  url: z.string(),
+});
+
+export const createModuleFileSchema = z.object({
+  title: z.string(),
+  remoteModuleId: z.string(),
+  file: z.instanceof(File),
 });

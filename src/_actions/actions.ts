@@ -5,19 +5,28 @@ import { eq, count } from "drizzle-orm";
 import { db } from "../db";
 import {
   adminsTable,
+  createModuleSchema,
   editEventSchema,
   editPresentialCourseSchema,
   editProductSchema,
+  editRemoteCourseSchema,
   eventSchema,
   eventsTable,
   presentialCourseSchema,
-  presentialCourseTable,
+  presentialCoursesTable,
   productSchema,
   productsTable,
+  remoteCourseSchema,
+  remoteCoursesTable,
+  remoteModuleFilesTable,
+  remoteModuleVideosTable,
+  remoteModulesTable,
   SelectUserToProduct,
   usersTable,
   usersToPresentialCourses,
   usersToProducts,
+  createModuleVideoSchema,
+  createModuleFileSchema,
 } from "../db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -47,11 +56,13 @@ const uploadImage = async ({
   signature,
   timestamp,
   folder = "universo-coffee",
+  format = "image",
 }: {
   file: File;
   signature: string;
   timestamp: string;
   folder?: string;
+  format?: "file" | "image";
 }) => {
   const cloudinaryFormData = new FormData();
   cloudinaryFormData.append("file", file);
@@ -75,7 +86,7 @@ const uploadImage = async ({
   const publicId = cldData?.public_id;
 
   if (typeof publicId !== "string") return;
-  return publicId;
+  return format === "image" ? publicId : cldData?.secure_url;
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -154,7 +165,7 @@ export const getProducts = async (
 };
 
 export const getCourses = async () => {
-  return await db.select().from(presentialCourseTable);
+  return await db.select().from(presentialCoursesTable);
 };
 
 export const deleteProduct = async (formData: FormData) => {
@@ -364,7 +375,7 @@ export const createPresentialCourse = async (formData: FormData) => {
     imgPublicId = id ?? "";
   }
 
-  await db.insert(presentialCourseTable).values({
+  await db.insert(presentialCoursesTable).values({
     instructorImg: publicId,
     img: imgPublicId,
     price: parseInt(price),
@@ -415,7 +426,7 @@ export const editPresentialCourse = async (formData: FormData) => {
   }
 
   await db
-    .update(presentialCourseTable)
+    .update(presentialCoursesTable)
     .set({
       title,
       description,
@@ -430,7 +441,7 @@ export const editPresentialCourse = async (formData: FormData) => {
       vacancies: parseInt(vacancies),
       instructorImg: newPublicId,
     })
-    .where(eq(presentialCourseTable.id, parseInt(id)));
+    .where(eq(presentialCoursesTable.id, parseInt(id)));
 
   revalidatePath("/");
 };
@@ -442,8 +453,108 @@ export const deletePresentialCourse = async (formData: FormData) => {
 
   await Promise.all([
     db
-      .delete(presentialCourseTable)
-      .where(eq(presentialCourseTable.id, parseInt(id))),
+      .delete(presentialCoursesTable)
+      .where(eq(presentialCoursesTable.id, parseInt(id))),
+    cloudinary.uploader.destroy(img),
+  ]);
+
+  revalidatePath("/");
+};
+
+export const createRemoteCourse = async (formData: FormData) => {
+  const {
+    price,
+    img: imgFile,
+    instructorImg: file,
+    ...data
+  } = remoteCourseSchema.parse(Object.fromEntries(formData));
+
+  let publicId = "";
+  let imgPublicId = "";
+
+  if (file.size) {
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file, signature, timestamp });
+    publicId = id ?? "";
+  }
+
+  if (imgFile.size) {
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file: imgFile, signature, timestamp });
+    imgPublicId = id ?? "";
+  }
+
+  await db.insert(remoteCoursesTable).values({
+    instructorImg: publicId,
+    img: imgPublicId,
+    price: parseInt(price),
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const editRemoteCourse = async (formData: FormData) => {
+  const {
+    title,
+    id,
+    publicId,
+    imgPublicId,
+    description,
+    img: imgFile,
+    content,
+    instructor,
+    instructorDescription,
+    price,
+    instructorImg: file,
+  } = editRemoteCourseSchema.parse(Object.fromEntries(formData));
+
+  let newPublicId = publicId;
+  let newImgPublicId = imgPublicId;
+
+  if (file?.size) {
+    cloudinary.uploader.destroy(publicId);
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file, signature, timestamp });
+    if (id) {
+      newPublicId = id;
+    }
+  }
+
+  if (imgFile?.size) {
+    cloudinary.uploader.destroy(imgPublicId);
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({ file: imgFile, signature, timestamp });
+    if (id) {
+      newImgPublicId = id;
+    }
+  }
+
+  await db
+    .update(remoteCoursesTable)
+    .set({
+      title,
+      description,
+      content,
+      instructor,
+      img: newImgPublicId,
+      instructorDescription,
+      price: parseInt(price),
+      instructorImg: newPublicId,
+    })
+    .where(eq(remoteCoursesTable.id, parseInt(id)));
+
+  revalidatePath("/");
+};
+
+export const deleteRemoteCourse = async (formData: FormData) => {
+  const { id, img } = z
+    .object({ id: z.string(), img: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await Promise.all([
+    db
+      .delete(remoteCoursesTable)
+      .where(eq(remoteCoursesTable.id, parseInt(id))),
     cloudinary.uploader.destroy(img),
   ]);
 
@@ -451,7 +562,21 @@ export const deletePresentialCourse = async (formData: FormData) => {
 };
 
 export const getPresentialCourses = async () => {
-  return await db.select().from(presentialCourseTable);
+  return await db.select().from(presentialCoursesTable);
+};
+
+export const getRemoteCourses = async () => {
+  return await db.query.remoteCoursesTable.findMany({
+    with: {
+      modules: {
+        with: {
+          questions: { with: { items: true } },
+          files: true,
+          videos: true,
+        },
+      },
+    },
+  });
 };
 
 export const editUser = async (formData: FormData) => {
@@ -517,3 +642,102 @@ export const getUsersToPresentialCourses = async () => {
     with: { presentialCourses: true, user: true },
   });
 };
+
+export const getUsersToRemoteCourses = async () => {
+  return await db.query.usersToRemoteCourses.findMany({
+    with: { remoteCourses: true, user: true },
+  });
+};
+
+export const createModule = async (formData: FormData) => {
+  const { remoteCourseId, ...data } = createModuleSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  await db.insert(remoteModulesTable).values({
+    remoteCourseId: parseInt(remoteCourseId),
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const deleteModule = async (formData: FormData) => {
+  const { id } = z
+    .object({ id: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await db
+    .delete(remoteModulesTable)
+    .where(eq(remoteModulesTable.id, parseInt(id)));
+
+  revalidatePath("/");
+};
+
+export const createModuleVideo = async (formData: FormData) => {
+  const { remoteModuleId, ...data } = createModuleVideoSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  await db.insert(remoteModuleVideosTable).values({
+    remoteModuleId: parseInt(remoteModuleId),
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const deleteModuleVideo = async (formData: FormData) => {
+  const { id } = z
+    .object({ id: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await db
+    .delete(remoteModuleFilesTable)
+    .where(eq(remoteModuleFilesTable.id, parseInt(id)));
+
+  revalidatePath("/");
+};
+
+export const createModuleFile = async (formData: FormData) => {
+  const { remoteModuleId, file, ...data } = createModuleFileSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  let publicId = "";
+
+  if (file.size) {
+    const { signature, timestamp } = getSignature();
+    const id = await uploadImage({
+      file,
+      signature,
+      timestamp,
+      format: "file",
+    });
+    publicId = id ?? "";
+  }
+
+  await db.insert(remoteModuleFilesTable).values({
+    remoteModuleId: parseInt(remoteModuleId),
+    file: publicId,
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const deleteModuleFile = async (formData: FormData) => {
+  const { id, fileId } = z
+    .object({ id: z.string(), fileId: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await Promise.all([
+    db
+      .delete(remoteModuleFilesTable)
+      .where(eq(remoteModuleFilesTable.id, parseInt(id))),
+    cloudinary.uploader.destroy(fileId),
+  ]);
+
+  revalidatePath("/");
+};
+
+export type SelectRemoteCourseQuery = Awaited<
+  ReturnType<typeof getRemoteCourses>
+>;
