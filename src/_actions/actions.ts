@@ -686,13 +686,11 @@ export const createModuleVideo = async (formData: FormData) => {
 };
 
 export const deleteModuleVideo = async (formData: FormData) => {
-  const { id } = z
-    .object({ id: z.string() })
-    .parse(Object.fromEntries(formData));
+  const id = z.string().parse(Object.fromEntries(formData));
 
   await db
-    .delete(remoteModuleFilesTable)
-    .where(eq(remoteModuleFilesTable.id, parseInt(id)));
+    .delete(remoteModuleVideosTable)
+    .where(eq(remoteModuleVideosTable.id, parseInt(id)));
 
   revalidatePath("/");
 };
