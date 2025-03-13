@@ -1,27 +1,24 @@
-import {
-  getPresentialCourses,
-  getUsersToPresentialCourses,
-} from "@/_actions/actions";
-import { CreateCourse } from "../create-presential-course";
-import { PresentialCourse } from "../course";
+import { getRemoteCourses, getUsersToRemoteCourses } from "@/_actions/actions";
+import { CreateCourse } from "./create-remote-course";
 import { Suspense } from "react";
 import { GridSkeleton } from "@/components/grid-skeleton";
 
-import { InscriptionTable } from "../inscription-table";
+import { InscriptionTable } from "../presential/inscription-table";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { RemoteCourse } from "./remote-course";
 
-const PresentialCourses = async () => {
-  const courses = await getPresentialCourses();
+const RemoteCourses = async () => {
+  const courses = await getRemoteCourses();
 
   return (
     <ul className="mb-6 sm:mb-10 md:mb-16">
       {courses.map((course) => (
         <li key={course.id}>
-          <PresentialCourse {...course} />
+          <RemoteCourse {...course} />
         </li>
       ))}
     </ul>
@@ -31,8 +28,8 @@ const PresentialCourses = async () => {
 export default async function Courses() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ["users-to-presential-courses"],
-    queryFn: getUsersToPresentialCourses,
+    queryKey: ["users-to-remote-courses"],
+    queryFn: getUsersToRemoteCourses,
   });
 
   return (
@@ -47,7 +44,7 @@ export default async function Courses() {
       </div>
       <CreateCourse />
       <Suspense fallback={<GridSkeleton />}>
-        <PresentialCourses />
+        <RemoteCourses />
       </Suspense>
       <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
         Cursos remotos

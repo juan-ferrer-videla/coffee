@@ -2,12 +2,12 @@ import {
   getPresentialCourses,
   getUsersToPresentialCourses,
 } from "@/_actions/actions";
-import { CreateCourse } from "../create-presential-course";
-import { PresentialCourse } from "../course";
+import { CreateCourse } from "./create-presential-course";
+import { PresentialCourse } from "./course";
 import { Suspense } from "react";
 import { GridSkeleton } from "@/components/grid-skeleton";
 
-import { InscriptionTable } from "../inscription-table";
+import { InscriptionTable } from "./inscription-table";
 import {
   dehydrate,
   HydrationBoundary,

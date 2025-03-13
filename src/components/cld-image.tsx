@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React from "react"
-import { CldImage as NextCldImage, type CldImageProps } from "next-cloudinary"
-import { cn } from "@/lib/utils"
+import React from "react";
+import { CldImage as NextCldImage, type CldImageProps } from "next-cloudinary";
+import { cn } from "@/lib/utils";
 
 export const CldImage = ({ className, ...props }: CldImageProps) => {
   return (
@@ -10,5 +10,5 @@ export const CldImage = ({ className, ...props }: CldImageProps) => {
       className={cn("object-cover object-center", className)}
       {...props}
     />
-  )
-}
+  );
+};
