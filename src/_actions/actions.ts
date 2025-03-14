@@ -51,18 +51,16 @@ const getSignature = () => {
   return { timestamp, signature };
 };
 
-const uploadImage = async ({
+const uploadFile = async ({
   file,
   signature,
   timestamp,
   folder = "universo-coffee",
-  format = "image",
 }: {
   file: File;
   signature: string;
   timestamp: string;
   folder?: string;
-  format?: "file" | "image";
 }) => {
   const cloudinaryFormData = new FormData();
   cloudinaryFormData.append("file", file);
@@ -79,14 +77,14 @@ const uploadImage = async ({
     body: cloudinaryFormData,
   });
 
-  if (!response.ok) return;
+  if (!response.ok) throw new Error("cloudinary fetch failed");
 
   const cldData = await response.json();
+  const data = z
+    .object({ secure_url: z.string(), public_id: z.string() })
+    .parse(cldData);
 
-  const publicId = cldData?.public_id;
-
-  if (typeof publicId !== "string") return;
-  return format === "image" ? publicId : cldData?.secure_url;
+  return data;
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -142,8 +140,8 @@ export const createProduct = async (formData: FormData) => {
 
   if (file.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    publicId = id ?? "";
+    const data = await uploadFile({ file, signature, timestamp });
+    publicId = data.public_id;
   }
 
   await db.insert(productsTable).values({
@@ -197,10 +195,8 @@ export const editProduct = async (formData: FormData) => {
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    if (id) {
-      newPublicId = id;
-    }
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+    newPublicId = public_id;
   }
 
   await db
@@ -292,8 +288,8 @@ export const createEvent = async (formData: FormData) => {
 
   if (file.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    publicId = id ?? "";
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+    publicId = public_id;
   }
 
   await db.insert(eventsTable).values({ img: publicId, ...data });
@@ -315,10 +311,9 @@ export const editEvent = async (formData: FormData) => {
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    if (id) {
-      newPublicId = id;
-    }
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+
+    newPublicId = public_id;
   }
 
   await db
@@ -365,14 +360,18 @@ export const createPresentialCourse = async (formData: FormData) => {
 
   if (file.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    publicId = id ?? "";
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+    publicId = public_id;
   }
 
   if (imgFile.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file: imgFile, signature, timestamp });
-    imgPublicId = id ?? "";
+    const { public_id } = await uploadFile({
+      file: imgFile,
+      signature,
+      timestamp,
+    });
+    imgPublicId = public_id;
   }
 
   await db.insert(presentialCoursesTable).values({
@@ -410,19 +409,21 @@ export const editPresentialCourse = async (formData: FormData) => {
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    if (id) {
-      newPublicId = id;
-    }
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+
+    newPublicId = public_id;
   }
 
   if (imgFile?.size) {
     cloudinary.uploader.destroy(imgPublicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file: imgFile, signature, timestamp });
-    if (id) {
-      newImgPublicId = id;
-    }
+    const { public_id } = await uploadFile({
+      file: imgFile,
+      signature,
+      timestamp,
+    });
+
+    newImgPublicId = public_id;
   }
 
   await db
@@ -474,14 +475,18 @@ export const createRemoteCourse = async (formData: FormData) => {
 
   if (file.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    publicId = id ?? "";
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+    publicId = public_id;
   }
 
   if (imgFile.size) {
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file: imgFile, signature, timestamp });
-    imgPublicId = id ?? "";
+    const { public_id } = await uploadFile({
+      file: imgFile,
+      signature,
+      timestamp,
+    });
+    imgPublicId = public_id;
   }
 
   await db.insert(remoteCoursesTable).values({
@@ -514,19 +519,21 @@ export const editRemoteCourse = async (formData: FormData) => {
   if (file?.size) {
     cloudinary.uploader.destroy(publicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file, signature, timestamp });
-    if (id) {
-      newPublicId = id;
-    }
+    const { public_id } = await uploadFile({ file, signature, timestamp });
+
+    newPublicId = public_id;
   }
 
   if (imgFile?.size) {
     cloudinary.uploader.destroy(imgPublicId);
     const { signature, timestamp } = getSignature();
-    const id = await uploadImage({ file: imgFile, signature, timestamp });
-    if (id) {
-      newImgPublicId = id;
-    }
+    const { public_id } = await uploadFile({
+      file: imgFile,
+      signature,
+      timestamp,
+    });
+
+    newImgPublicId = public_id;
   }
 
   await db
@@ -622,7 +629,7 @@ export const getUserOrders = async (id: number) => {
   });
 };
 
-export const getUserPresentialCourses = async (id: number ) => {
+export const getUserPresentialCourses = async (id: number) => {
   return await db.query.usersToPresentialCourses.findMany({
     with: { presentialCourses: true, user: true },
     where: eq(usersToPresentialCourses.userId, id),
@@ -686,7 +693,9 @@ export const createModuleVideo = async (formData: FormData) => {
 };
 
 export const deleteModuleVideo = async (formData: FormData) => {
-  const id = z.string().parse(Object.fromEntries(formData));
+  const { id } = z
+    .object({ id: z.string() })
+    .parse(Object.fromEntries(formData));
 
   await db
     .delete(remoteModuleVideosTable)
@@ -700,22 +709,19 @@ export const createModuleFile = async (formData: FormData) => {
     Object.fromEntries(formData),
   );
 
-  let publicId = "";
+  if (!file.size) throw new Error("The file provided has no size");
 
-  if (file.size) {
-    const { signature, timestamp } = getSignature();
-    const id = await uploadImage({
-      file,
-      signature,
-      timestamp,
-      format: "file",
-    });
-    publicId = id ?? "";
-  }
+  const { signature, timestamp } = getSignature();
+  const { public_id, secure_url } = await uploadFile({
+    file,
+    signature,
+    timestamp,
+  });
 
   await db.insert(remoteModuleFilesTable).values({
     remoteModuleId: parseInt(remoteModuleId),
-    file: publicId,
+    file: public_id,
+    url: secure_url,
     ...data,
   });
   revalidatePath("/");

@@ -63,6 +63,7 @@ export const remoteModuleFilesTable = sqliteTable("remote_module_files", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
   file: text("file").notNull(),
+  url: text("url").notNull(),
   remoteModuleId: integer("remote_module_id")
     .notNull()
     .references(() => remoteModulesTable.id, { onDelete: "cascade" }),
