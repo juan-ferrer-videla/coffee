@@ -27,6 +27,10 @@ import {
   usersToProducts,
   createModuleVideoSchema,
   createModuleFileSchema,
+  createModuleQuestionSchema,
+  moduleQuestionsTable,
+  moduleQuestionChoicesTable,
+  createModuleQuestionChoiceSchema,
 } from "../db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -739,6 +743,52 @@ export const deleteModuleFile = async (formData: FormData) => {
     cloudinary.uploader.destroy(fileId),
   ]);
 
+  revalidatePath("/");
+};
+
+export const createModuleQuestion = async (formData: FormData) => {
+  const { remoteModuleId, ...data } = createModuleQuestionSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  await db.insert(moduleQuestionsTable).values({
+    remoteModuleId: parseInt(remoteModuleId),
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const deleteModuleQuestion = async (formData: FormData) => {
+  const { id } = z
+    .object({ id: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await db
+    .delete(moduleQuestionsTable)
+    .where(eq(moduleQuestionsTable.id, parseInt(id)));
+  revalidatePath("/");
+};
+
+export const createModuleQuestionChoice = async (formData: FormData) => {
+  const { moduleQuestionId, ...data } = createModuleQuestionChoiceSchema.parse(
+    Object.fromEntries(formData),
+  );
+
+  await db.insert(moduleQuestionChoicesTable).values({
+    moduleQuestionId: parseInt(moduleQuestionId),
+    ...data,
+  });
+  revalidatePath("/");
+};
+
+export const deleteModuleQuestionChoice = async (formData: FormData) => {
+  const { id } = z
+    .object({ id: z.string() })
+    .parse(Object.fromEntries(formData));
+
+  await db
+    .delete(moduleQuestionChoicesTable)
+    .where(eq(moduleQuestionChoicesTable.id, parseInt(id)));
   revalidatePath("/");
 };
 

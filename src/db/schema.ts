@@ -417,3 +417,14 @@ export const createModuleFileSchema = z.object({
   remoteModuleId: z.string(),
   file: z.instanceof(File),
 });
+
+export const createModuleQuestionSchema = z.object({
+  question: z.string(),
+  remoteModuleId: z.string(),
+  answer: z.string(),
+});
+
+export const createModuleQuestionChoiceSchema = z.object({
+  choice: z.string(),
+  moduleQuestionId: z.string(),
+});

@@ -3,8 +3,11 @@
 import {
   createModule,
   createModuleFile,
+  createModuleQuestion,
+  createModuleQuestionChoice,
   createModuleVideo,
   deleteModuleFile,
+  deleteModuleQuestion,
   deleteModuleVideo,
   SelectRemoteCourseQuery,
 } from "@/_actions/actions";
@@ -38,6 +41,123 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+
+const CreateModuleQuestion = ({
+  remoteModuleId,
+}: {
+  remoteModuleId: number;
+}) => {
+  const [open, setOpen] = useState(false);
+  const handleAction = async (formData: FormData) => {
+    await createModuleQuestion(formData);
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="self-start">
+          <Plus />
+          Añadir pregunta
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Crea una nueva pregunta</DialogTitle>
+          <DialogDescription>
+            Elegi un pregunta a tu preferencia
+          </DialogDescription>
+        </DialogHeader>
+
+        <form
+          action={handleAction}
+          className="align-start mb-6 grid gap-6 sm:mb-10 md:mb-16"
+        >
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="question">Pregunta</Label>
+            <Input
+              id="question"
+              name="question"
+              placeholder="Escribe la pregunta ..."
+              required
+            />
+          </div>
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="answer">Respuesta</Label>
+            <Input
+              id="answer"
+              name="answer"
+              placeholder="Escribe la respuesta ..."
+              required
+            />
+          </div>
+
+          <input type="hidden" name="remoteModuleId" value={remoteModuleId} />
+
+          <div>
+            <Submit text="Crear" />
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const CreateModuleChoice = ({
+  moduleQuestionId,
+}: {
+  moduleQuestionId: number;
+}) => {
+  const [open, setOpen] = useState(false);
+  const handleAction = async (formData: FormData) => {
+    await createModuleQuestionChoice(formData);
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="mb-2 self-start">
+          <Plus />
+          Añadir respuesta incorrecta
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Crea una nueva respuesta incorrecta</DialogTitle>
+          <DialogDescription>
+            Elegi una respuesta incorrecta a tu preferencia
+          </DialogDescription>
+        </DialogHeader>
+
+        <form
+          action={handleAction}
+          className="align-start mb-6 grid gap-6 sm:mb-10 md:mb-16"
+        >
+          <div className="grid w-full items-center gap-1.5">
+            <Label htmlFor="choice">Respuesta incorrecta</Label>
+            <Input
+              id="choice"
+              name="choice"
+              placeholder="Escribe la pregunta ..."
+              required
+            />
+          </div>
+
+          <input
+            type="hidden"
+            name="moduleQuestionId"
+            value={moduleQuestionId}
+          />
+
+          <div>
+            <Submit text="Crear" />
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 const FileItem = ({
   title,
@@ -98,6 +218,40 @@ const FileItem = ({
         </AlertDialog>
       </div>
     </>
+  );
+};
+
+const DeleteQuestion = ({ id }: { id: number }) => {
+  const [open, setOpen] = useState(false);
+  const handleAction = async (formData: FormData) => {
+    await deleteModuleQuestion(formData);
+    setOpen(false);
+  };
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive" className="mt-2">
+          Borrar pregunta
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Estas totalmente seguro?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Esta acción no puede ser desecha. Al aceptar borraras la pregunta de
+            forma permanente.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+
+          <form action={handleAction} className="grid place-items-center">
+            <input type="hidden" name="id" value={id} />
+            <Submit text="Borrar" variant={"destructive"} />
+          </form>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
@@ -266,6 +420,7 @@ export const RemoteModule = ({
   id: moduleId,
   videos,
   title,
+  questions,
 }: SelectRemoteCourseQuery[number]["modules"][number]) => {
   return (
     <Accordion type="single" collapsible className="w-full">
@@ -286,9 +441,33 @@ export const RemoteModule = ({
               </li>
             ))}
           </ul>
+          <ul>
+            {questions.map(({ question, answer, items, id }) => (
+              <li key={id} className="mb-3">
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>{question}</AccordionTrigger>
+                    <AccordionContent>
+                      <CreateModuleChoice moduleQuestionId={id} />
+                      <ul className="flex items-center gap-x-4 text-lg font-bold">
+                        <li className="text-green-600">{answer}</li>
+                        {items.map(({ choice, id }) => (
+                          <li className="text-red-600" key={id}>
+                            {choice}
+                          </li>
+                        ))}
+                      </ul>
+                      <DeleteQuestion id={id} />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </li>
+            ))}
+          </ul>
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <CreateModuleFile id={moduleId} />
             <CreateModuleVideo id={moduleId} />
+            <CreateModuleQuestion remoteModuleId={moduleId} />
           </div>
         </AccordionContent>
       </AccordionItem>
