@@ -114,10 +114,10 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         <form
           action={async () => {
             "use server";
-            await createCoursePreference(user.id, courseId);
+            await createCoursePreference(courseId, user.id);
           }}
         >
-          <Button disabled={vacancies < 1}> {course_buy_button}</Button>
+          <Button disabled={vacancies < 1}>{course_buy_button}</Button>
         </form>
       </div>
 
