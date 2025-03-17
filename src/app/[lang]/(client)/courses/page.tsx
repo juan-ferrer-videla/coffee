@@ -14,7 +14,7 @@ const Courses = async () => {
     <ul className="grid gap-6">
       {courses.map((course) => (
         <li key={`${course.type}-${course.id}`}>
-          <Link href={`/courses/${course.id}`}>
+          <Link href={`/courses/${course.type}/${course.id}`}>
             <CourseCard key={course.id} {...course} />
           </Link>
         </li>

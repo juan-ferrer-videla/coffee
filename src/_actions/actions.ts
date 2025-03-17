@@ -606,7 +606,7 @@ export const getCourses = async (): Promise<CourseCardProps[]> =>  {
 
   const formattedRemoteCourses = remoteCourses.map(course => ({
     ...course,
-    type: 'virtual',
+    type: 'remote',
   }));
 
   return [...formattedPresentialCourses, ...formattedRemoteCourses];
