@@ -1,4 +1,4 @@
-import { getProducts, getUser, getUserPresentialCourses } from "@/_actions/actions";
+import { getProducts, getUser, getUserPresentialCourses, getUserRemoteCourses } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { FaqModal } from "@/components/faq-modal";
 import { MobileDrawer } from "@/components/mobile-drawer";
@@ -7,6 +7,7 @@ import { Nav } from "@/components/nav";
 import { ToggleLang } from "@/components/toggle-lang";
 import { User } from "@/components/user";
 import Link from "next/link";
+
 
 export default async function RootLayout({
   children,
@@ -19,8 +20,9 @@ export default async function RootLayout({
   let hasCourses = false;
 
   if (user) {
-    const courses = await getUserPresentialCourses(user.id)
-     hasCourses = courses.length > 0;
+    const presentialCourses = await getUserPresentialCourses(user.id)
+    const remoteCourses = await getUserRemoteCourses(user.id)
+     hasCourses = presentialCourses.length > 0 || remoteCourses.length > 0
   }
 
   return (

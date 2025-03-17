@@ -1,4 +1,4 @@
-import { getPresentialCourses } from "@/_actions/actions";
+import { getCourses } from "@/_actions/actions";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 import { Suspense } from "react";
@@ -8,13 +8,13 @@ import { CourseCard } from "@/components/course-card";
 import Link from "next/link";
 
 const Courses = async () => {
-  const courses = await getPresentialCourses();
+  const courses = await getCourses();
 
   return (
     <ul className="grid gap-6">
       {courses.map((course) => (
-        <li key={course.id}>
-          <Link href={`/courses/${course.id}`}>
+        <li key={`${course.type}-${course.id}`}>
+          <Link href={`/courses/${course.type}/${course.id}`}>
             <CourseCard key={course.id} {...course} />
           </Link>
         </li>

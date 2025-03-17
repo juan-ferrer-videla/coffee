@@ -1,6 +1,5 @@
 import {
-  getPresentialCourses,
-  getPresentialCoursesVacancies,
+  getRemoteCourses,
   getUser,
 } from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
@@ -21,10 +20,9 @@ interface EventDescProps {
 export default async function CoursesDetail({ params }: EventDescProps) {
   const { id, lang } = await params;
   const courseId = Number(id);
-  const [user, courses, coursesCount] = await Promise.all([
+  const [user, courses] = await Promise.all([
     getUser(),
-    getPresentialCourses(),
-    getPresentialCoursesVacancies(),
+    getRemoteCourses()
   ]);
   if (!user) redirect(`/sign-in?redirect=courses/${courseId}`);
 
@@ -33,17 +31,12 @@ export default async function CoursesDetail({ params }: EventDescProps) {
   if (!course) {
     return <div>Curso no encontrado</div>;
   }
-  const vacancies = course.vacancies - coursesCount;
 
   const {
     faq,
     course_buy_button,
-    schedule,
     course_details,
-    start_date,
-    location,
     content,
-    vacancies: vacanciesTitle,
   } = await getDictionary(lang);
 
   return (
@@ -80,26 +73,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
           <h2 className="mb-4 text-2xl">{course_details}:</h2>
           <ul className="space-y-2">
             <li>
-              <strong className="">{start_date}:</strong>{" "}
-              <span className="">{course.initialDate}:</span>
-            </li>
-            <li>
-              <strong className="">{schedule}:</strong>{" "}
-              <span className="">{course.schedule}:</span>
-            </li>
-            <li>
-              <strong className="">{vacanciesTitle}:</strong>{" "}
-              <span className="">
-                {vacancies > 0
-                  ? `${vacancies}/${course.vacancies}`
-                  : "No hay vacantes disponibles"}
-              </span>
-            </li>
-            <li>
-              <strong className="">{location}:</strong>{" "}
-              <span className="">{course.location}</span>
-            </li>
-            <li>
               <strong className="">{content}:</strong>{" "}
               <span className="">{course.content}</span>
             </li>
@@ -117,7 +90,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
             await createCoursePreference(courseId, user.id);
           }}
         >
-          <Button disabled={vacancies < 1}>{course_buy_button}</Button>
+          <Button>{course_buy_button}</Button>
         </form>
       </div>
 

@@ -1,16 +1,17 @@
 import { TLocale } from "@/i18n";
 import { getDictionary } from "@/get-dictionary";
-import { getUser, getUserPresentialCourses } from "@/_actions/actions";
+import { getCourses, getUser} from "@/_actions/actions";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { CourseCard } from "@/components/course-card";
+import Link from "next/link";
 
 const UserCourses = async ({ lang }: { lang: TLocale }) => {
   const user = await getUser();
 
   if (!user) redirect(`/${lang}/sign-in?redirect=my-courses`);
 
-  const courses = await getUserPresentialCourses(user.id);
+  const courses = await getCourses();
 
   if (!courses) {
     return <h1>Todavia no has adquirido ningun curso.</h1>;
@@ -19,9 +20,11 @@ const UserCourses = async ({ lang }: { lang: TLocale }) => {
   return (
     <>
       <ul>
-        {courses.map(({ presentialCourses }) => (
-          <li key={presentialCourses.id}>
-            <CourseCard {...presentialCourses} showPrice={false} />
+        {courses.map((course) => (
+          <li key={`${course.type}-${course.id}`} className="mb-6">
+            <Link href={`/my-courses/${course.type}/${course.id}`}>
+            <CourseCard {...course} showPrice={false} />
+            </Link>
           </li>
         ))}
       </ul>
