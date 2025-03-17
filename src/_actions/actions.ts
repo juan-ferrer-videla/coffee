@@ -27,6 +27,7 @@ import {
   usersToProducts,
   createModuleVideoSchema,
   createModuleFileSchema,
+  usersToRemoteCourses
 } from "../db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -681,6 +682,13 @@ export const getUsersToRemoteCourses = async () => {
     with: { remoteCourses: true, user: true },
   });
 };
+
+export const getUserRemoteCourses = async(id:number) => {
+  return await db.query.usersToRemoteCourses.findMany({
+    with: {remoteCourses: true, user: true},
+    where: eq(usersToRemoteCourses.userId, id),
+  })
+}
 
 export const createModule = async (formData: FormData) => {
   const { remoteCourseId, ...data } = createModuleSchema.parse(
