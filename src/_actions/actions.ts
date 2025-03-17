@@ -32,6 +32,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
 import { Items } from "mercadopago/dist/clients/commonTypes";
+import { CourseCardProps } from "@/components/course-card";
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -160,10 +161,6 @@ export const getProducts = async (
     .select()
     .from(productsTable)
     .where(eq(productsTable.isRecommended, options.recommended));
-};
-
-export const getCourses = async () => {
-  return await db.select().from(presentialCoursesTable);
 };
 
 export const deleteProduct = async (formData: FormData) => {
@@ -585,6 +582,35 @@ export const getRemoteCourses = async () => {
     },
   });
 };
+
+export const getCourses = async (): Promise<CourseCardProps[]> =>  {
+  const [presentialCourses, remoteCourses] = await Promise.all([
+    db.select().from(presentialCoursesTable),
+    db.query.remoteCoursesTable.findMany({
+      with: {
+        modules: {
+          with: {
+            questions: { with: { items: true}},
+            files: true,
+            videos: true,
+          }
+        }
+      }
+    })
+  ]);
+
+  const formattedPresentialCourses = presentialCourses.map(course => ({
+    ...course,
+    type: 'presential',
+  }));
+
+  const formattedRemoteCourses = remoteCourses.map(course => ({
+    ...course,
+    type: 'virtual',
+  }));
+
+  return [...formattedPresentialCourses, ...formattedRemoteCourses];
+}
 
 export const editUser = async (formData: FormData) => {
   const { id, streetNumber, dni, ...data } = z

@@ -8,15 +8,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SelectPresencialCourse } from "@/db/schema";
 import { currency } from "@/lib/utils";
 import { CldImage } from "./cld-image";
 import { Badge } from "./ui/badge";
 import { useDictionary } from "@/hooks/useDictionary";
 
-type CourseCardProps = SelectPresencialCourse & {
+export type CourseCardProps = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  img: string;
   showPrice?: boolean;
-}
+  type?: string;
+};
 
 export const CourseCard: React.FC<CourseCardProps> = ({
   id,
@@ -24,7 +29,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   description,
   price,
   img,
-  showPrice = true
+  showPrice = true,
+  type,
 }) => {
   const { more_info, on_site } = useDictionary();
   return (
@@ -44,10 +50,14 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
         <CardDescription className="mb-3 text-base">
           <p className="mb-3 line-clamp-4 text-sm">{description}</p>
-          <Badge className="text-base">{on_site}</Badge>
+          {type === "presential" ? (
+            <Badge className="text-base">{on_site}</Badge>
+          ) : (
+            <Badge className="text-base">Virtual</Badge>
+          )}
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex items-center gap-x-4 p-0">
-        {showPrice && (
+          {showPrice && (
             <p className="w-min rounded text-lg font-bold">
               {currency.format(price)}
             </p>
