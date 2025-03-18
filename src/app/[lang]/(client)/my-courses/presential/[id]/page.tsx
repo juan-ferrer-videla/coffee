@@ -5,12 +5,8 @@ import {
 } from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { currency } from "@/lib/utils";
-import { FrequentQuestions } from "@/components/faq-courses";
 import { InstructorCard } from "@/components/instructor-card";
 import { redirect } from "next/navigation";
-import { createCoursePreference } from "@/_actions/mercadopago";
 import { TLocale } from "@/i18n";
 import { getDictionary } from "@/get-dictionary";
 
@@ -36,8 +32,6 @@ export default async function CoursesDetail({ params }: EventDescProps) {
   const vacancies = course.vacancies - coursesCount;
 
   const {
-    faq,
-    course_buy_button,
     schedule,
     course_details,
     start_date,
