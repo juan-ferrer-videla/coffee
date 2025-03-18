@@ -22,6 +22,8 @@ export default async function CourseStudy({ params }: EventDescProps) {
   const remoteCourses = await getRemoteCourses();
   const course = remoteCourses.find((course) => course.id === courseId);
 
+  console.log("CURSO", course)
+
   if (!course) {
     return <div>Curso no encontrado</div>;
   }
