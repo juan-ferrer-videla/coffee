@@ -588,6 +588,21 @@ export const getRemoteCourses = async () => {
   });
 };
 
+export const getRemoteCourse = async (id: number) => {
+  return await db.query.remoteCoursesTable.findFirst({
+    with: {
+      modules: {
+        with: {
+          questions: { with: { items: true } },
+          files: true,
+          videos: true,
+        },
+        where: eq(remoteCoursesTable.id, id),
+      },
+    },
+  });
+};
+
 export const getCourses = async (): Promise<CourseCardProps[]> => {
   const [presentialCourses, remoteCourses] = await Promise.all([
     db.select().from(presentialCoursesTable),
