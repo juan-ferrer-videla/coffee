@@ -8,6 +8,7 @@ import {
   getPresentialCourses,
   getPresentialCoursesVacancies,
   getProducts,
+  getRemoteCourses,
 } from "./actions";
 
 const preference = new Preference(client);
@@ -68,6 +69,38 @@ export const createCoursePreference = async (
     body: {
       items,
       metadata: { userId, presentialCourseId },
+    },
+  });
+
+  const initPoint = preferenceResponse.init_point;
+
+  if (initPoint) {
+    redirect(initPoint);
+  }
+};
+
+export const createRemoteCoursePreference = async (
+  remoteCourseId: number,
+  userId: number,
+) => {
+  const courses = await getRemoteCourses();
+
+  const course = courses.find((course) => course.id === remoteCourseId);
+  if (!course) return;
+
+  const items: Items[] = [
+    {
+      id: course.id.toString(),
+      title: course.title,
+      quantity: 1,
+      unit_price: course.price,
+    },
+  ];
+
+  const preferenceResponse = await preference.create({
+    body: {
+      items,
+      metadata: { userId, remoteCourseId },
     },
   });
 

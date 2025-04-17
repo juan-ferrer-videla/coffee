@@ -1,4 +1,4 @@
-import { getRemoteCourse, getRemoteCourses, getUser } from "@/_actions/actions";
+import { getRemoteCourse, getUser } from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { InstructorCard } from "@/components/instructor-card";
@@ -21,7 +21,7 @@ export default async function CourseStudy({ params }: EventDescProps) {
 
   const course = await getRemoteCourse(courseId);
 
-  console.log("CURSO", course)
+  console.log("CURSO", course);
 
   if (!course) {
     return <div>Curso no encontrado</div>;

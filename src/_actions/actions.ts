@@ -247,7 +247,7 @@ export const buy = async (
   revalidatePath("/");
 };
 
-export const buyCourse = async ({
+export const buyPresentialCourse = async ({
   userId,
   presentialCourseId,
 }: {
@@ -257,6 +257,17 @@ export const buyCourse = async ({
   await db
     .insert(usersToPresentialCourses)
     .values({ userId, presentialCourseId });
+
+  revalidatePath("/");
+};
+export const buyRemoteCourse = async ({
+  userId,
+  remoteCourseId,
+}: {
+  userId: number;
+  remoteCourseId: number;
+}) => {
+  await db.insert(usersToRemoteCourses).values({ userId, remoteCourseId });
 
   revalidatePath("/");
 };
@@ -575,6 +586,9 @@ export const getPresentialCourses = async () => {
 };
 
 export const getRemoteCourses = async () => {
+  return await db.select().from(remoteCoursesTable);
+};
+export const getRemoteCoursesQuery = async () => {
   return await db.query.remoteCoursesTable.findMany({
     with: {
       modules: {
@@ -842,5 +856,5 @@ export const deleteModuleQuestionChoice = async (formData: FormData) => {
 };
 
 export type SelectRemoteCourseQuery = Awaited<
-  ReturnType<typeof getRemoteCourses>
+  ReturnType<typeof getRemoteCoursesQuery>
 >;

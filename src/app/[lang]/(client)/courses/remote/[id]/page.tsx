@@ -1,4 +1,4 @@
-import { getRemoteCourses, getUser } from "@/_actions/actions";
+import { getRemoteCoursesQuery, getUser } from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { currency } from "@/lib/utils";
 import { FrequentQuestions } from "@/components/faq-courses";
 import { InstructorCard } from "@/components/instructor-card";
 import { redirect } from "next/navigation";
-import { createCoursePreference } from "@/_actions/mercadopago";
+import { createRemoteCoursePreference } from "@/_actions/mercadopago";
 import { TLocale } from "@/i18n";
 import { getDictionary } from "@/get-dictionary";
 
@@ -17,7 +17,10 @@ interface EventDescProps {
 export default async function CoursesDetail({ params }: EventDescProps) {
   const { id, lang } = await params;
   const courseId = Number(id);
-  const [user, courses] = await Promise.all([getUser(), getRemoteCourses()]);
+  const [user, courses] = await Promise.all([
+    getUser(),
+    getRemoteCoursesQuery(),
+  ]);
   if (!user) redirect(`/sign-in?redirect=courses/remote/${courseId}`);
 
   const course = courses.find((course) => course.id === courseId);
@@ -77,7 +80,7 @@ export default async function CoursesDetail({ params }: EventDescProps) {
         <form
           action={async () => {
             "use server";
-            await createCoursePreference(courseId, user.id);
+            await createRemoteCoursePreference(courseId, user.id);
           }}
         >
           <Button>{course_buy_button}</Button>

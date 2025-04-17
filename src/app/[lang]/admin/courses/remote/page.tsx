@@ -1,4 +1,7 @@
-import { getRemoteCourses, getUsersToRemoteCourses } from "@/_actions/actions";
+import {
+  getRemoteCoursesQuery,
+  getUsersToRemoteCourses,
+} from "@/_actions/actions";
 import { CreateCourse } from "./create-remote-course";
 import { Suspense } from "react";
 import { GridSkeleton } from "@/components/grid-skeleton";
@@ -12,7 +15,7 @@ import {
 import { RemoteCourse } from "./remote-course";
 
 const RemoteCourses = async () => {
-  const courses = await getRemoteCourses();
+  const courses = await getRemoteCoursesQuery();
 
   return (
     <ul className="mb-6 sm:mb-10 md:mb-16">
