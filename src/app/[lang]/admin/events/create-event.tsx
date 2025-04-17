@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createEvent } from "@/_actions/actions";
 import { Submit } from "@/components/submit";
+import { InputCalendar } from "./calendar-events";
 
 export const CreateEvent = async () => {
   return (
@@ -16,14 +17,9 @@ export const CreateEvent = async () => {
           <Input id="title" name="title" placeholder="Evento de ..." required />
         </div>
 
-        <div className="grid w-full items-center gap-1.5">
+        <div>
           <Label htmlFor="date">Fecha</Label>
-          <Input
-            id="date"
-            name="date"
-            placeholder="15 de Enero, 2025"
-            required
-          />
+          <InputCalendar id="date" name="date" required />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="image">Imagen</Label>

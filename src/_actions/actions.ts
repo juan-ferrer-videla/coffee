@@ -293,9 +293,11 @@ export const changeStatus = async ({
 };
 
 export const createEvent = async (formData: FormData) => {
-  const { img: file, ...data } = eventSchema.parse(
-    Object.fromEntries(formData),
-  );
+  const {
+    img: file,
+    date,
+    ...data
+  } = eventSchema.parse(Object.fromEntries(formData));
 
   let publicId = "";
 
@@ -305,7 +307,9 @@ export const createEvent = async (formData: FormData) => {
     publicId = public_id;
   }
 
-  await db.insert(eventsTable).values({ img: publicId, ...data });
+  await db
+    .insert(eventsTable)
+    .values({ img: publicId, date: parseInt(date), ...data });
   revalidatePath("/");
 };
 
@@ -334,7 +338,7 @@ export const editEvent = async (formData: FormData) => {
     .set({
       title,
       description,
-      date,
+      date: parseInt(date),
       img: newPublicId,
     })
     .where(eq(eventsTable.id, parseInt(id)));
