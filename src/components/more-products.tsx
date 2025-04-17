@@ -25,10 +25,10 @@ export const MoreProducts = async ({
 }) => {
   const products = await getProducts();
 
-  const currentProduct = Number(currentProductId)
+  const currentProduct = Number(currentProductId);
 
   const filteredProducts = products.filter(
-    (product) => product.id !== currentProduct
+    (product) => product.id !== currentProduct,
   );
 
   return (
@@ -55,6 +55,7 @@ export const MoreProducts = async ({
                       className="object-cover"
                       src={product.img}
                       fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
                   <CardHeader className="grow">

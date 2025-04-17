@@ -42,6 +42,7 @@ export async function IncommingEvents() {
                     className="object-cover"
                     src={event.img}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
                 <CardHeader className="grow">

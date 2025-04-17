@@ -40,6 +40,7 @@ export const RemoteCourse = (course: SelectRemoteCourseQuery[number]) => {
             className="rounded-xl object-contain"
             src={img}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </CardHeader>

@@ -37,6 +37,7 @@ export async function RecommendedCarousel() {
                     className="object-cover"
                     src={product.img}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
                 <CardHeader className="grow">

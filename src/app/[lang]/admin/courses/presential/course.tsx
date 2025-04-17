@@ -41,6 +41,7 @@ export const PresentialCourse = (course: SelectPresencialCourse) => {
             className="rounded-xl object-cover"
             src={img}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
       </CardHeader>

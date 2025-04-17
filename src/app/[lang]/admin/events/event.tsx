@@ -24,6 +24,7 @@ export const Event = ({ id, description, img, date, title }: SelectEvent) => {
           className="object-cover"
           src={img}
           fill
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
       <CardHeader>
