@@ -36,7 +36,7 @@ export const AboutUsCard = () => {
       <div className="flex w-full max-w-lg transform-gpu overflow-hidden rounded-lg shadow-2xl md:w-[48%] lg:w-[48%]">
         <Image src={imgOwner2} alt="Owner" className="w-1/3 object-cover" />
         <div className="p-4">
-          <h2 className="text-xl font-bold">Coffee Master Mancini Rafael</h2>
+          <h2 className="text-xl font-bold">Nuestro @MIYAGIargentoOFICIAL</h2>
           <p className="text-base">
             <strong>{second_about_us_title}</strong>
             <br />

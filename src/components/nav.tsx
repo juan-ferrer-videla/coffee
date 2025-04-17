@@ -13,29 +13,22 @@ type NavbarProps = HTMLAttributes<HTMLElement> & {
 };
 
 export const getMainLinks = (
-  { courses, home, store, my_courses }: TDictionary,
-  hasCourses: boolean = false,
+  { home, store }: TDictionary,
 ) => {
   const links = [
     { path: "", title: home },
     { path: "/store", title: store },
-    { path: "/courses", title: courses },
   ];
-
-  if (hasCourses) {
-    links.push({ path: "/my-courses", title: my_courses });
-  }
 
   return links;
 };
 
 export const Nav: FC<NavbarProps> = ({
   className,
-  hasCourses,
   ...rest
 }: NavbarProps) => {
   const dictionary = useDictionary();
-  const links = getMainLinks(dictionary, hasCourses);
+  const links = getMainLinks(dictionary);
   const pathname = usePathname();
   return (
     <nav className={cn(className)} {...rest}>

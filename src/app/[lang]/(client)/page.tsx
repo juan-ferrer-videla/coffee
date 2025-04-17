@@ -46,7 +46,7 @@ export default async function Home({
         <BannerCarousel />
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">
-        <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+        <h2 className="mb-4 scroll-m-20 text-2xl font-semibold font-serif tracking-tight">
           {recommended_products}
         </h2>
 
@@ -61,7 +61,7 @@ export default async function Home({
         </Button>
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">
-        <h2 className="mb-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+        <h2 className="mb-4 scroll-m-20 text-2xl font-semibold font-serif tracking-tight">
           {incomming_events}
         </h2>
         <Suspense fallback={<CarouselSkeleton />}>

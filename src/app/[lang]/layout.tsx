@@ -168,7 +168,7 @@ export default async function RootLayout({
                       universo.coffee@gmail.com
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      +54 11-5341-4003
+                      +54 11-3469-8469
                     </p>
                   </div>
                 </div>
