@@ -112,7 +112,7 @@ export const productsTable = sqliteTable("products", {
 export const eventsTable = sqliteTable("events", {
   id: integer("id").primaryKey(),
   title: text("title").notNull(),
-  date: text("date").notNull(),
+  date: integer("date").notNull(),
   img: text("img").notNull(),
   description: text("description").notNull(),
 });

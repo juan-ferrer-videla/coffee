@@ -10,3 +10,24 @@ export const currency = new Intl.NumberFormat("es-AR", {
   currency: "ARS",
   minimumFractionDigits: 0,
 });
+
+const MONTHS = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
+export const getParseDate = (number: number) => {
+  const dateObj = new Date(number);
+
+  return `${dateObj.getDate()} de ${MONTHS[dateObj.getMonth()]}, ${dateObj.getFullYear()}`;
+};

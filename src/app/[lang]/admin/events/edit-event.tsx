@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SelectEvent } from "@/db/schema";
 import { useState } from "react";
 import { Submit } from "@/components/submit";
+import { InputCalendar } from "./calendar-events";
 
 export const EditEvent = ({
   description,
@@ -55,16 +56,14 @@ export const EditEvent = ({
               required
             />
           </div>
-          <div className="w-fullitems-center grid gap-1.5">
-            <Label htmlFor="edit_date">Fecha</Label>
-            <Input
-              id="edit_date"
-              name="date"
-              placeholder="5000"
-              defaultValue={date}
-              required
-            />
-          </div>
+          <Label htmlFor="edit_date">Fecha</Label>
+          <InputCalendar
+            id="edit_date"
+            name="date"
+            required
+            initialDate={date}
+          />
+
           <div className="w-fullitems-center grid gap-1.5">
             <Label htmlFor="edit_description">Description</Label>
             <Textarea
