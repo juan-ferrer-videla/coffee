@@ -5,16 +5,9 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, {FC } from "react";
-import { HTMLAttributes } from "react";
+import React, { type ComponentProps, type FC } from "react";
 
-type NavbarProps = HTMLAttributes<HTMLElement> & {
-  hasCourses: boolean;
-};
-
-export const getMainLinks = (
-  { home, store }: TDictionary,
-) => {
+export const getMainLinks = ({ home, store }: TDictionary) => {
   const links = [
     { path: "", title: home },
     { path: "/store", title: store },
@@ -23,10 +16,7 @@ export const getMainLinks = (
   return links;
 };
 
-export const Nav: FC<NavbarProps> = ({
-  className,
-  ...rest
-}: NavbarProps) => {
+export const Nav: FC<ComponentProps<"nav">> = ({ className, ...rest }) => {
   const dictionary = useDictionary();
   const links = getMainLinks(dictionary);
   const pathname = usePathname();

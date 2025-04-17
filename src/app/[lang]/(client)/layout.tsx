@@ -1,4 +1,9 @@
-import { getProducts, getUser, getUserPresentialCourses, getUserRemoteCourses } from "@/_actions/actions";
+import {
+  getProducts,
+  getUser,
+  getUserPresentialCourses,
+  getUserRemoteCourses,
+} from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { FaqModal } from "@/components/faq-modal";
 import { MobileDrawer } from "@/components/mobile-drawer";
@@ -8,11 +13,10 @@ import { ToggleLang } from "@/components/toggle-lang";
 import { User } from "@/components/user";
 import Link from "next/link";
 
-
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode,
+  children: React.ReactNode;
 }>) {
   const products = await getProducts();
   const user = await getUser();
@@ -20,9 +24,9 @@ export default async function RootLayout({
   let hasCourses = false;
 
   if (user) {
-    const presentialCourses = await getUserPresentialCourses(user.id)
-    const remoteCourses = await getUserRemoteCourses(user.id)
-     hasCourses = presentialCourses.length > 0 || remoteCourses.length > 0
+    const presentialCourses = await getUserPresentialCourses(user.id);
+    const remoteCourses = await getUserRemoteCourses(user.id);
+    hasCourses = presentialCourses.length > 0 || remoteCourses.length > 0;
   }
 
   return (
@@ -32,7 +36,7 @@ export default async function RootLayout({
           <Link href={"/"} className="hidden md:block">
             UniversoCoffee.ar
           </Link>
-          <Nav className="hidden md:block" hasCourses={hasCourses} />
+          <Nav className="hidden md:block" />
           <div className="flex items-center space-x-3">
             <FaqModal />
             <ToggleLang />
