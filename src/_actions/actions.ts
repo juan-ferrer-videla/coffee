@@ -360,7 +360,9 @@ export const deleteEvent = async (formData: FormData) => {
 };
 
 export const getEvents = async () => {
-  return await db.select().from(eventsTable);
+  return await db.query.eventsTable.findMany({
+    orderBy: (events, { asc }) => [asc(events.date)],
+  });
 };
 
 export const createPresentialCourse = async (formData: FormData) => {

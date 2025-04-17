@@ -14,9 +14,14 @@ import {
 import { CldImage } from "./cld-image";
 import { getEvents } from "@/_actions/actions";
 import Link from "next/link";
+import { getParseDate } from "@/lib/utils";
 
 export async function IncommingEvents() {
-  const events = await getEvents();
+  const events = (await getEvents()).filter(
+    ({ date }) => date > new Date().getTime(),
+  );
+  if (events.length < 1)
+    return <p>Por el momento no hay eventos programados</p>;
 
   return (
     <Carousel
@@ -41,7 +46,7 @@ export async function IncommingEvents() {
                 </div>
                 <CardHeader className="grow">
                   <CardTitle>{event.title}</CardTitle>
-                  <CardDescription>{event.date}</CardDescription>
+                  <CardDescription>{getParseDate(event.date)}</CardDescription>
                   <CardDescription className="line-clamp-2">
                     {event.description}
                   </CardDescription>

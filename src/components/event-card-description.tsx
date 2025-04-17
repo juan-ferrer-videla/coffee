@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SelectEvent } from "@/db/schema";
+import { getParseDate } from "@/lib/utils";
 import { CldImage } from "next-cloudinary";
 
 export const EventCardDesc: React.FC<SelectEvent> = ({
@@ -17,6 +18,8 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
   date,
   id,
 }) => {
+  const descriptionArray = description.replace(/\r/g, "").split("\n");
+  console.log(descriptionArray);
   return (
     <Card className="mb-4 flex transform flex-col lg:flex-row">
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
@@ -33,10 +36,13 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
       <CardContent className="flex flex-col p-4">
         <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
         <CardDescription className="mb-1 text-base">
-          <p>{description}</p>
+          {descriptionArray.map((description, i) => {
+            if (description === "") return <br />;
+            return <p key={i}>{description}</p>;
+          })}
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex p-0">
-          <p>{date}</p>
+          <p>{getParseDate(date)}</p>
         </CardFooter>
       </CardContent>
     </Card>
