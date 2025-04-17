@@ -1,7 +1,4 @@
-import {
-  getRemoteCourses,
-  getUser,
-} from "@/_actions/actions";
+import { getRemoteCourses, getUser } from "@/_actions/actions";
 import banner from "@/assets/banner-courses.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -20,11 +17,8 @@ interface EventDescProps {
 export default async function CoursesDetail({ params }: EventDescProps) {
   const { id, lang } = await params;
   const courseId = Number(id);
-  const [user, courses] = await Promise.all([
-    getUser(),
-    getRemoteCourses()
-  ]);
-  if (!user) redirect(`/sign-in?redirect=courses/${courseId}`);
+  const [user, courses] = await Promise.all([getUser(), getRemoteCourses()]);
+  if (!user) redirect(`/sign-in?redirect=courses/remote/${courseId}`);
 
   const course = courses.find((course) => course.id === courseId);
 
@@ -32,12 +26,8 @@ export default async function CoursesDetail({ params }: EventDescProps) {
     return <div>Curso no encontrado</div>;
   }
 
-  const {
-    faq,
-    course_buy_button,
-    course_details,
-    content,
-  } = await getDictionary(lang);
+  const { faq, course_buy_button, course_details, content } =
+    await getDictionary(lang);
 
   return (
     <div className="flex flex-col items-center justify-center gap-8">
