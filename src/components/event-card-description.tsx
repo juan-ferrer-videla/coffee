@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SelectEvent } from "@/db/schema";
-import { getParseDate } from "@/lib/utils";
+import { getParsedDate } from "@/lib/utils";
 import { CldImage } from "next-cloudinary";
 
 export const EventCardDesc: React.FC<SelectEvent> = ({
@@ -42,7 +42,7 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
           })}
         </CardDescription>
         <CardFooter className="ml-auto mt-auto flex p-0">
-          <p>{getParseDate(date)}</p>
+          <p>{getParsedDate(date)}</p>
         </CardFooter>
       </CardContent>
     </Card>

@@ -14,7 +14,7 @@ import {
 import { CldImage } from "./cld-image";
 import { getEvents } from "@/_actions/actions";
 import Link from "next/link";
-import { getParseDate } from "@/lib/utils";
+import { getParsedDate } from "@/lib/utils";
 
 export async function IncommingEvents() {
   const events = (await getEvents()).filter(
@@ -47,7 +47,7 @@ export async function IncommingEvents() {
                 </div>
                 <CardHeader className="grow">
                   <CardTitle>{event.title}</CardTitle>
-                  <CardDescription>{getParseDate(event.date)}</CardDescription>
+                  <CardDescription>{getParsedDate(event.date)}</CardDescription>
                   <CardDescription className="line-clamp-2">
                     {event.description}
                   </CardDescription>

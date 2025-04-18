@@ -3,7 +3,7 @@
 import { useState, type FC, type ComponentProps, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
-import { getParseDate } from "@/lib/utils";
+import { getParsedDate } from "@/lib/utils";
 
 export const InputCalendar: FC<
   ComponentProps<"input"> & { initialDate?: number }
@@ -31,7 +31,7 @@ export const InputCalendar: FC<
         defaultMonth={date}
         className="w-fit rounded-md border shadow"
       />
-      {!!value && <p className="text-sm">{getParseDate(value)}</p>}
+      {!!value && <p className="text-sm">{getParsedDate(value)}</p>}
     </div>
   );
 };

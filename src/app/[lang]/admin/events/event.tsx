@@ -12,7 +12,7 @@ import { CldImage } from "next-cloudinary";
 import { SelectEvent } from "@/db/schema";
 import { EditEvent } from "./edit-event";
 import { DeleteEvent } from "./delete-event";
-import { getParseDate } from "@/lib/utils";
+import { getParsedDate } from "@/lib/utils";
 
 export const Event = ({ id, description, img, date, title }: SelectEvent) => {
   return (
@@ -29,7 +29,7 @@ export const Event = ({ id, description, img, date, title }: SelectEvent) => {
       </div>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        <CardDescription>{getParseDate(date)}</CardDescription>
+        <CardDescription>{getParsedDate(date)}</CardDescription>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
