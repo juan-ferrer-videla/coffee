@@ -19,9 +19,11 @@ export const createPreference = async (
   delivery: boolean,
 ) => {
   const products = await getProducts();
+  let total = 0;
   const items = store.reduce<Items[]>((acc, [id, quantity]) => {
     const product = products.find((product) => product.id === parseInt(id));
     if (product && quantity > 0) {
+      total += product.price * quantity;
       acc.push({
         id,
         quantity,
@@ -31,6 +33,13 @@ export const createPreference = async (
     }
     return acc;
   }, []);
+  if (delivery && total < 60000)
+    items.push({
+      id: "delivery",
+      quantity: 1,
+      title: "delivery",
+      unit_price: 10000,
+    });
 
   const preferenceResponse = await preference.create({
     body: {

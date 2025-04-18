@@ -18,10 +18,21 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
   user,
   ...props
 }) => {
-  const { buy: title, warehouse, phone, street, zip_code, indications, province, town, number } = useDictionary();
+  const {
+    buy: title,
+    warehouse,
+    phone,
+    street,
+    zip_code,
+    indications,
+    province,
+    town,
+    number,
+  } = useDictionary();
   const productsMap = useProductContext((state) => state.products);
   const products = Object.entries(productsMap);
-  const [delivery, setDelivery] = useState(false);
+  const delivery = useProductContext((state) => state.delivery);
+  const toggleDelivery = useProductContext((state) => state.toggleDelivery);
 
   return (
     <form
@@ -40,7 +51,7 @@ export const Buy: FC<ButtonProps & { close: () => void; user: SelectUser }> = ({
           className="mb-3 grid grid-cols-3 gap-4"
           name="delivery"
           onValueChange={(value) => {
-            setDelivery(value === "delivery");
+            toggleDelivery(value === "delivery");
           }}
         >
           <div>

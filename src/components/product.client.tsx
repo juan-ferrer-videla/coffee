@@ -1,17 +1,15 @@
 "use client";
 
 import { Plus, Minus } from "lucide-react";
-import { Button } from "./ui/button";
-import { useCallback } from "react";
+import { Button, ButtonProps } from "./ui/button";
+import { FC, useCallback } from "react";
 import { useProductContext } from "@/hooks/useProduct";
 import { cn } from "@/lib/utils";
 
-export const DecreaseButton = ({
+export const DecreaseButton: FC<ButtonProps & { id: string }> = ({
   id,
-  className = "",
-}: {
-  id: string;
-  className?: string;
+  className,
+  ...props
 }) => {
   const count = useProductContext((state) => state.products[id]);
   const decrease = useProductContext((state) => state.removeProduct);
@@ -26,18 +24,17 @@ export const DecreaseButton = ({
       onClick={handleDecrease}
       size={"icon"}
       className={className}
+      {...props}
     >
       <Minus />
     </Button>
   );
 };
 
-export const IncreaseButton = ({
+export const IncreaseButton: FC<ButtonProps & { id: string }> = ({
   id,
-  className = "",
-}: {
-  id: string;
-  className?: string;
+  className,
+  ...props
 }) => {
   const increase = useProductContext((state) => state.addProduct);
   const handleIncrease = useCallback(() => {
@@ -45,7 +42,12 @@ export const IncreaseButton = ({
   }, [increase, id]);
 
   return (
-    <Button onClick={handleIncrease} size={"icon"} className={className}>
+    <Button
+      onClick={handleIncrease}
+      size={"icon"}
+      className={className}
+      {...props}
+    >
       <Plus />
     </Button>
   );

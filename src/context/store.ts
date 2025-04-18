@@ -17,9 +17,11 @@ export const ProductContext = createContext<ProductStore | null>(null);
 
 export interface ProductProps {
   products: Record<string, number>;
+  delivery: boolean;
 }
 
 export interface ProductState extends ProductProps {
+  toggleDelivery: (action: boolean) => void;
   addProduct: (id: string) => void;
   removeProduct: (id: string) => void;
   clearCart: () => void;
@@ -39,6 +41,9 @@ export const createProductsStore = (initProps: SelectProduct[]) => {
 
   return createStore<ProductState>()((set, get) => ({
     products: initialCart,
+    delivery: false,
+    toggleDelivery: (action) =>
+      set((state) => ({ ...state, delivery: action })),
     addProduct: (id: string) =>
       set((state) => ({
         products: { ...state.products, [id]: state.products[id] + 1 },

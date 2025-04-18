@@ -87,6 +87,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={cn(
           `${LexendSansSerif.variable} ${MontserratSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`,
           "font-sans",

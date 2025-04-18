@@ -20,6 +20,7 @@ import { DecreaseButton, IncreaseButton } from "./product.client";
 export const CartTable = ({ products }: { products: SelectProduct[] }) => {
   const store = useProductContext((state) => state.products);
   const total = useProductContext((state) => state.getTotal());
+  const delivery = useProductContext((state) => state.delivery);
   const { product, price, quantity, cart_table_caption } = useDictionary();
 
   return (
@@ -38,22 +39,29 @@ export const CartTable = ({ products }: { products: SelectProduct[] }) => {
             acc.push(
               <TableRow key={id}>
                 <TableCell className="font-medium">{title}</TableCell>
-                <TableCell>{price}</TableCell>
-                <TableCell>{store[id]}</TableCell>
-                <TableCell className="flex gap-2 items-center">
-                    <DecreaseButton id={id.toString()} />
-                    -
-                    <IncreaseButton id={id.toString()} />
+                <TableCell>{currency.format(price)}</TableCell>
+                <TableCell className="flex w-full items-center gap-x-3">
+                  <DecreaseButton id={id.toString()} />
+                  <p>{store[id]}</p>
+                  <IncreaseButton id={id.toString()} />
                 </TableCell>
-              </TableRow>
+              </TableRow>,
             );
           return acc;
         }, [])}
+        {delivery && (
+          <TableRow>
+            <TableCell className="font-medium">Envio</TableCell>
+            <TableCell>{currency.format(10000)}</TableCell>
+          </TableRow>
+        )}
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">{currency.format(total)}</TableCell>
+          <TableCell colSpan={2}>Total</TableCell>
+          <TableCell className="text-right">
+            {currency.format(delivery ? total + 10000 : total)}
+          </TableCell>
         </TableRow>
       </TableFooter>
     </Table>
