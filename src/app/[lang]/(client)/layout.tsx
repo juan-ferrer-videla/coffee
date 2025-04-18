@@ -1,9 +1,4 @@
-import {
-  getProducts,
-  getUser,
-  getUserPresentialCourses,
-  getUserRemoteCourses,
-} from "@/_actions/actions";
+import { getProducts, getUser } from "@/_actions/actions";
 import { Cart } from "@/components/cart";
 import { FaqModal } from "@/components/faq-modal";
 import { MobileDrawer } from "@/components/mobile-drawer";
@@ -18,16 +13,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const products = await getProducts();
-  const user = await getUser();
-
-  let hasCourses = false;
-
-  if (user) {
-    const presentialCourses = await getUserPresentialCourses(user.id);
-    const remoteCourses = await getUserRemoteCourses(user.id);
-    hasCourses = presentialCourses.length > 0 || remoteCourses.length > 0;
-  }
+  const [products, user] = await Promise.all([getProducts(), getUser()]);
 
   return (
     <>

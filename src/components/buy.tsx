@@ -6,7 +6,7 @@ import { useDictionary } from "@/hooks/useDictionary";
 import { createPreference } from "@/_actions/mercadopago";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { editUser } from "@/_actions/actions";
 import { SelectUser } from "@/db/schema";
 import { Textarea } from "./ui/textarea";

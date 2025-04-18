@@ -19,7 +19,6 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
   id,
 }) => {
   const descriptionArray = description.replace(/\r/g, "").split("\n");
-  console.log(descriptionArray);
   return (
     <Card className="mb-4 flex transform flex-col lg:flex-row">
       <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3">
@@ -38,7 +37,7 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
         <CardTitle className="mb-2 text-2xl font-bold">{title}</CardTitle>
         <CardDescription className="mb-1 text-base">
           {descriptionArray.map((description, i) => {
-            if (description === "") return <br />;
+            if (description === "") return <br key={i} />;
             return <p key={i}>{description}</p>;
           })}
         </CardDescription>
