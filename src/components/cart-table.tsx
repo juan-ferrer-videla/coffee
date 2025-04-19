@@ -49,7 +49,7 @@ export const CartTable = ({ products }: { products: SelectProduct[] }) => {
             );
           return acc;
         }, [])}
-        {delivery && (
+        {delivery && total < 60000 && (
           <TableRow>
             <TableCell className="font-medium">Envio</TableCell>
             <TableCell>{currency.format(10000)}</TableCell>
@@ -60,7 +60,7 @@ export const CartTable = ({ products }: { products: SelectProduct[] }) => {
         <TableRow>
           <TableCell colSpan={2}>Total</TableCell>
           <TableCell className="text-right">
-            {currency.format(delivery ? total + 10000 : total)}
+            {currency.format(delivery && total < 60000 ? total + 10000 : total)}
           </TableCell>
         </TableRow>
       </TableFooter>
