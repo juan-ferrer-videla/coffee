@@ -27,7 +27,8 @@ const MONTHS = [
 ];
 
 export const getParsedDate = (number: number) => {
-  const dateObj = new Date(number);
+  const timestamp = Math.floor(Number(number))
+  const dateObj = new Date(timestamp);
 
   return `${dateObj.getDate()} de ${MONTHS[dateObj.getMonth()]}, ${dateObj.getFullYear()}`;
 };

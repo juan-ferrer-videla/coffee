@@ -70,5 +70,9 @@
   "sign_in_desc": "Debes iniciar sesion para acceder a esta pagina. Gracias!",
   "sign_in_email": "Ingrese su correo electrónico para iniciar sesión en su cuenta",
   "sign_in_login": "Ingresar",
-  "my_courses": "Mis Cursos"
+  "my_courses": "Mis Cursos",
+  "next_events": "Próximos Eventos",
+  "past_events": "Eventos Pasados",
+  "events": "Eventos",
+  "events_description": "En esta sección podés explorar todos nuestros próximos eventos y revivir los momentos destacados de los eventos pasados. ¡No te pierdas lo que se viene!"
 }

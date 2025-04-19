@@ -2,7 +2,6 @@ import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
 import { BannerCarousel } from "@/components/banner-carousel";
 import { RecommendedCarousel } from "@/components/recommended-products";
-import { IncommingEvents } from "@/components/incomming-events";
 import { AboutUsCard } from "@/components/about-us-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -11,6 +10,7 @@ import { Suspense } from "react";
 import { CarouselSkeleton } from "@/components/carousel-skeleton";
 import Image from "next/image";
 import logo from "@/assets/logo.png";
+import { NextEvents } from "@/components/next-events";
 
 export default async function Home({
   params,
@@ -65,7 +65,7 @@ export default async function Home({
           {incomming_events}
         </h2>
         <Suspense fallback={<CarouselSkeleton />}>
-          <IncommingEvents />
+          <NextEvents />
         </Suspense>
       </section>
       <section className="mb-6 sm:mb-10 md:mb-16">

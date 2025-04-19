@@ -7,10 +7,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { type ComponentProps, type FC } from "react";
 
-export const getMainLinks = ({ home, store }: TDictionary) => {
+export const getMainLinks = ({ home, store, events }: TDictionary) => {
   const links = [
     { path: "", title: home },
     { path: "/store", title: store },
+    { path: "/events", title: events },  
   ];
 
   return links;
