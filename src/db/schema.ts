@@ -121,10 +121,10 @@ export const usersToProducts = sqliteTable("users_to_products", {
   id: integer("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   productId: integer("product_id")
     .notNull()
-    .references(() => productsTable.id),
+    .references(() => productsTable.id, { onDelete: "cascade" }),
   quantity: integer("quantity").notNull(),
   delivery: integer("delivery", { mode: "boolean" }).default(true).notNull(),
   status: text("status", { enum: ["pending", "dispatched", "delivered"] })
@@ -141,10 +141,10 @@ export const usersToPresentialCourses = sqliteTable(
     id: integer("id").primaryKey(),
     userId: integer("user_id")
       .notNull()
-      .references(() => usersTable.id),
+      .references(() => usersTable.id, { onDelete: "cascade" }),
     presentialCourseId: integer("presential_course_id")
       .notNull()
-      .references(() => presentialCoursesTable.id),
+      .references(() => presentialCoursesTable.id, { onDelete: "cascade" }),
     purchasedAt: text("purchased_at")
       .default(sql`(CURRENT_TIMESTAMP)`)
       .notNull(),
@@ -155,10 +155,10 @@ export const usersToRemoteCourses = sqliteTable("users_to_remote_courses", {
   id: integer("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
-    .references(() => usersTable.id),
+    .references(() => usersTable.id, { onDelete: "cascade" }),
   remoteCourseId: integer("remote_course_id")
     .notNull()
-    .references(() => remoteCoursesTable.id),
+    .references(() => remoteCoursesTable.id, { onDelete: "cascade" }),
   purchasedAt: text("purchased_at")
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
