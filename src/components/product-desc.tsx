@@ -13,6 +13,8 @@ export const ProductDesc = ({
   img,
   price,
 }: SelectProduct) => {
+  const descriptionArray = description?.replace(/\r/g, "").split("\n");
+
   return (
     <main className="m-4 flex flex-col gap-6 lg:mb-8 lg:flex-row">
       <div className="w-full lg:w-1/2">
@@ -29,13 +31,20 @@ export const ProductDesc = ({
         <Card>
           <CardContent className="p-4">
             <h2 className="mb-2 text-3xl font-bold">{title}</h2>
-            <p className="mb-4">{description}</p>        
-              <p className="text-2xl mb-4 font-bold">{currency.format(price)}</p>
-              <div className="flex justify-end p-2 items-center gap-x-1">
-                <DecreaseButton id={id.toString()} />
-                <Count id={id.toString()} />
-                <IncreaseButton id={id.toString()} />
-              </div>
+            <div className="mb-4">
+              {descriptionArray &&
+                descriptionArray.length > 0 &&
+                descriptionArray.map((description, i) => {
+                  if (description === "") return <br key={i} />;
+                  return <p key={i}>{description}</p>;
+                })}
+            </div>
+            <p className="mb-4 text-2xl font-bold">{currency.format(price)}</p>
+            <div className="flex items-center justify-end gap-x-1 p-2">
+              <DecreaseButton id={id.toString()} />
+              <Count id={id.toString()} />
+              <IncreaseButton id={id.toString()} />
+            </div>
           </CardContent>
         </Card>
       </div>

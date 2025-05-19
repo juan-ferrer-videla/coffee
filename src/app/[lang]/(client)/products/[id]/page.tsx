@@ -18,7 +18,7 @@ interface EventDescProps {
 
 export default async function ProductDescription({ params }: EventDescProps) {
   const { id } = await params;
-  const idProduct = await Number(id);
+  const idProduct = Number(id);
   const product = await ProductId(idProduct);
   const { lang } = await params;
 
@@ -30,7 +30,7 @@ export default async function ProductDescription({ params }: EventDescProps) {
     return <h1>Producto no encontrado</h1>;
   }
 
-  const { more_products} = await getDictionary(lang)
+  const { more_products } = await getDictionary(lang);
 
   return (
     <>
