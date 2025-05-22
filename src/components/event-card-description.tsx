@@ -20,15 +20,15 @@ export const EventCardDesc: React.FC<SelectEvent> = ({
 }) => {
   const descriptionArray = description.replace(/\r/g, "").split("\n");
   return (
-    <Card className="mb-4 flex transform flex-col lg:flex-row">
-      <CardHeader className="w-full flex-shrink-0 p-2 lg:w-1/3 lg:h-[350px] md:h-[450px] sm:h-[150px]">
-        <div className="relative h-[18rem] md:h-[32rem] w-full lg:h-full">
+    <Card className="mb-4 grid md:grid-cols-2">
+      <CardHeader className="p-2">
+        <div className="relative aspect-square h-full w-full">
           <CldImage
             key={id}
             alt={title}
             src={img}
             fill
-            className="rounded-lg"
+            className="rounded-lg object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
         </div>
