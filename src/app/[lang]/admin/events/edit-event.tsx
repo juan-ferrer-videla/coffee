@@ -38,7 +38,7 @@ export const EditEvent = ({
           <Edit />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
           <DialogDescription>
@@ -46,7 +46,7 @@ export const EditEvent = ({
           </DialogDescription>
         </DialogHeader>
         <form action={handleAction} className="grid max-w-sm gap-6">
-          <div className="w-fullitems-center grid gap-1.5">
+          <div className="w-full items-center grid gap-1.5">
             <Label htmlFor="edit_title">Title</Label>
             <Input
               id="edit_title"

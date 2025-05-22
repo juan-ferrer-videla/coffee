@@ -29,9 +29,6 @@ export default async function EventDesc({ params }: EventDescProps) {
 
   return (
     <>
-      <h1 className="mb-8 scroll-m-20 text-center font-serif text-4xl tracking-tight sm:mb-12 md:mb-16 lg:text-5xl xl:text-6xl">
-        {event.title}
-      </h1>
       <EventCardDesc key={event.id} {...event} />
       <div className="w-full">
         <ContactButton

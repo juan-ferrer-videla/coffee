@@ -140,7 +140,7 @@ export default async function RootLayout({
                         </li>
                         <li>
                           <a
-                            href="https://www.tiktok.com/@universo.coffee.a"
+                            href="https://www.tiktok.com/@universo.coffee.ar"
                             target="_blank"
                             rel="noopener noreferrer"
                           >

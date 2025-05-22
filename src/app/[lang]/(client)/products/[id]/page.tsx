@@ -37,7 +37,7 @@ export default async function ProductDescription({ params }: EventDescProps) {
       <ProductDesc {...product} />
 
       <div>
-        <h1 className="mb-6 flex justify-center text-3xl font-extrabold uppercase tracking-tight lg:mb-8 lg:text-3xl xl:text-4xl">
+        <h1 className="mb-6 font-serif flex justify-center text-3xl tracking-tight lg:mb-10 lg:text-3xl xl:text-4xl">
           {more_products}
         </h1>
         <MoreProducts currentProductId={id} />
