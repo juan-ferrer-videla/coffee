@@ -33,7 +33,7 @@ export const createPreference = async (
     }
     return acc;
   }, []);
-  if (delivery && total < 60000)
+  if (delivery && total < 80000)
     items.push({
       id: "delivery",
       quantity: 1,
