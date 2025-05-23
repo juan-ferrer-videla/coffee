@@ -35,7 +35,7 @@ export const MobileDrawer = () => {
             {adminLinks.map(({ path, title }) => (
               <li key={path}>
                 <Link
-                  href={`/es${path}`}
+                  href={`/es/admin${path}`}
                   onClick={() => {
                     setOpen(false);
                   }}
