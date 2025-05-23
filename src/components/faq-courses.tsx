@@ -32,7 +32,10 @@ export const FrequentQuestions = () => {
           ¿Cómo funcionan los envíos?
         </AccordionTrigger>
         <AccordionContent className="xl:text-base">
-          Ofrecemos dos modalidades. Envío a domicilio: tiene un costo de $10.000 a cualquier parte de Argentina. Si tu compra supera los $60.000, el envío es gratuito. Retiro en depósito: podés retirar tu pedido sin costo desde nuestro depósito en San Telmo.
+          Ofrecemos dos modalidades. Envío a domicilio: tiene un costo de
+          $10.000 a cualquier parte de Argentina. Si tu compra supera los
+          $80.000, el envío es gratuito. Retiro en depósito: podés retirar tu
+          pedido sin costo desde nuestro depósito en San Telmo.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-4">
