@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { GoProfile } from "../goProfile";
+import { User2 } from "lucide-react";
 
 export const User = () => {
   const { data: session, isPending } = authClient.useSession();
@@ -20,11 +21,12 @@ export const User = () => {
   const logOut = async () => await signOut();
 
   return (
-    <div className="grid place-items-center">
+    <>
       {session === null ? (
         <Button
           variant="outline"
-          className={"w-full gap-2"}
+          size={"icon"}
+          className={"gap-2"}
           disabled={isPending}
           onClick={async () => {
             await signIn.social({
@@ -32,7 +34,8 @@ export const User = () => {
             });
           }}
         >
-          Inciar sesión
+          <User2 className="" size={"icon"} />
+          <span className="sr-only">Inciar sesión</span>
         </Button>
       ) : (
         <DropdownMenu>
@@ -61,6 +64,6 @@ export const User = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       )}
-    </div>
+    </>
   );
 };
