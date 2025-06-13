@@ -2,10 +2,58 @@ import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { z } from "zod";
 
-export const usersTable = sqliteTable("users", {
-  id: integer("id").primaryKey(),
+export const session = sqliteTable("session", {
+  id: text("id").primaryKey(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const account = sqliteTable("account", {
+  id: text("id").primaryKey(),
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  idToken: text("id_token"),
+  accessTokenExpiresAt: integer("access_token_expires_at", {
+    mode: "timestamp",
+  }),
+  refreshTokenExpiresAt: integer("refresh_token_expires_at", {
+    mode: "timestamp",
+  }),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+});
+
+export const verification = sqliteTable("verification", {
+  id: text("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }),
+  updatedAt: integer("updated_at", { mode: "timestamp" }),
+});
+
+export const user = sqliteTable("user", {
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
-  email: text("email").unique().notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: integer("email_verified", { mode: "boolean" }).notNull(),
+  image: text("image"),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
   dni: integer("dni").unique(),
   phone: text("phone"),
   street: text("street"),
@@ -119,9 +167,9 @@ export const eventsTable = sqliteTable("events", {
 
 export const usersToProducts = sqliteTable("users_to_products", {
   id: integer("id").primaryKey(),
-  userId: integer("user_id")
+  userId: text("user_id")
     .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
   productId: integer("product_id")
     .notNull()
     .references(() => productsTable.id, { onDelete: "cascade" }),
@@ -139,9 +187,9 @@ export const usersToPresentialCourses = sqliteTable(
   "users_to_presential_courses",
   {
     id: integer("id").primaryKey(),
-    userId: integer("user_id")
+    userId: text("user_id")
       .notNull()
-      .references(() => usersTable.id, { onDelete: "cascade" }),
+      .references(() => user.id, { onDelete: "cascade" }),
     presentialCourseId: integer("presential_course_id")
       .notNull()
       .references(() => presentialCoursesTable.id, { onDelete: "cascade" }),
@@ -155,7 +203,7 @@ export const usersToRemoteCourses = sqliteTable("users_to_remote_courses", {
   id: integer("id").primaryKey(),
   userId: integer("user_id")
     .notNull()
-    .references(() => usersTable.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
   remoteCourseId: integer("remote_course_id")
     .notNull()
     .references(() => remoteCoursesTable.id, { onDelete: "cascade" }),
@@ -164,7 +212,7 @@ export const usersToRemoteCourses = sqliteTable("users_to_remote_courses", {
     .notNull(),
 });
 
-export const usersRelations = relations(usersTable, ({ many }) => ({
+export const usersRelations = relations(user, ({ many }) => ({
   usersToProducts: many(usersToProducts),
 }));
 
@@ -179,9 +227,9 @@ export const usersToProductsRelations = relations(
       fields: [usersToProducts.productId],
       references: [productsTable.id],
     }),
-    user: one(usersTable, {
+    user: one(user, {
       fields: [usersToProducts.userId],
-      references: [usersTable.id],
+      references: [user.id],
     }),
   }),
 );
@@ -193,9 +241,9 @@ export const usersToPresentialCoursesRelations = relations(
       fields: [usersToPresentialCourses.presentialCourseId],
       references: [presentialCoursesTable.id],
     }),
-    user: one(usersTable, {
+    user: one(user, {
       fields: [usersToPresentialCourses.userId],
-      references: [usersTable.id],
+      references: [user.id],
     }),
   }),
 );
@@ -207,9 +255,9 @@ export const usersToRemoteCoursesRelations = relations(
       fields: [usersToRemoteCourses.remoteCourseId],
       references: [remoteCoursesTable.id],
     }),
-    user: one(usersTable, {
+    user: one(user, {
       fields: [usersToRemoteCourses.userId],
-      references: [usersTable.id],
+      references: [user.id],
     }),
   }),
 );
@@ -275,8 +323,8 @@ export const moduleQuestionChoiceRelations = relations(
   }),
 );
 
-export type InsertUser = typeof usersTable.$inferInsert;
-export type SelectUser = typeof usersTable.$inferSelect;
+export type InsertUser = typeof user.$inferInsert;
+export type SelectUser = typeof user.$inferSelect;
 
 export type InsertProduct = typeof productsTable.$inferInsert;
 export type SelectProduct = typeof productsTable.$inferSelect;

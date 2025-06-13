@@ -1,6 +1,5 @@
 "use server";
 
-import { auth, signIn, signOut } from "../auth";
 import { eq, count } from "drizzle-orm";
 import { db } from "../db";
 import {
@@ -22,7 +21,7 @@ import {
   remoteModuleVideosTable,
   remoteModulesTable,
   SelectUserToProduct,
-  usersTable,
+  user,
   usersToPresentialCourses,
   usersToProducts,
   createModuleVideoSchema,
@@ -38,6 +37,7 @@ import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
 import { Items } from "mercadopago/dist/clients/commonTypes";
 import { CourseCardProps } from "@/components/course-card";
+import { getSession } from "./auth";
 
 const cloudinaryConfig = cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
@@ -93,37 +93,8 @@ const uploadFile = async ({
   return data;
 };
 
-export const signInAction = async (formData: FormData) => {
-  const redirectPath = formData.get("redirect");
-  await signIn(
-    "google",
-    typeof redirectPath === "string" && redirectPath
-      ? { redirectTo: redirectPath }
-      : {},
-  );
-};
-
-export const signOutAction = async () => {
-  await signOut();
-};
-
 export const getUsers = async () => {
-  return db.select().from(usersTable);
-};
-
-export const logIn = async ({
-  email,
-  name,
-}: {
-  email: string;
-  name: string;
-}) => {
-  const user = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.email, email));
-
-  if (user.length === 0) await db.insert(usersTable).values({ email, name });
+  return db.select().from(user);
 };
 
 export const isAdmin = async (email: string) => {
@@ -219,26 +190,14 @@ export const buy = async (
   items: Items[],
   { email, delivery }: { email: string; delivery: boolean },
 ) => {
-  let userId;
-  const users = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.email, email));
-
-  if (users.length === 0) {
-    const [{ id }] = await db
-      .insert(usersTable)
-      .values({ email, name: "" })
-      .returning();
-    userId = id;
-  } else {
-    userId = users[0].id;
-  }
+  const currentUser = (await db.query.user.findFirst({
+    where: eq(user.email, email),
+  }))!;
 
   await db.insert(usersToProducts).values(
     items.map(({ id: productId, quantity }) => ({
       productId: parseInt(productId),
-      userId,
+      userId: currentUser.id,
       quantity,
       delivery,
     })),
@@ -251,7 +210,7 @@ export const buyPresentialCourse = async ({
   userId,
   presentialCourseId,
 }: {
-  userId: number;
+  userId: string;
   presentialCourseId: number;
 }) => {
   await db
@@ -668,34 +627,34 @@ export const editUser = async (formData: FormData) => {
     .parse(Object.fromEntries(formData));
 
   await db
-    .update(usersTable)
+    .update(user)
     .set({
       streetNumber: streetNumber ? parseInt(streetNumber) : null,
       dni: dni ? parseInt(dni) : null,
       ...data,
     })
-    .where(eq(usersTable.id, parseInt(id)));
+    .where(eq(user.id, id));
   revalidatePath("/");
 };
 
 export const getUser = async () => {
-  const session = await auth();
+  const session = await getSession();
   const email = session?.user?.email;
   if (!email) return;
 
-  return await db.query.usersTable.findFirst({
-    where: eq(usersTable.email, email),
+  return await db.query.user.findFirst({
+    where: eq(user.email, email),
   });
 };
 
-export const getUserOrders = async (id: number) => {
+export const getUserOrders = async (id: string) => {
   return await db.query.usersToProducts.findMany({
     with: { product: true, user: true },
     where: eq(usersToProducts.userId, id),
   });
 };
 
-export const getUserPresentialCourses = async (id: number) => {
+export const getUserPresentialCourses = async (id: string) => {
   return await db.query.usersToPresentialCourses.findMany({
     with: { presentialCourses: true, user: true },
     where: eq(usersToPresentialCourses.userId, id),

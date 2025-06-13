@@ -1,5 +1,4 @@
 import { getProducts } from "@/_actions/actions";
-import { auth } from "@/auth";
 import { GridSkeleton } from "@/components/grid-skeleton";
 
 import { getDictionary } from "@/get-dictionary";
@@ -7,6 +6,7 @@ import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { Products } from "./products";
+import { getSession } from "@/_actions/auth";
 
 export default async function Home({
   params,
@@ -15,7 +15,7 @@ export default async function Home({
 }>) {
   const { lang } = await params;
   const { store, store_description } = await getDictionary(lang);
-  const session = await auth();
+  const session = await getSession();
   const email = session?.user?.email;
   if (!email) redirect(`/${lang}/sign-in?redirect=store`);
   const productsPromise = getProducts();

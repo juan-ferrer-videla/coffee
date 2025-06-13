@@ -56,7 +56,7 @@ export const createPreference = async (
 
 export const createCoursePreference = async (
   presentialCourseId: number,
-  userId: number,
+  userId: string,
 ) => {
   const [courses, courseCount] = await Promise.all([
     getPresentialCourses(),
@@ -90,7 +90,7 @@ export const createCoursePreference = async (
 
 export const createRemoteCoursePreference = async (
   remoteCourseId: number,
-  userId: number,
+  userId: string,
 ) => {
   const courses = await getRemoteCourses();
 

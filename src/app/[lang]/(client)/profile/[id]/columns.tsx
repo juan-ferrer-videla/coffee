@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export interface PurchaseInfo {
   id: number;
-  userId: number;
+  userId: string;
   productId: number;
   quantity: number;
   delivery: boolean;

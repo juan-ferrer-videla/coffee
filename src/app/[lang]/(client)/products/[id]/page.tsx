@@ -2,10 +2,10 @@ import { getProducts } from "@/_actions/actions";
 import { SelectProduct } from "@/db/schema";
 import { ProductDesc } from "@/components/product-desc";
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import { MoreProducts } from "@/components/more-products";
 import { getDictionary } from "@/get-dictionary";
 import { TLocale } from "@/i18n";
+import { getSession } from "@/_actions/auth";
 
 const ProductId = async (id: number) => {
   const products: SelectProduct[] = await getProducts();
@@ -22,7 +22,7 @@ export default async function ProductDescription({ params }: EventDescProps) {
   const product = await ProductId(idProduct);
   const { lang } = await params;
 
-  const session = await auth();
+  const session = await getSession();
   const email = session?.user?.email;
   if (!email) redirect(`/${lang}/sign-in?redirect=store`);
 
@@ -37,7 +37,7 @@ export default async function ProductDescription({ params }: EventDescProps) {
       <ProductDesc {...product} />
 
       <div>
-        <h1 className="mb-6 font-serif flex justify-center text-3xl tracking-tight lg:mb-10 lg:text-3xl xl:text-4xl">
+        <h1 className="mb-6 flex justify-center font-serif text-3xl tracking-tight lg:mb-10 lg:text-3xl xl:text-4xl">
           {more_products}
         </h1>
         <MoreProducts currentProductId={id} />

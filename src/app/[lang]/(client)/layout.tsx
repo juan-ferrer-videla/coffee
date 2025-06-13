@@ -5,7 +5,7 @@ import { MobileDrawer } from "@/components/mobile-drawer";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Nav } from "@/components/nav";
 import { ToggleLang } from "@/components/toggle-lang";
-import { User } from "@/components/user";
+import { User } from "@/components/auth/user";
 import Link from "next/link";
 
 export default async function RootLayout({

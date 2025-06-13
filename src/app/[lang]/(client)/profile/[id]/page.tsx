@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 
-const Orders = async ({ id }: { id: number }) => {
+const Orders = async ({ id }: { id: string }) => {
   const allOrders = await getUserOrders(id);
 
   const data = allOrders.map((order) => ({
@@ -44,7 +44,7 @@ const Orders = async ({ id }: { id: number }) => {
   return <OrdersClient data={data} />;
 };
 
-const Courses = async ({ id }: { id: number }) => {
+const Courses = async ({ id }: { id: string }) => {
   const courses = await getUserPresentialCourses(id);
 
   return (

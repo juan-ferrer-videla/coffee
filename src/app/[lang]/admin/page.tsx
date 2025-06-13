@@ -1,10 +1,10 @@
 import { isAdmin } from "@/_actions/actions";
-import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { TLocale } from "@/i18n";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { adminLinks } from "./links";
+import { getSession } from "@/_actions/auth";
 
 export default async function Admin({
   params,
@@ -13,7 +13,7 @@ export default async function Admin({
 }>) {
   const { lang } = await params;
 
-  const session = await auth();
+  const session = await getSession();
   const email = session?.user?.email;
   if (!email) redirect(`/${lang}/sign-in?redirect=admin`);
 

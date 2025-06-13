@@ -1,11 +1,11 @@
 import { isAdmin } from "@/_actions/actions";
-import { auth } from "@/auth";
 import { ModeToggle } from "@/components/mode-toggle";
 import { TLocale } from "@/i18n";
 import { redirect } from "next/navigation";
 import { Nav } from "./nav";
 import { Providers } from "@/providers/tanstack-query";
 import { MobileDrawer } from "./mobile-drawer";
+import { getSession } from "@/_actions/auth";
 
 export default function RootLayout({
   children,
@@ -30,7 +30,7 @@ async function AdminLayout({
 }>) {
   const { lang } = await params;
 
-  const session = await auth();
+  const session = await getSession();
   const email = session?.user?.email;
   if (!email) redirect(`/${lang}/sign-in?redirect=admin`);
 
