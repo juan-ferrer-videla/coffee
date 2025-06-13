@@ -1,12 +1,13 @@
-// auth.js (or auth.ts if you're using TS)
+// src/auth.ts
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authConfig = {
+  experimental: {},
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -14,6 +15,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/sign-in",
   },
   session: {
-    strategy: "jwt", // Optional, but good to be explicit
+    strategy: "jwt" as const,
   },
-});
+};
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
