@@ -10,6 +10,7 @@ import { ProductsProvider } from "@/providers/products-provider";
 import { getProducts } from "@/_actions/actions";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 import { TikTok } from "@/components/icons/tiktok";
+import Link from "next/link";
 
 const LexendSansSerif = Lexend_Giga({
   variable: "--font-lexend",
@@ -82,7 +83,8 @@ export default async function RootLayout({
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
   const products = await getProducts();
-  const { follow, address, contact } = dictionary;
+  const { follow, address, contact, privacy, privacy_link, terms_link } =
+    dictionary;
 
   return (
     <html lang={lang} suppressHydrationWarning>
@@ -171,6 +173,25 @@ export default async function RootLayout({
                     <p className="text-sm text-muted-foreground">
                       +54 11-3469-8469
                     </p>
+                  </div>
+                  <div>
+                    <h3 className="mb-1 scroll-m-20 text-xl font-semibold tracking-tight md:mb-3">
+                      {privacy}
+                    </h3>
+                    <div className="grid">
+                      <Link
+                        href={"/privacy-policy"}
+                        className="text-sm text-muted-foreground"
+                      >
+                        {privacy_link}
+                      </Link>
+                      <Link
+                        href={"/terms"}
+                        className="text-sm text-muted-foreground"
+                      >
+                        {terms_link}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </footer>
